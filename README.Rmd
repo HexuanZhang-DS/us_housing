@@ -1,0 +1,1041 @@
+---
+title: "US Housing Rental Market Prediction"
+always_allow_html: true
+output: github_document
+---
+
+![US Housing Market (sourse: https://www.loveproperty.com/gallerylist/96138/expert-predictions-for-the-us-housing-market-through-the-rest-of-2020)](image/Housing.jpg){width=100%}
+# Introduction
+
+We found our dataset on Kaggle (https://www.kaggle.com/austinreese/usa-housing-listings) which was compiled Craigslist housing information for the United States. The dataset contains 384,977 rows which represent each housing listing on the craigslist page. We also have 22 columns which are descriptors of the house listed. We had to clean the data because three of the columns were URLs for the listings. We are interested in this dataset because the dependent variable for the data is the monthly housing rent prices and the members of our group are looking for places to live after we complete the MSBA program. There is also geographic information which is interesting because we were able to look at different areas of the country and what impact the geography had on the housing rent price and other factors. In our data there are 4 numeric variables: price, size of the property (sq feet), number of bedrooms, and number of bathrooms. There are 6 binary variables in the dataset such as: whether cats are allowed, whether dogs are allowed, whether smoking is allowed, wheelchair access, electric vehicle charge, and whether it comes furnished. There are 5 categorical variables including: type, region, state, laundry_options, parking options.
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo=FALSE, warning=FALSE}
+#load packages
+library(tidyverse)
+library(readr)
+library(data.table)
+```
+
+# Load the data
+```{r}
+housing <- read.csv("data/housing.csv")
+```
+
+# Clean the data
+
+## Take out three columns with urls
+```{r}
+housing <- housing %>%
+  select (-url, -region_url, -image_url)
+glimpse(housing)
+
+```
+
+## Change data type
+```{r}
+factorvars <- c('id', 'region', 'type', 'cats_allowed', 'dogs_allowed', 'smoking_allowed','wheelchair_access',  'electric_vehicle_charge', 'comes_furnished',
+'laundry_options', 'parking_options','state')
+housing <- as.data.table(housing)
+housing[, (factorvars):= lapply(.SD, function(x) as.factor(x)), 
+                    .SDcols= factorvars]
+
+summary(housing)
+
+```
+
+## Trim abnormal records
+```{r}
+#check range of the variables
+summary(housing$price)
+summary(housing$sqfeet)
+summary(housing$beds)
+summary(housing$baths)
+
+price99 <- quantile(housing$price, .99)
+price01 <- quantile(housing$price, .01)
+
+sqfeet99 <- quantile(housing$sqfeet, .99)
+sqfeet01 <- quantile(housing$sqfeet, .01)
+
+
+housing%>% 
+  group_by(beds) %>% 
+  count()
+
+
+housing%>% 
+  group_by(baths) %>% 
+  count()
+```
+
+Price range, square feet range, beds and baths ranges are all abnormal. It may be due to mistakes during the web scraping or when people put the housing information on Craigslist, they didn't provide the accurate information. In order to keep the integrity of the data we decide to trim 1% from the lower end and 1% from the higher end for price and sqfeet variables. We also filter out beds and baths larger than 10. Price will range between *\$344* to *\$3395* per month, and square feet between *340* to *2405*.
+
+
+```{r}
+mydata <- housing %>% 
+  filter (price >=price01 & price<=price99) %>% 
+  filter (sqfeet >=sqfeet01 & sqfeet <=sqfeet99) %>% 
+  filter (beds <= 10) %>% 
+  filter (baths <= 10)
+#only 10k cases been removed. We still have 374k observations  
+summary(mydata)
+
+```
+
+# Exploratory Analysis
+
+## Depentdent Variable: Price
+```{r}
+library(ggplot2)
+
+summary(mydata$price)
+
+ggplot(mydata) + 
+  geom_histogram(aes(price), alpha=.5, color="black", fill="skyblue")+
+  xlab("Monthly Housing Rent Price")+
+  theme_minimal() + 
+   theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.border = element_blank(), 
+        panel.background = element_blank()) 
+
+```
+
+The monthly rent a continuous variable that is not normally distributed. It is slightly skewed to the right. Mean rent is \$1,157, median is \$1,035, 75% of housing monthly rent clustered between \$815 to \$1385. 
+
+
+## Independent Variables
+
+### Square Feet: sqfeet
+```{r}
+summary(mydata$sqfeet)
+
+ggplot(mydata) +
+  geom_histogram(aes(sqfeet), alpha=.3, color="black", fill="turquoise")+
+  xlab("Housing Square Feet")+
+  theme_minimal()+ 
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.border = element_blank(), 
+        panel.background = element_blank()) 
+
+```
+
+Square feet is slightly skewed to the right. Mean is 978 square feet, median is 946 square feet. 75% of the cases range from 750 to 1136 square feet.
+
+### Scatter plot of square feet and montly rent
+```{r}
+library(ggplot2)
+ggplot(mydata, aes(x=sqfeet,
+                 y=price)) + 
+  geom_point(alpha=.01) + 
+  geom_smooth()+ 
+  geom_smooth(method='lm', color='red') + 
+  xlab("Housing Square Feet")+ 
+  ylab("Monthly Housing Rent Price") + 
+  theme_minimal()+ 
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        panel.border = element_blank(), 
+        panel.background = element_blank()) 
+
+```
+
+There may be a linear relationship here based on the scatter plot.
+
+```{r}
+ggplot(mydata, aes( x=comes_furnished, y=price, fill=comes_furnished)) + 
+  geom_boxplot(alpha=0.5)+ 
+  theme_minimal()
+```
+
+The furnished houses are slightly higher in median rent prices than unfurnished. But both have a large range and a lot of outliers.
+
+```{r}
+ggplot(mydata, aes(x=smoking_allowed, y=price, fill=smoking_allowed)) + 
+  geom_boxplot(alpha=0.5)+ 
+  theme_minimal()
+```
+
+THe houses allowed smoking have a lower median rent price than houses do not allow smoking, which makes sense.
+
+```{r}
+ggplot(mydata, aes(x=cats_allowed, y=price, fill=dogs_allowed)) + 
+  geom_boxplot(alpha=0.5)+ 
+  theme_minimal()
+```
+
+The median rent prices for houses do not allow cats but allow dogs is slightly higher than others.
+
+### Correlation Matrix
+```{r, fig.width=12, fig.height=10}
+names(mydata)
+mydata<- as.data.frame(mydata)
+library(PerformanceAnalytics)
+cor_vars <- c( "price", "sqfeet", "beds" ,"baths" ,"cats_allowed" ,"dogs_allowed"  , "smoking_allowed" , "wheelchair_access" , "electric_vehicle_charge" , "comes_furnished" )
+cor_df <- as.data.frame(mydata)[cor_vars]
+cor_df <- cor_df %>%
+  mutate_if(is.factor, as.numeric)
+corplotmtrix <- chart.Correlation(cor_df, histogram = TRUE,  method = c("pearson"))
+
+```
+
+Confusion matrix plot include all numeric variables and binary variables. We can see from this matrix plot that independent variables are correlated with each other, the square feet are highly correlated with beds and baths, cats allowed is highly correlated with dogs allowed. This plot helps guide us in the model construction process. We may need to pay attention to multicollinearity issues.
+
+### Categorical variables:
+
+#### Type of housing: type
+
+```{r}
+mydata %>% 
+  group_by(type) %>% 
+  summarize(avg_price = round(mean(price)), count=n()) %>% 
+  arrange(desc(count)) %>%
+  DT::datatable()
+
+```
+
+The majority of our cases are apartment, house and townhouse. Their mean prices are different. We may use this variable as a grouping variable for mixed effect model.
+We have three 3 cases of land. Let's check them.
+```{r}
+mydata %>% 
+  filter(type=="land")
+```
+
+These three cases seem like monthly fees for mobile homes. Since there are only three cases in this type, and this type is very different from others, we will drop them for our analysis.
+
+```{r}
+mydata <- mydata %>% 
+  filter(type!="land")
+```
+
+
+#### State
+```{r}
+mydata$state<- toupper(mydata$state)
+
+mydata%>% 
+  group_by(state)%>% 
+  summarize(avg_price=round(mean(price)), count=n())%>%
+  DT::datatable()
+```
+
+##### Map by State
+```{r, echo = TRUE, warning = FALSE, message = FALSE, comment = ""}
+library(ggmap)
+library(maps)
+library(mapproj)
+
+# Draw a map of the lower 48
+states<- map_data("state")
+
+#filter out AK and HI 
+df <- filter(mydata,
+                  state != "ak" & 
+                    state != "hi")
+
+df_low <- df %>% 
+  select(state, price, long, lat) %>%
+  filter(lat >= 21 & lat <= 50 & long>= -130 & long <= -68.01197, price <3000)
+
+
+df_high <- df %>% 
+  select(state, price, long, lat) %>%
+  filter(lat >= 21 & lat <= 50 & long>= -130 & long <= -68.01197, price >=3000) 
+
+  
+ggplot()+
+  geom_polygon(data=states,
+               aes(x=long, 
+                   y=lat,
+                   group=group),
+               color="white",
+               fill="grey85") + 
+  coord_map()+ 
+  geom_point (data=df_low, 
+              aes(x=long,
+                  y=lat), 
+              color="#0C2340")+
+   geom_point (data=df_high,
+              aes(x=long,
+                 y=lat,
+                 size=price),
+              color="#AE9142", alpha=0.7
+               ) +
+  scale_size_continuous(range=c(1,5))+
+    theme(panel.grid = element_blank(),
+        panel.background=element_blank(),
+        axis.title=element_blank(),
+        axis.ticks=element_blank(),
+        axis.text=element_blank(),
+        legend.key=element_blank())
+
+```
+
+
+The mean prices for 51 states are also very different. We may use this variable as a grouping variable for mixed effect model.
+
+
+#### Laundry options
+```{r}
+#recode the blank options
+mydata$laundry_options <- as.character(mydata$laundry_options)
+mydata$laundry_options[mydata$laundry_options==""] <- "Information not available"
+
+mydata$laundry_options <- as.factor(mydata$laundry_options)
+
+summary(mydata$laundry_options)
+
+mydata%>% 
+  group_by(laundry_options)%>% 
+  summarize(avg_price=round(mean(price)), count=n())%>%
+  DT::datatable()
+```
+
+There are 6 categories in laundry options. We can see that washer/dryer in unit has the highest mean prices compared to others, which makes sense. We can add this variable to our linear model, but in that case, we can only see the comparison of other laundry options to one reference group. Therefore, we may use this as a grouping variable in mixed effect model. 76741 cases have no available information about laundry options. 
+
+
+#### Parking option
+```{r}
+#recode the blank options
+mydata$parking_options <- as.character(mydata$parking_options)
+mydata$parking_options[mydata$parking_options==""] <- "Information not available"
+
+mydata$parking_options <- as.factor(mydata$parking_options)
+
+summary(mydata$parking_options)
+
+
+mydata%>% 
+  group_by(parking_options)%>% 
+  summarize(avg_price=round(mean(price)), count=n())%>%
+  DT::datatable()
+```
+
+There are 8 categories in parking options. WE can see that valet parking has the highest mean prices compared to others. Same as laundry options, We decide to use this as a grouping variable in mixed effect model. 137014 cases have no available information about parking options. 
+
+
+#### Region
+```{r}
+mydata%>% 
+  group_by(region)%>% 
+  summarize(avg_price=round(mean(price)), count=n())%>%
+  DT::datatable()
+```
+
+There are 404 unique regions in our data set. The regions are not cleaned. Some indicate a city, a town, or an area, and some just indicate part of the state. Some regions have fewer than 10 cases. We decide not to use it as a grouping variable for mixed effect model, because the results may be less informative due to the poor quality of the data.
+
+
+
+# Research Question and Hypotheses
+
+Our major question of this data is: *What are the major factors that drive up or down the monthly housing rent prices?* 
+
+* Hypothesis1: Square feet has a positive influence on monthly rent prices.
+* Hypothesis2: Beds and baths have positive influence on monthly rent prices.
+* Hypothesis3: Cats allowed and dogs allowed have negative influence on monthly rent prices, when controlling for square feet.
+* Hypothesis4: Smoking allowed has a negative influence on monthly rent prices, when controlling for square feet.
+* Hypothesis5: Houses with Wheelchair access, electric vehicle charge, and furnished will have a higher monthly rent price, when controlling for square feet.
+
+* Hypothesis6: square feet's influence on monthly rent prices varies by type.
+* Hypothesis7: square feet's influence on monthly rent prices varies by state.
+* Hypothesis8: square feet's influence on monthly rent prices varies by laundry options.
+* Hypothesis9: square feet's influence on monthly rent prices varies by parking options.
+
+* Hypothesis10: square feet's influence on monthly rent prices varies by laundry options nested in types of housing.
+* Hypothesis11: square feet's influence on monthly rent prices varies by parking options nested in types of housing.
+* Hypothesis12: square feet's influence on monthly rent prices varies by types of housing nested in state.
+
+
+
+# A priori power analysis
+
+```{r}
+library(pwr)
+k = 20
+adjR2 = 0.01
+pwrAnalysis <- pwr.f2.test(u = k-1, f2 = (adjR2 / (1-adjR2)), sig.level = 0.05, power = 0.8)
+pwrAnalysis
+sampSize = floor(pwrAnalysis$u + pwrAnalysis$v + 1)+1
+sampSize
+```
+
+We will have multivariate linear models and mixed effect models. If our largest model have 20 terms, we will need 2051 observations to detect a 1% effect from the model. We have 371082 observations, so we have more than enough cases for our study.
+
+
+# Model construction
+
+## Smiple linear regressions
+```{r}
+lm1 <- lm(price ~ sqfeet, data = mydata)
+summary(lm1)
+
+par(mfrow=c(2,2))
+plot(lm1)
+```
+
+The simple linear regression of square feet and monthly rent price shows a significant relationship between the two. The model's adjusted R-squared is 0.1009, so square feet explains 10.09% of variance in monthly rent prices. Each additional square feet increase will lead to 0.484 increase of monthly rent price. coefficient is not very large, but it is highly significant. 
+Our hypothesis 1 is supported. The plots show that the residuals and fitted values scatter plots are relatively random. The residual values are not completely normal in normal Q-Q plot.
+
+However, we would like to dig deeper to see how other variables influence on monthly rent prices.
+```{r}
+lm2 <- lm(price ~ beds + baths, data = mydata)
+summary(lm2)
+car::vif(lm2)
+```
+
+When we just include beds and baths in the linear model, both of them are positively related to price. The model is statistically significant, but the adjusted R-squared is only 0.0575, so beds and baths can only explain 5.75% of variance in price. Every additional bed will lead to \$11 increase in monthly rent, and every additional bath will lead to \$193.7 increase in monthly rent. The vif scores show that multicollinearity is not severe here. We add an interaction term for beds and baths.
+
+```{r}
+lm2_int <- lm(price ~  beds * baths, data = mydata)
+
+summary(lm2_int)
+
+library(interactions)
+
+interact_plot(lm2_int, pred = beds, modx = baths)
+interact_plot(lm2_int, pred = baths, modx = beds)
+
+```
+
+The interaction term is statistically significant, and the adjusted R-squared slightly increased to 0.06. The effect of beds on price is positive with lower numbers of baths, but negative with higher numbers of baths. 
+Our hypothesis 2 is supported.
+
+
+```{r}
+lm2a <- lm(price ~ sqfeet + beds + baths , data = mydata)
+summary(lm2a)
+car::vif(lm2a)
+
+```
+
+
+When we add square feet in the model, beds' coefficient becomes negative. We thought that there may be a multicollinearity issue with square feet, beds and baths. However, the vif scores do not exceed 5, so the multicollinearity issue is not as severe as we expected for square feet, beds and baths. We still include the interaction terms in our following model.
+
+```{r}
+lm2a_int <- lm(price ~ sqfeet * (beds + baths) + beds * baths, data = mydata)
+
+summary(lm2a_int)
+
+```
+
+The interaction term of beds and baths is significant in this model. The interaction term of square feet and beds is just above the significant level, and the interaction term of square feet and baths is highly significant. The adjusted R-squared is 0.1285, so the independent variables explain 12.85% of variance in price.
+
+```{r}
+
+interact_plot(lm2a_int, pred = sqfeet, modx = baths)
+
+
+interact_plot(lm2a_int, pred = sqfeet, modx = beds)
+
+
+interact_plot(lm2a_int, pred = beds, modx = baths)
+
+
+interact_plot(lm2a_int, pred = baths, modx = beds)
+
+```
+
+The interaction effects of square feet and baths, square feet and beds are not very strong. Beds effect on price is negative when controlling for square feet. The negative slope is steeper with higher numbers of baths. Controlling for square feet, houses with more beds are cheaper. 
+
+```{r}
+lm3 <- lm(price ~ sqfeet + dogs_allowed + cats_allowed, data=mydata)
+summary(lm3)
+car::vif(lm3)
+```
+The model is significant with ajusted R-squared of 0.1013. 10.13% of variance in price are explained by independent variables. All variables are significant in the model. Dogs allowed is negatively related to price while cats allowed is positively related to price.
+According to the vif scores, the dogs allowed and cats allowed have some issues of multicollinearity, but not severe. Let's include interaction terms for them.
+
+```{r}
+lm3_int <- lm(price ~ sqfeet * (dogs_allowed + cats_allowed ) + dogs_allowed * cats_allowed , data=mydata)
+summary(lm3_int)
+```
+
+The interaction terms are all highly statistically significant, but cats_allowed is no longer significant here. The adjusted R-squared only slighly increased from 0.1013 to 0.1016.
+
+```{r}
+interact_plot(lm3_int, pred = sqfeet, modx = dogs_allowed)
+
+interact_plot(lm3_int, pred = sqfeet, modx = cats_allowed)
+
+library(effects)
+
+modelEffects <- effect("dogs_allowed * cats_allowed", lm3_int)
+plot(modelEffects)
+
+```
+
+It is interesting to see that the dogs allowed and cats allowed have different interaction effect with square feet on price. Dogs not allowed houses have a slightly steeper slope for square feet on price than dogs allowed houses. For smaller houses, dogs allowed houses are more expensive than dogs not allowed, but for larger houses, dogs allowed houses are less expensive than dogs not allowed. 
+Cats allowed houses have a slightly steeper slope for square feet on price than cats not allowed houses. Cats allowed houses are generally more expensive than cats not allowed houses.
+The interaction of cats allowed and dogs allowed reveals an interesting result. For houses not allowing cats, if they allow dogs, the price will be higher. For houses allowing cats, if they allow dogs, the price will be lower. The highest price is the houses allow cats, but not allow dogs.
+
+The hypothesis 3 is not fully supported. The interaction effect is more important here.
+
+```{r}
+lm4 <- lm(price ~ sqfeet + smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished, data = mydata)
+summary(lm4)
+car::vif(lm4)
+
+```
+
+This model includes all of the other binary variables. The model is significant. Adjusted R-squared is 0.136, so the independent variables explain 13.6% of the varaince in price. All independent variables are significant. The smoking allowed is negatively related to price. A house allowing smoking will be \$151 cheaper than house not allowing smoking. A house with wheel chair access will be \$6.657 higher than house without wheel chair access. A house with electric vehicle charge will be \$43.85 higher than house without electric vehicle charge. A furnished house will be \$4.89 higher than house not furnished.
+
+The vif scores show that there is no multicollinearity issue. 
+
+The hypothesis 4 and 5 are supported. We also add the interaction terms in the following model.
+
+```{r}
+lm4_int <- lm(price ~ sqfeet * (smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished), data = mydata)
+summary(lm4_int)
+```
+
+The interaction terms are all significant. The adjusted R-squared slightly increased from 0.136 to 0.1393. The interaction effects are plotted as follows:
+
+```{r}
+interact_plot(lm4_int, pred = sqfeet, modx = smoking_allowed)
+
+interact_plot(lm4_int, pred = sqfeet, modx = wheelchair_access)
+
+interact_plot(lm4_int, pred = sqfeet, modx = electric_vehicle_charge)
+
+interact_plot(lm4_int, pred = sqfeet, modx = comes_furnished)
+
+```
+
+Based on the plots, we can see that houses not allowing smoking the slope of square feet on price is steeper than houses allowing smoking. Houses without wheel chair access have slightly steeper slope for square feet on price. Houses with electric vehicle charge generally higher on price, but square feet's slope is steeper for houses without electric vehicle charge. The houses not furnished also have a steeper slope than furnished houses. 
+
+
+```{r}
+lmAll_int <- lm(price ~ sqfeet*(dogs_allowed + cats_allowed + smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished ) + dogs_allowed * cats_allowed + beds*baths, data = mydata)
+summary(lmAll_int)
+
+par(mfrow=c(2,2))
+plot(lmAll_int)
+```
+
+When we add all variables and interaction terms in the final linear model, the coefficients are all significant. The model is statistically significant. The adjusted R-squared is 0.1647, so 16.47% of variance in price are explained by the independent variables.  
+
+<!-- ### Plot the interaction terms in the final model -->
+<!-- ```{r} -->
+<!-- interact_plot(lmAll_int, pred = sqfeet, modx = dogs_allowed) -->
+<!-- interact_plot(lmAll_int, pred = sqfeet, modx = cats_allowed) -->
+<!-- interact_plot(lmAll_int, pred = sqfeet, modx = smoking_allowed) -->
+<!-- interact_plot(lmAll_int, pred = sqfeet, modx = wheelchair_access) -->
+<!-- interact_plot(lmAll_int, pred = sqfeet, modx = electric_vehicle_charge) -->
+<!-- interact_plot(lmAll_int, pred = sqfeet, modx = comes_furnished) -->
+
+<!-- interact_plot(lmAll_int, pred = beds, modx = baths) -->
+<!-- interact_plot(lmAll_int, pred = baths, modx = beds) -->
+
+<!-- modelEffects <- effect("dogs_allowed * cats_allowed", lmAll_int) -->
+<!-- plot(modelEffects) -->
+<!-- ``` -->
+
+
+### List all models
+
+```{r, results="asis"}
+stargazer::stargazer(lm1, lm2, lm2_int, lm2a, lm2a_int, lm3_int, lm4_int, lmAll_int, type = "html", header = FALSE)
+```
+
+## Mixed effect models
+
+There are 5 categorical variables in our dataset and we would like to explore whether the influence of square feet varies based on the grouping variables.
+
+### Visualizations of grouping effects
+
+#### Housing type
+```{r}
+ggplot(mydata, aes(sqfeet, price, group = type)) +
+  geom_point(alpha=0.01) +
+  geom_smooth(method = "lm") +
+  facet_wrap( ~ type) +
+  theme_bw()
+```
+
+The plot shows that different housing types have different intercepts and slops for square feet on price. 
+
+#### State
+```{r, fig.width = 14, fig.height = 20}
+ggplot(mydata, aes(sqfeet, price, group = state)) +
+  geom_point(alpha=0.01) +
+  geom_smooth(method = "lm") +
+  facet_wrap( ~ state) +
+  theme_bw()
+```
+
+The plot shows that different states have different intercepts and slops for square feet on price. 
+
+
+#### Laundry options
+```{r}
+ggplot(mydata, aes(sqfeet, price, group = laundry_options)) +
+  geom_point(alpha=0.01) +
+  geom_smooth(method = "lm") +
+  facet_wrap( ~ laundry_options) +
+  theme_bw()
+```
+
+The plot shows that different laundry options have different intercepts for square feet on price. 
+
+
+#### Parking options
+```{r}
+ggplot(mydata, aes(sqfeet, price, group = parking_options)) +
+  geom_point(alpha=0.01) +
+  geom_smooth(method = "lm") +
+  facet_wrap( ~ parking_options) +
+  theme_bw()
+```
+
+The plot shows that different parking options have different intercepts for square feet on price. 
+
+
+### Fit mixed effect models
+
+#### Housing type
+```{r}
+library(lme4)
+
+#Random intercept
+
+MixEffMod1 <- lmer(price ~  sqfeet + (1|type), 
+               data = mydata)
+
+summary(MixEffMod1)
+
+performance::icc(MixEffMod1)
+
+MuMIn::r.squaredGLMM(MixEffMod1)
+```
+
+The random intercept model shows that the intercept variance is pretty large. the square feet's fix effect is still significant, with a t value of 211. 
+The intraclass correlation (ICC) is 0.161. 16% of variance in price is accounted for by the housing type alone. The fix effect r-squared is 0.1098, and the total model r-squared is 0.2704. The difference is 0.16.
+
+
+```{r}
+#Random slope
+MixEffMod1a <- lmer(price ~  1 +  (sqfeet|type), 
+               data = mydata,
+                control = lmerControl(optimizer="Nelder_Mead"))
+
+summary(MixEffMod1a)
+
+performance::icc(MixEffMod1a)
+
+MuMIn::r.squaredGLMM(MixEffMod1a)
+
+```
+
+When we add the random slope, the model failed to converge. When we changed optimizer to "bobyqa" and "Nelder_Mead", or using (0 + sqfeet|type) + (1|type), the model still failed to converge. We decide to drop the random slope and stick with the random intercept model.
+
+```{r}
+#add the linear model predictors
+MixEffMod1b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished ) + dogs_allowed * cats_allowed + beds*baths +  (1|type), 
+               data = mydata)
+
+summary(MixEffMod1b)
+
+performance::icc(MixEffMod1b)
+
+MuMIn::r.squaredGLMM(MixEffMod1b)
+anova(MixEffMod1, MixEffMod1b)
+
+```
+
+We add our linear predictors to this full random intercept model, the icc is 0,094, so 9.4% of variance in price is accounted for by type. The fixed model r squared is 0.164 now which is in line with our linear model before. Adding the random intercept effect by type, we increased the total R-squared to 0.258. Although the total R-squared is slightly lower than the first model, the AIC for this model is lower. 
+
+
+#### State
+```{r}
+#Random intercept
+MixEffMod2 <- lmer(price ~  sqfeet + (1|state), 
+               data = mydata)
+
+summary(MixEffMod2)
+
+performance::icc(MixEffMod2)
+
+MuMIn::r.squaredGLMM(MixEffMod2)
+```
+
+The random intercept model shows that the intercept variance is pretty large. the square feet's fix effect is still significant, with a t value of 272.70. 
+The intraclass correlation (ICC) is 0.375. 37.5% of variance in price is accounted for by the state alone. The fix effect r-squared is 0.1064, and the total model r-squared is 0.4819. The difference is 0.375, which is pretty high. 
+
+```{r}
+#Random slope
+MixEffMod2a <- lmer(price ~  sqfeet + (sqfeet|state), 
+               data = mydata, 
+                control = lmerControl(optimizer="Nelder_Mead"))
+
+summary(MixEffMod2a)
+
+performance::icc(MixEffMod2a)
+
+MuMIn::r.squaredGLMM(MixEffMod2a)
+```
+
+We tried different optimizers, but the model failed to converge. we decide to drop the random slope.
+
+```{r}
+#Add linear regression predictors
+MixEffMod2b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished ) + dogs_allowed * cats_allowed + beds*baths +  (1|state), 
+               data = mydata)
+
+summary(MixEffMod2b)
+
+
+performance::icc(MixEffMod2b)
+
+MuMIn::r.squaredGLMM(MixEffMod2b)
+
+anova(MixEffMod2, MixEffMod2b)
+```
+We add our linear predictors to this full random intercept model, the icc is 0,370, so 37% of variance in price is accounted for by type. The fixed model r squared is 0.144. Adding the random intercept effect by state, we increased the total R-squared to 0.514, which is pretty decent increase. This model is also significantly better than the first model in terms of AIC and R-squared.
+
+
+#### Laundry options
+```{r}
+#Random intercept
+MixEffMod3 <- lmer(price ~  sqfeet + (1|laundry_options), 
+               data = mydata)
+
+summary(MixEffMod3)
+
+performance::icc(MixEffMod3)
+
+MuMIn::r.squaredGLMM(MixEffMod3)
+```
+
+The random intercept model shows that the intercept variance is pretty large. the square feet's fix effect is still significant, with a t value of 191.31.
+The intraclass correlation (ICC) is 0.071. 7.1% of variance in price is accounted for by the laundry options alone. The fix effect r-squared is 0.092, and the total model r-squared is 0.162. The difference is 0.07. 
+
+
+```{r}
+#Random slope
+MixEffMod3a <- lmer(price ~  sqfeet +  (sqfeet|laundry_options), 
+               data = mydata,
+               control = lmerControl(optimizer="Nelder_Mead"))
+
+summary(MixEffMod3a)
+MuMIn::r.squaredGLMM(MixEffMod3a)
+
+```
+
+This model failed to converge. We dropped the random slope.
+
+```{r}
+#Add linear model predictors
+MixEffMod3b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished ) + dogs_allowed * cats_allowed + beds*baths +  (1|laundry_options), 
+               data = mydata)
+
+summary(MixEffMod3b)
+
+performance::icc(MixEffMod3b)
+
+MuMIn::r.squaredGLMM(MixEffMod3b)
+
+anova(MixEffMod3,  MixEffMod3b)
+```
+
+We add our linear predictors to this full random intercept model, the icc is 0,06, so 6% of variance in price is accounted for by laundry options. The fixed model r squared is 0.1357. Adding the random intercept effect by laundry options, we increased the total R-squared to 0.196. This model is also significantly better than the first model in terms of AIC and total R-squared.
+
+#### Parking options
+```{r}
+#Random intercept
+MixEffMod4 <- lmer(price ~  sqfeet + (1|parking_options), 
+               data = mydata)
+
+summary(MixEffMod4)
+
+performance::icc(MixEffMod4)
+MuMIn::r.squaredGLMM(MixEffMod4)
+```
+
+The random intercept model shows that the intercept variance is pretty large. the square feet's fix effect is still significant, with a t value of 168.29.
+The intraclass correlation (ICC) is 0.203. 20.3% of variance in price is accounted for by the parking options alone. The fix effect r-squared is 0.06, and the total model r-squared is 0.2636. The difference is 0.2036. 
+
+
+```{r}
+#Random slope
+MixEffMod4a <- lmer(price ~  sqfeet + (sqfeet|parking_options), 
+               data = mydata,
+               control = lmerControl(optimizer="Nelder_Mead"))
+
+summary(MixEffMod4a)
+MuMIn::r.squaredGLMM(MixEffMod4a)
+
+```
+
+This model failed to converge, so we dropped the random slope.
+
+```{r}
+MixEffMod4b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished ) + dogs_allowed * cats_allowed + beds*baths +  (1|parking_options), 
+               data = mydata)
+
+summary(MixEffMod4b)
+
+performance::icc(MixEffMod4b)
+MuMIn::r.squaredGLMM(MixEffMod4b)
+
+anova(MixEffMod4, MixEffMod4b)
+
+```
+
+We add our linear predictors to this full random intercept model, the icc is 0,172, so 17.2% of variance in price is accounted for by parking options. The fixed model r squared is 0.1108. Adding the random intercept effect by parking options, we increased the total R-squared to 0.283. This model is also significantly better than the first model in terms of AIC and total R-squared.
+
+#### Mixed Clusters
+```{r}
+clustermix1 <- lmer(price ~  sqfeet + (1|type) + (1|laundry_options) + (1|parking_options) + (1|state), 
+               data = mydata)
+
+summary(clustermix1)
+performance::icc(clustermix1)
+MuMIn::r.squaredGLMM(clustermix1)
+```
+
+In this clustered mixed effect model, we added all the grouping variables as random intercepts. We can see that the square feet's intercept varies most by state, followed by parking options, housing type. It varies least by laundry options. The icc is 0.512, meaning 51.2% of variance in monthly rent prices is accounted for by state, type, parking options and laundry options. The fixed effect R-squared is 0.089 and the total R-squared is 0.6016, which is a huge improvement. 
+
+
+
+```{r}
+clustermix2 <- lmer(price ~  sqfeet + sqfeet*(dogs_allowed + cats_allowed + smoking_allowed + wheelchair_access + electric_vehicle_charge + comes_furnished ) + dogs_allowed * cats_allowed + beds*baths +  (1|type) + (1|laundry_options) + (1|parking_options) + (1|state), 
+               data = mydata)
+
+summary(clustermix2)
+performance::icc(clustermix2)
+MuMIn::r.squaredGLMM(clustermix2)
+
+anova(clustermix1,  clustermix2)
+```
+
+We added the linear predictors to the clustered mixed effect model. The icc is 0.495, so state, type, parking and laundry options still account for 49.5% of the variance in price. The fixed effect r-squared is 0.1068, and the total R-squared is 0.6018, which is a small increase from the previous model. The anova results show that the second model is still significantly better than the first model.
+
+
+### Plot fixed effects and random effects
+
+#### Housing type
+
+```{r}
+library(sjPlot)
+
+plot_model(MixEffMod1, type = "re") + 
+  theme_minimal()
+
+library(merTools)
+
+plotREsim(REsim(MixEffMod1), labs = TRUE)
+```
+When looking at the results of the mixed effects model for the random intercepts of square feet by housing types, we can see that there are clear differences in the intercepts of the various types. Townhouse, duplex, apartment, cottages/cabins/ and lofts have intercepts that are not significant. Manufactured (mobile homes) and houses have intercepts that are significantly below the average. Condos, in-law suites, and flats have intercepts that are significantly above the average intercept. Based on this model and the results, we can conclude that our hypothesis that square feet’s influence on the monthly rent differs by the type of home.
+
+<!-- We also plotted some other graphs as follows: -->
+<!-- ```{r} -->
+<!-- ggplot(mydata, aes(sqfeet, price,  -->
+<!--                               group = type, color = type)) + -->
+<!--   geom_smooth(method = "lm", se = FALSE) + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- plotdat <- mydata -->
+<!-- plotdat$Prediction  <-  predict(MixEffMod1) -->
+
+<!-- ggplot() +  -->
+<!--   geom_line(mapping = aes(sqfeet, Prediction, group = type),  -->
+<!--             data = plotdat, alpha = .25) +  -->
+<!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
+<!--               data = plotdat, method = "lm",  -->
+<!--               color = "red") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+#### State
+
+```{r}
+plot_model(MixEffMod2, type = "re") + 
+  theme_minimal()
+
+plotREsim(REsim(MixEffMod2), labs = TRUE)
+```
+
+Our hypothesis that square feet’s influence on the monthly rent differs by state was supported by the results of our random intercept model for state. The majority of the states are significantly different than the average intercept. Idaho, Wisconsin, South Carolina, Arizona, Virginia, Minnesota, Pennsylvania, Nevada, Florida, Alaska, Utah, and New York have intercepts that are not significantly different from the mean. The remaining states all have intercepts that are significantly different from the mean intercept. Some interesting points on the plot are Indiana, which is significantly below that average, California, which is well above the average intercept, and Washington DC which is also significantly above the average intercept.  
+
+<!-- We plotted some other graphs as follows: -->
+<!-- ```{r, fig.width=10, fig.height=8} -->
+<!-- ggplot(mydata, aes(sqfeet, price,  -->
+<!--                               group = state, color = state)) + -->
+<!--   geom_smooth(method = "lm", se = FALSE) + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+
+<!-- plotdata <- as.data.frame(mydata)[which(mydata$state=='IN' | mydata$state == 'NY' | mydata$state == 'CA' ),] -->
+<!-- ggplot(plotdata, aes(sqfeet, price,  -->
+<!--                               group = state, color = state)) + -->
+<!--   geom_smooth(method = "lm", se = FALSE) + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+<!-- This is a plot comparing slopes and intercepts of square feet on price at IN, CA, NY. IN is the lowest in housing price. -->
+<!-- ```{r} -->
+<!-- plotdat <- mydata -->
+<!-- plotdat$Prediction  <-  predict(MixEffMod2a) -->
+
+<!-- ggplot() +  -->
+<!--   geom_line(mapping = aes(sqfeet, Prediction, group = state),  -->
+<!--             data = plotdat, alpha = .25) +  -->
+<!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
+<!--               data = plotdat, method = "lm",  -->
+<!--               color = "red") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+#### Laundry options
+```{r}
+plot_model(MixEffMod3, type = "re") + 
+  theme_minimal()
+
+plotREsim(REsim(MixEffMod3), labs = TRUE)
+```
+
+Our hypothesis that square feet’s influence on the monthly rent differs by the laundry options was supported by the results of our random intercept model for laundry options. For the 6 laundry options in our dataset, only 2 are significantly different from the average intercept. Washer/Dryer hookups is significantly below the average intercept and washer/dryer in unit is significantly above the average intercept. These are intuitive because only the hookups would require the tenant to supply their own machines and if the machines are in unit, that is most convenient for the tenant. 
+
+<!-- We plotted some other graphs as follows: -->
+<!-- ```{r} -->
+<!-- ggplot(mydata, aes(sqfeet, price,  -->
+<!--                               group = laundry_options, color = laundry_options)) + -->
+<!--   geom_smooth(method = "lm", se = FALSE) + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- plotdat <- mydata -->
+<!-- plotdat$Prediction  <-  predict(MixEffMod3a) -->
+
+<!-- ggplot() +  -->
+<!--   geom_line(mapping = aes(sqfeet, Prediction, group = laundry_options),  -->
+<!--             data = plotdat, alpha = .25) +  -->
+<!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
+<!--               data = plotdat, method = "lm",  -->
+<!--               color = "red") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+#### Parking options
+```{r}
+plot_model(MixEffMod4, type = "re") + 
+  theme_minimal()
+
+plotREsim(REsim(MixEffMod4), labs = TRUE)
+```
+
+For the parking options, only 3 of the 8 options are significantly different from the average intercept. One of those that is significant is “information not available” so we are unable to conclude significant findings from that information. Off-street parking is significantly below the average intercept for parking options and valet parking is significantly above the average intercept for parking options. Again this satisfies our hypothesis and makes intuitive sense.
+
+<!-- We plotted some other graphs as follows: -->
+<!-- ```{r} -->
+<!-- ggplot(mydata, aes(sqfeet, price,  -->
+<!--                               group = parking_options, color = parking_options)) + -->
+<!--   geom_smooth(method = "lm", se = FALSE) + -->
+<!--   theme_minimal() -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- plotdat <- mydata -->
+<!-- plotdat$Prediction  <-  predict(MixEffMod4a) -->
+
+<!-- ggplot() +  -->
+<!--   geom_line(mapping = aes(sqfeet, Prediction, group = parking_options),  -->
+<!--             data = plotdat, alpha = .25) +  -->
+<!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
+<!--               data = plotdat, method = "lm",  -->
+<!--               color = "red") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+#### Clusters
+```{r, fig.width=14, fig.height=8}
+plotREsim(REsim(clustermix1), labs = TRUE)
+```
+
+We plot the effect ranges of the clustered mixed model. The results are slightly different from the previous random intercept models. The lowest intercept by laundry options is now laundry on site instead of washer/dryer hookups, the lowest intercept by parking option is carport instead of off-street parking. The lowest intercept by housing types is house instead of manufactured. It's interesting to see that when we added them in one model, the intercept variances for each grouping variable also changed.
+
+## Hierarchical Model
+
+### Laundry options nested in type
+```{r}
+HierarchyMod1 <- lmer(price ~  sqfeet + (1|type/laundry_options), 
+               data = mydata)
+
+summary(HierarchyMod1)
+
+performance::icc(HierarchyMod1)
+
+MuMIn::r.squaredGLMM(HierarchyMod1)
+```
+
+The hierarchical model shows that the intercept of square feet varies a lot by type and by laundry options within the housing type. The icc is 0.197, so the laundry options within types accounted for 19.7% of variance in price. The fixed effect R-squared is 0.0956, and the total R-squared is 0.2928. It is a big improvement. We plot the effects as follows:
+
+
+```{r,  fig.width=16, fig.height=8}
+plotREsim(REsim(HierarchyMod1), labs = TRUE)
+```
+
+For the hierarchy model exploring how the different types relate to the laundry options, many more of the options are insignificant than are significant. The formatting of the plot makes it difficult to understand the absolute relationship between the types and the laundry options. Unsurprisingly however, the option that is significantly higher than the average is the flat with in-unit laundry. Flat has a significantly higher intercept than the other housing options and the in-unit laundry has the highest intercept. 
+
+
+
+### Parking options nested in type
+```{r}
+HierarchyMod2 <- lmer(price ~  sqfeet + (1|type/parking_options), 
+               data = mydata)
+
+summary(HierarchyMod2)
+performance::icc(HierarchyMod2)
+
+MuMIn::r.squaredGLMM(HierarchyMod2)
+```
+
+The hierarchical model shows that the intercept of square feet varies a lot by type and by parking options within the housing type. The icc is 0.265, so the parking options within types accounted for 26.5% of variance in price. The fixed effect R-squared is 0.0879, and the total R-squared is 0.3526. It is a big improvement. We plot the effects as follows:
+
+
+```{r,  fig.width=16, fig.height=8}
+plotREsim(REsim(HierarchyMod2), labs = TRUE)
+```
+
+Very similarly to the laundry hierarchy model, there are many more intercepts that are not different from the average. Again, the specifics of this plot are difficult to see but there are some clear effects that are significantly different than the average. The highest intercept in our model is apartment with valet parking and this makes sense with our hypothesis because the valet parking is the highest intercept for parking option. 
+
+
+### Housing type nested in States
+```{r}
+HierarchyMod3 <- lmer(price ~  sqfeet + (1|state/type), 
+               data = mydata)
+
+summary(HierarchyMod3)
+
+performance::icc(HierarchyMod3)
+
+MuMIn::r.squaredGLMM(HierarchyMod3)
+```
+
+The hierarchical model shows that the intercept of square feet varies a lot by state and by housing type within state. The icc is 0.413, so the state and type within state accounted for 41.3% of variance in price. The fixed effect R-squared is 0.127, and the total R-squared is 0.541. It is a big improvement. We plot the effects as follows:
+
+```{r,  fig.width=16, fig.height=8}
+plotREsim(REsim(HierarchyMod3), labs = TRUE)
+```
+
+The second plot is hard to see because of the large numbers of categories of state by type. There is not much information that we are able to gain from his plot or output. It is clear that some of the hierarchies of types within states are significantly different than the average intercept but there is too much overlap of the axis labels so we cannot determine which intercept is which. 
+
+# Conclusion
+
+* Main predictors are Geography (state), Housing Type & Square feet
+* Homes only allowing a cat are the most expensive option compared to houses only allow dogs, houses allow both cats and dogs and houses do not allow cats and dogs.
+* Rent prices vary by parking options and laundry options
