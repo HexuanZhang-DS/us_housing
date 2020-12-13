@@ -1,15 +1,11 @@
-US Housing Rental Market Prediction
-================
-
-![US Housing Market (sourse:
-<https://www.loveproperty.com/gallerylist/96138/expert-predictions-for-the-us-housing-market-through-the-rest-of-2020>)](image/Housing.jpg)
+<img src="image/Housing.jpg" style="width:100.0%" alt="US Housing Market (sourse: https://www.loveproperty.com/gallerylist/96138/expert-predictions-for-the-us-housing-market-through-the-rest-of-2020)" />
 \# Introduction
 
 We found our dataset on Kaggle
-(<https://www.kaggle.com/austinreese/usa-housing-listings>) which was
-compiled Craigslist housing information for the United States. The
-dataset contains 384,977 rows which represent each housing listing on
-the craigslist page. We also have 22 columns which are descriptors of
+(<a href="https://www.kaggle.com/austinreese/usa-housing-listings" class="uri">https://www.kaggle.com/austinreese/usa-housing-listings</a>)
+which was compiled Craigslist housing information for the United States.
+The dataset contains 384,977 rows which represent each housing listing
+on the craigslist page. We also have 22 columns which are descriptors of
 the house listed. We had to clean the data because three of the columns
 were URLs for the listings. We are interested in this dataset because
 the dependent variable for the data is the monthly housing rent prices
@@ -47,15 +43,18 @@ state, laundry\_options, parking options.
     ## 
     ##     transpose
 
-# Load the data
+Load the data
+=============
 
 ``` r
 housing <- read.csv("data/housing.csv")
 ```
 
-# Clean the data
+Clean the data
+==============
 
-## Take out three columns with urls
+Take out three columns with urls
+--------------------------------
 
 ``` r
 housing <- housing %>%
@@ -85,7 +84,8 @@ glimpse(housing)
     ## $ long                    <dbl> -119.796, -119.789, -119.708, -119.771, -11...
     ## $ state                   <chr> "ca", "ca", "ca", "ca", "ca", "ca", "ca", "...
 
-## Change data type
+Change data type
+----------------
 
 ``` r
 factorvars <- c('id', 'region', 'type', 'cats_allowed', 'dogs_allowed', 'smoking_allowed','wheelchair_access',  'electric_vehicle_charge', 'comes_furnished',
@@ -146,7 +146,8 @@ summary(housing)
     ##  Max.   : 172.63   ga     : 13841  
     ##  NA's   :1918      (Other):241828
 
-## Trim abnormal records
+Trim abnormal records
+---------------------
 
 ``` r
 #check range of the variables
@@ -305,9 +306,11 @@ summary(mydata)
     ##  Max.   :  94.16   ga     : 13437  
     ##  NA's   :1835      (Other):233856
 
-# Exploratory Analysis
+Exploratory Analysis
+====================
 
-## Depentdent Variable: Price
+Depentdent Variable: Price
+--------------------------
 
 ``` r
 library(ggplot2)
@@ -331,13 +334,14 @@ ggplot(mydata) +
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
 The monthly rent a continuous variable that is not normally distributed.
 It is slightly skewed to the right. Mean rent is $1,157, median is
 $1,035, 75% of housing monthly rent clustered between $815 to $1385.
 
-## Independent Variables
+Independent Variables
+---------------------
 
 ### Square Feet: sqfeet
 
@@ -361,7 +365,7 @@ ggplot(mydata) +
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
 Square feet is slightly skewed to the right. Mean is 978 square feet,
 median is 946 square feet. 75% of the cases range from 750 to 1136
@@ -389,7 +393,7 @@ ggplot(mydata, aes(x=sqfeet,
 
     ## `geom_smooth()` using formula 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
 There may be a linear relationship here based on the scatter plot.
 
@@ -399,7 +403,7 @@ ggplot(mydata, aes( x=comes_furnished, y=price, fill=comes_furnished)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 The furnished houses are slightly higher in median rent prices than
 unfurnished. But both have a large range and a lot of outliers.
@@ -410,7 +414,7 @@ ggplot(mydata, aes(x=smoking_allowed, y=price, fill=smoking_allowed)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
 THe houses allowed smoking have a lower median rent price than houses do
 not allow smoking, which makes sense.
@@ -421,7 +425,7 @@ ggplot(mydata, aes(x=cats_allowed, y=price, fill=dogs_allowed)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 The median rent prices for houses do not allow cats but allow dogs is
 slightly higher than others.
@@ -487,7 +491,7 @@ cor_df <- cor_df %>%
 corplotmtrix <- chart.Correlation(cor_df, histogram = TRUE,  method = c("pearson"))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 Confusion matrix plot include all numeric variables and binary
 variables. We can see from this matrix plot that independent variables
@@ -514,12 +518,7 @@ mydata %>%
 
 <!--html_preserve-->
 
-<div id="htmlwidget-8bb73dddc17ee18a89e1" class="datatables html-widget" style="width:100%;height:auto;">
-
-</div>
-
-<script type="application/json" data-for="htmlwidget-8bb73dddc17ee18a89e1">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11"],["apartment","house","townhouse","condo","duplex","manufactured","loft","cottage/cabin","flat","in-law","land"],[1141,1223,1255,1481,1199,924,1344,1227,1491,1324,550],[310039,29063,15416,5763,4857,3991,667,640,494,152,3]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-
+<script type="application/json" data-for="htmlwidget-48dd835b368915f2c7e4">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11"],["apartment","house","townhouse","condo","duplex","manufactured","loft","cottage/cabin","flat","in-law","land"],[1141,1223,1255,1481,1199,924,1344,1227,1491,1324,550],[310039,29063,15416,5763,4857,3991,667,640,494,152,3]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>type<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 
 The majority of our cases are apartment, house and townhouse. Their mean
@@ -576,17 +575,62 @@ mydata%>%
 
 <!--html_preserve-->
 
-<div id="htmlwidget-7e8e1a625d1c52fc73c8" class="datatables html-widget" style="width:100%;height:auto;">
-
-</div>
-
-<script type="application/json" data-for="htmlwidget-7e8e1a625d1c52fc73c8">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51"],["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],[1169,881,859,1051,1744,1471,1338,1810,1275,1219,957,1961,933,1126,966,864,750,856,947,1732,1392,1401,1014,1196,757,801,1131,987,1006,998,1622,1692,953,1183,1272,889,736,1324,1206,1582,1115,840,940,1010,1211,1152,1450,1448,1108,1081,953],[2095,8093,3087,6453,30251,10824,3673,2369,2007,31160,13437,1608,7363,4323,9452,6266,7552,5346,7169,4536,7305,398,14213,7278,2059,4805,1262,18105,3226,2658,1732,5538,2663,2604,9382,12495,5689,7843,9556,1837,9751,1753,11232,30062,5066,10852,501,6748,6445,782,178]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-
+<script type="application/json" data-for="htmlwidget-8cad87bb7f5dbffdc884">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51"],["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],[1169,881,859,1051,1744,1471,1338,1810,1275,1219,957,1961,933,1126,966,864,750,856,947,1732,1392,1401,1014,1196,757,801,1131,987,1006,998,1622,1692,953,1183,1272,889,736,1324,1206,1582,1115,840,940,1010,1211,1152,1450,1448,1108,1081,953],[2095,8093,3087,6453,30251,10824,3673,2369,2007,31160,13437,1608,7363,4323,9452,6266,7552,5346,7169,4536,7305,398,14213,7278,2059,4805,1262,18105,3226,2658,1732,5538,2663,2604,9382,12495,5689,7843,9556,1837,9751,1753,11232,30062,5066,10852,501,6748,6445,782,178]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>state<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 
 ##### Map by State
 
-![](README_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+``` r
+library(ggmap)
+library(maps)
+library(mapproj)
+
+# Draw a map of the lower 48
+states<- map_data("state")
+
+#filter out AK and HI 
+df <- filter(mydata,
+                  state != "ak" & 
+                    state != "hi")
+
+df_low <- df %>% 
+  select(state, price, long, lat) %>%
+  filter(lat >= 21 & lat <= 50 & long>= -130 & long <= -68.01197, price <3000)
+
+
+df_high <- df %>% 
+  select(state, price, long, lat) %>%
+  filter(lat >= 21 & lat <= 50 & long>= -130 & long <= -68.01197, price >=3000) 
+
+  
+ggplot()+
+  geom_polygon(data=states,
+               aes(x=long, 
+                   y=lat,
+                   group=group),
+               color="white",
+               fill="grey85") + 
+  coord_map()+ 
+  geom_point (data=df_low, 
+              aes(x=long,
+                  y=lat), 
+              color="#0C2340")+
+   geom_point (data=df_high,
+              aes(x=long,
+                 y=lat,
+                 size=price),
+              color="#AE9142", alpha=0.7
+               ) +
+  scale_size_continuous(range=c(1,5))+
+    theme(panel.grid = element_blank(),
+        panel.background=element_blank(),
+        axis.title=element_blank(),
+        axis.ticks=element_blank(),
+        axis.text=element_blank(),
+        legend.key=element_blank())
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 The mean prices for 51 states are also very different. We may use this
 variable as a grouping variable for mixed effect model.
@@ -619,12 +663,7 @@ mydata%>%
 
 <!--html_preserve-->
 
-<div id="htmlwidget-1c1eb4481f644b931394" class="datatables html-widget" style="width:100%;height:auto;">
-
-</div>
-
-<script type="application/json" data-for="htmlwidget-1c1eb4481f644b931394">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["Information not available","laundry in bldg","laundry on site","no laundry on site","w/d hookups","w/d in unit"],[1101,1031,979,957,1045,1375],[76741,34178,56361,3235,73644,126923]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>laundry_options<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-
+<script type="application/json" data-for="htmlwidget-47be1f0140022b5897cc">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["Information not available","laundry in bldg","laundry on site","no laundry on site","w/d hookups","w/d in unit"],[1101,1031,979,957,1045,1375],[76741,34178,56361,3235,73644,126923]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>laundry_options<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 
 There are 6 categories in laundry options. We can see that washer/dryer
@@ -664,12 +703,7 @@ mydata%>%
 
 <!--html_preserve-->
 
-<div id="htmlwidget-b28910a28afd223848ae" class="datatables html-widget" style="width:100%;height:auto;">
-
-</div>
-
-<script type="application/json" data-for="htmlwidget-b28910a28afd223848ae">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8"],["attached garage","carport","detached garage","Information not available","no parking","off-street parking","street parking","valet parking"],[1529,1261,1323,1108,1238,1045,1154,1787],[37006,38004,16263,137014,3087,124171,15393,144]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parking_options<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-
+<script type="application/json" data-for="htmlwidget-df5556c7c99bf2087ddf">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8"],["attached garage","carport","detached garage","Information not available","no parking","off-street parking","street parking","valet parking"],[1529,1261,1323,1108,1238,1045,1154,1787],[37006,38004,16263,137014,3087,124171,15393,144]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>parking_options<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 
 There are 8 categories in parking options. WE can see that valet parking
@@ -690,12 +724,7 @@ mydata%>%
 
 <!--html_preserve-->
 
-<div id="htmlwidget-ad61050c1e5b4bddd52a" class="datatables html-widget" style="width:100%;height:auto;">
-
-</div>
-
-<script type="application/json" data-for="htmlwidget-ad61050c1e5b4bddd52a">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404"],["abilene","akron / canton","albany","albuquerque","altoona-johnstown","amarillo","ames","anchorage / mat-su","ann arbor","annapolis","appleton-oshkosh-FDL","asheville","ashtabula","athens","atlanta","auburn","augusta","austin","bakersfield","baltimore","baton rouge","battle creek","beaumont / port arthur","bellingham","bemidji","bend","billings","binghamton","birmingham","bismarck","bloomington","bloomington-normal","boise","boone","boston","boulder","bowling green","bozeman","brainerd","brownsville","brunswick","buffalo","butte","cape cod / islands","catskills","cedar rapids","central louisiana","central michigan","central NJ","champaign urbana","charleston","charlotte","charlottesville","chattanooga","chautauqua","chicago","chico","chillicothe","cincinnati","clarksville","cleveland","clovis / portales","college station","colorado springs","columbia","columbia / jeff city","columbus","cookeville","corpus christi","corvallis/albany","cumberland valley","dallas / fort worth","danville","dayton / springfield","daytona beach","decatur","deep east texas","del rio / eagle pass","delaware","denver","des moines","detroit metro","dothan","dubuque","duluth / superior","east idaho","east oregon","eastern CO","eastern CT","eastern kentucky","eastern montana","eastern NC","eastern panhandle","eastern shore","eau claire","el paso","elko","elmira-corning","erie","eugene","evansville","fairbanks","fargo / moorhead","farmington","fayetteville","finger lakes","flagstaff / sedona","flint","florence","florence / muscle shoals","florida keys","fort collins / north CO","fort dodge","fort smith","fort smith, AR","fort wayne","frederick","fredericksburg","fresno / madera","ft myers / SW florida","gadsden-anniston","gainesville","galveston","glens falls","gold country","grand forks","grand island","grand rapids","great falls","green bay","greensboro","greenville / upstate","gulfport / biloxi","hanford-corcoran","harrisburg","harrisonburg","hartford","hattiesburg","hawaii","heartland florida","helena","hickory / lenoir","high rockies","hilton head","holland","houma","houston","hudson valley","humboldt county","huntington-ashland","huntsville / decatur","imperial county","indianapolis","inland empire","iowa city","ithaca","jackson","jacksonville","janesville","jersey shore","jonesboro","joplin","kalamazoo","kalispell","kansas city","kansas city, MO","kenai peninsula","kennewick-pasco-richland","kenosha-racine","killeen / temple / ft hood","kirksville","klamath falls","knoxville","kokomo","la crosse","la salle co","lafayette","lafayette / west lafayette","lake charles","lake of the ozarks","lakeland","lancaster","lansing","laredo","las cruces","las vegas","lawrence","lawton","lehigh valley","lewiston / clarkston","lexington","lima / findlay","lincoln","little rock","logan","long island","los angeles","louisville","lubbock","lynchburg","macon / warner robins","madison","maine","manhattan","mankato","mansfield","mason city","mattoon-charleston","mcallen / edinburg","meadville","medford-ashland","memphis","mendocino county","merced","meridian","milwaukee","minneapolis / st paul","missoula","mobile","modesto","mohave county","monroe","monterey bay","montgomery","morgantown","moses lake","muncie / anderson","muskegon","myrtle beach","nashville","new hampshire","new haven","new orleans","new river valley","new york city","norfolk / hampton roads","north central FL","north dakota","north jersey","north mississippi","north platte","northeast SD","northern michigan","northern panhandle","northern WI","northwest CT","northwest GA","northwest KS","northwest OK","ocala","odessa / midland","ogden-clearfield","okaloosa / walton","oklahoma city","olympic peninsula","omaha / council bluffs","oneonta","orange county","oregon coast","orlando","outer banks","owensboro","palm springs","panama city","parkersburg-marietta","pensacola","peoria","philadelphia","phoenix","pierre / central SD","pittsburgh","plattsburgh-adirondacks","poconos","port huron","portland","potsdam-canton-massena","prescott","provo / orem","pueblo","pullman / moscow","quad cities, IA/IL","raleigh / durham / CH","rapid city / west SD","reading","redding","reno / tahoe","rhode island","richmond","roanoke","rochester","rockford","roseburg","roswell / carlsbad","sacramento","saginaw-midland-baycity","salem","salina","salt lake city","san angelo","san antonio","san diego","san luis obispo","san marcos","sandusky","santa barbara","santa fe / taos","santa maria","sarasota-bradenton","savannah / hinesville","scottsbluff / panhandle","scranton / wilkes-barre","seattle-tacoma","SF bay area","sheboygan","show low","shreveport","sierra vista","sioux city","sioux falls / SE SD","siskiyou county","skagit / island / SJI","south bend / michiana","south coast","south dakota","south florida","south jersey","southeast alaska","southeast IA","southeast KS","southeast missouri","southern illinois","southern maryland","southern WV","southwest KS","southwest michigan","southwest MN","southwest MS","southwest TX","southwest VA","space coast","spokane / coeur d'alene","springfield","st augustine","st cloud","st george","st joseph","st louis","st louis, MO","state college","statesboro","stillwater","stockton","susanville","syracuse","tallahassee","tampa bay area","terre haute","texarkana","texoma","the thumb","toledo","topeka","treasure coast","tri-cities","tucson","tulsa","tuscaloosa","tuscarawas co","twin falls","twin tiers NY/PA","tyler / east TX","upper peninsula","utica-rome-oneida","valdosta","ventura county","vermont","victoria","visalia-tulare","waco","washington, DC","waterloo / cedar falls","watertown","wausau","wenatchee","west virginia (old)","western IL","western KY","western maryland","western massachusetts","western slope","wichita","wichita falls","williamsport","wilmington","winchester","winston-salem","worcester / central MA","wyoming","yakima","york","youngstown","yuba-sutter","yuma","zanesville / cambridge"],[792,850,1025,900,815,657,825,1150,1249,1588,882,1219,891,928,1256,758,948,1365,1145,1314,926,871,863,1496,1043,1602,936,845,960,1066,914,692,1172,1083,2174,1695,910,1544,997,748,1063,999,820,1790,1158,871,767,872,1819,910,1252,1142,1268,1005,964,1600,1372,878,956,817,963,915,813,1237,957,683,892,822,892,1186,1301,1302,778,753,1064,672,762,984,1275,1611,1001,1048,740,823,1185,934,907,1468,1185,811,1184,870,1177,1029,903,712,1222,900,776,1255,884,1226,835,1028,881,1021,1408,892,1068,749,2359,1369,725,883,523,834,1322,1294,1245,1319,971,1063,1052,1223,1638,893,795,1050,992,943,864,1036,789,1176,1165,841,1285,909,1961,1019,1112,862,1939,1317,979,850,1166,1628,1427,794,880,926,885,1692,1067,1352,805,973,991,1767,772,830,998,1397,922,884,1052,1178,993,806,766,1027,907,669,916,908,826,919,965,864,1039,1110,973,1037,866,1114,812,655,1269,797,812,847,989,787,1139,2290,2201,891,860,947,751,1174,1401,796,984,762,852,753,818,797,1421,804,1666,1216,633,1290,1462,1102,904,1528,881,823,2133,693,1057,1104,706,877,1113,1197,1622,1426,1186,940,2252,1134,969,1093,1938,816,1074,812,1095,834,824,1697,995,812,775,996,1543,1051,1303,752,1296,935,1085,2063,1327,1306,1123,829,1474,1273,784,1003,754,1581,1211,1021,1127,1264,1297,890,1475,793,1342,1270,1003,934,888,1110,1012,1253,1280,1402,1582,1119,984,1121,775,1236,1606,1570,816,1193,838,1226,757,1005,2094,2125,973,839,2458,1359,1824,1346,1069,1431,923,1793,2470,910,868,771,717,839,775,951,1461,859,1557,863,1843,1466,1480,777,598,790,670,1476,955,608,945,662,843,1325,869,1169,1152,770,1230,1064,1168,757,999,922,1176,902,569,1509,979,1036,957,1238,708,868,979,789,777,731,1401,728,869,715,870,717,980,855,969,844,950,842,2228,1450,983,1288,862,1810,776,973,820,1331,816,834,693,1134,1324,1259,615,786,967,1127,1186,859,1674,953,1141,1043,739,1441,798,868],[891,1508,2046,2053,245,1341,354,1654,2215,2041,460,1944,36,1246,2226,340,2520,2448,1609,1990,1785,626,1015,386,42,404,516,249,2177,795,598,446,1424,35,1360,2501,1014,224,32,278,198,1357,52,115,48,732,100,230,1944,2027,2486,2376,1272,2058,42,1402,246,56,2081,684,2146,80,2388,2437,2232,575,3611,80,1619,1259,273,2314,108,1837,2361,299,220,24,2007,2554,2252,1970,116,79,328,337,64,43,661,53,88,1184,385,162,151,1161,83,142,403,1218,1299,281,592,44,3598,170,929,870,244,61,420,2514,108,137,3,777,2117,2724,1996,2028,65,1940,980,193,224,1304,37,2360,32,182,1988,2466,1492,811,1066,465,1468,327,1608,245,48,139,193,963,441,221,1680,690,133,128,2159,81,2089,2487,356,630,3633,4185,124,594,153,139,786,113,3,1715,81,2322,900,1048,20,45,1888,73,220,36,1532,289,359,65,2259,1100,2172,200,198,2016,509,517,871,25,2223,68,2521,1711,295,517,1930,1849,1104,382,1358,2218,398,1060,232,92,21,38,861,57,405,2386,49,260,213,1687,2394,189,1698,1241,474,507,1024,738,242,243,269,324,1467,2407,1732,1378,2013,143,580,2238,23,1127,822,511,40,31,246,141,51,166,468,78,67,547,2344,617,932,2064,86,2713,75,2269,125,2536,65,16,1223,1599,65,1583,440,1781,1958,18,1373,64,194,254,2518,88,136,1423,238,220,1327,2263,433,1017,226,2340,1837,2361,907,3609,387,54,35,2339,677,1751,36,2635,41,2018,2152,393,2400,63,380,253,129,2399,2599,58,348,2472,1639,193,97,925,327,401,1208,40,480,689,715,63,1315,2178,79,55,86,51,382,509,24,42,395,52,11,7,62,2484,2298,1362,156,1883,96,131,9,2346,373,46,278,2507,15,884,1953,2093,91,95,427,45,1711,2100,1716,590,2321,2333,739,74,80,16,1188,85,149,508,2427,501,274,443,761,2369,294,399,257,421,17,26,67,213,992,344,1926,1448,116,1835,283,2064,1354,178,277,612,245,143,211,191]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>region<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-
+<script type="application/json" data-for="htmlwidget-465856baa70d5a6adc2f">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404"],["abilene","akron / canton","albany","albuquerque","altoona-johnstown","amarillo","ames","anchorage / mat-su","ann arbor","annapolis","appleton-oshkosh-FDL","asheville","ashtabula","athens","atlanta","auburn","augusta","austin","bakersfield","baltimore","baton rouge","battle creek","beaumont / port arthur","bellingham","bemidji","bend","billings","binghamton","birmingham","bismarck","bloomington","bloomington-normal","boise","boone","boston","boulder","bowling green","bozeman","brainerd","brownsville","brunswick","buffalo","butte","cape cod / islands","catskills","cedar rapids","central louisiana","central michigan","central NJ","champaign urbana","charleston","charlotte","charlottesville","chattanooga","chautauqua","chicago","chico","chillicothe","cincinnati","clarksville","cleveland","clovis / portales","college station","colorado springs","columbia","columbia / jeff city","columbus","cookeville","corpus christi","corvallis/albany","cumberland valley","dallas / fort worth","danville","dayton / springfield","daytona beach","decatur","deep east texas","del rio / eagle pass","delaware","denver","des moines","detroit metro","dothan","dubuque","duluth / superior","east idaho","east oregon","eastern CO","eastern CT","eastern kentucky","eastern montana","eastern NC","eastern panhandle","eastern shore","eau claire","el paso","elko","elmira-corning","erie","eugene","evansville","fairbanks","fargo / moorhead","farmington","fayetteville","finger lakes","flagstaff / sedona","flint","florence","florence / muscle shoals","florida keys","fort collins / north CO","fort dodge","fort smith","fort smith, AR","fort wayne","frederick","fredericksburg","fresno / madera","ft myers / SW florida","gadsden-anniston","gainesville","galveston","glens falls","gold country","grand forks","grand island","grand rapids","great falls","green bay","greensboro","greenville / upstate","gulfport / biloxi","hanford-corcoran","harrisburg","harrisonburg","hartford","hattiesburg","hawaii","heartland florida","helena","hickory / lenoir","high rockies","hilton head","holland","houma","houston","hudson valley","humboldt county","huntington-ashland","huntsville / decatur","imperial county","indianapolis","inland empire","iowa city","ithaca","jackson","jacksonville","janesville","jersey shore","jonesboro","joplin","kalamazoo","kalispell","kansas city","kansas city, MO","kenai peninsula","kennewick-pasco-richland","kenosha-racine","killeen / temple / ft hood","kirksville","klamath falls","knoxville","kokomo","la crosse","la salle co","lafayette","lafayette / west lafayette","lake charles","lake of the ozarks","lakeland","lancaster","lansing","laredo","las cruces","las vegas","lawrence","lawton","lehigh valley","lewiston / clarkston","lexington","lima / findlay","lincoln","little rock","logan","long island","los angeles","louisville","lubbock","lynchburg","macon / warner robins","madison","maine","manhattan","mankato","mansfield","mason city","mattoon-charleston","mcallen / edinburg","meadville","medford-ashland","memphis","mendocino county","merced","meridian","milwaukee","minneapolis / st paul","missoula","mobile","modesto","mohave county","monroe","monterey bay","montgomery","morgantown","moses lake","muncie / anderson","muskegon","myrtle beach","nashville","new hampshire","new haven","new orleans","new river valley","new york city","norfolk / hampton roads","north central FL","north dakota","north jersey","north mississippi","north platte","northeast SD","northern michigan","northern panhandle","northern WI","northwest CT","northwest GA","northwest KS","northwest OK","ocala","odessa / midland","ogden-clearfield","okaloosa / walton","oklahoma city","olympic peninsula","omaha / council bluffs","oneonta","orange county","oregon coast","orlando","outer banks","owensboro","palm springs","panama city","parkersburg-marietta","pensacola","peoria","philadelphia","phoenix","pierre / central SD","pittsburgh","plattsburgh-adirondacks","poconos","port huron","portland","potsdam-canton-massena","prescott","provo / orem","pueblo","pullman / moscow","quad cities, IA/IL","raleigh / durham / CH","rapid city / west SD","reading","redding","reno / tahoe","rhode island","richmond","roanoke","rochester","rockford","roseburg","roswell / carlsbad","sacramento","saginaw-midland-baycity","salem","salina","salt lake city","san angelo","san antonio","san diego","san luis obispo","san marcos","sandusky","santa barbara","santa fe / taos","santa maria","sarasota-bradenton","savannah / hinesville","scottsbluff / panhandle","scranton / wilkes-barre","seattle-tacoma","SF bay area","sheboygan","show low","shreveport","sierra vista","sioux city","sioux falls / SE SD","siskiyou county","skagit / island / SJI","south bend / michiana","south coast","south dakota","south florida","south jersey","southeast alaska","southeast IA","southeast KS","southeast missouri","southern illinois","southern maryland","southern WV","southwest KS","southwest michigan","southwest MN","southwest MS","southwest TX","southwest VA","space coast","spokane / coeur d'alene","springfield","st augustine","st cloud","st george","st joseph","st louis","st louis, MO","state college","statesboro","stillwater","stockton","susanville","syracuse","tallahassee","tampa bay area","terre haute","texarkana","texoma","the thumb","toledo","topeka","treasure coast","tri-cities","tucson","tulsa","tuscaloosa","tuscarawas co","twin falls","twin tiers NY/PA","tyler / east TX","upper peninsula","utica-rome-oneida","valdosta","ventura county","vermont","victoria","visalia-tulare","waco","washington, DC","waterloo / cedar falls","watertown","wausau","wenatchee","west virginia (old)","western IL","western KY","western maryland","western massachusetts","western slope","wichita","wichita falls","williamsport","wilmington","winchester","winston-salem","worcester / central MA","wyoming","yakima","york","youngstown","yuba-sutter","yuma","zanesville / cambridge"],[792,850,1025,900,815,657,825,1150,1249,1588,882,1219,891,928,1256,758,948,1365,1145,1314,926,871,863,1496,1043,1602,936,845,960,1066,914,692,1172,1083,2174,1695,910,1544,997,748,1063,999,820,1790,1158,871,767,872,1819,910,1252,1142,1268,1005,964,1600,1372,878,956,817,963,915,813,1237,957,683,892,822,892,1186,1301,1302,778,753,1064,672,762,984,1275,1611,1001,1048,740,823,1185,934,907,1468,1185,811,1184,870,1177,1029,903,712,1222,900,776,1255,884,1226,835,1028,881,1021,1408,892,1068,749,2359,1369,725,883,523,834,1322,1294,1245,1319,971,1063,1052,1223,1638,893,795,1050,992,943,864,1036,789,1176,1165,841,1285,909,1961,1019,1112,862,1939,1317,979,850,1166,1628,1427,794,880,926,885,1692,1067,1352,805,973,991,1767,772,830,998,1397,922,884,1052,1178,993,806,766,1027,907,669,916,908,826,919,965,864,1039,1110,973,1037,866,1114,812,655,1269,797,812,847,989,787,1139,2290,2201,891,860,947,751,1174,1401,796,984,762,852,753,818,797,1421,804,1666,1216,633,1290,1462,1102,904,1528,881,823,2133,693,1057,1104,706,877,1113,1197,1622,1426,1186,940,2252,1134,969,1093,1938,816,1074,812,1095,834,824,1697,995,812,775,996,1543,1051,1303,752,1296,935,1085,2063,1327,1306,1123,829,1474,1273,784,1003,754,1581,1211,1021,1127,1264,1297,890,1475,793,1342,1270,1003,934,888,1110,1012,1253,1280,1402,1582,1119,984,1121,775,1236,1606,1570,816,1193,838,1226,757,1005,2094,2125,973,839,2458,1359,1824,1346,1069,1431,923,1793,2470,910,868,771,717,839,775,951,1461,859,1557,863,1843,1466,1480,777,598,790,670,1476,955,608,945,662,843,1325,869,1169,1152,770,1230,1064,1168,757,999,922,1176,902,569,1509,979,1036,957,1238,708,868,979,789,777,731,1401,728,869,715,870,717,980,855,969,844,950,842,2228,1450,983,1288,862,1810,776,973,820,1331,816,834,693,1134,1324,1259,615,786,967,1127,1186,859,1674,953,1141,1043,739,1441,798,868],[891,1508,2046,2053,245,1341,354,1654,2215,2041,460,1944,36,1246,2226,340,2520,2448,1609,1990,1785,626,1015,386,42,404,516,249,2177,795,598,446,1424,35,1360,2501,1014,224,32,278,198,1357,52,115,48,732,100,230,1944,2027,2486,2376,1272,2058,42,1402,246,56,2081,684,2146,80,2388,2437,2232,575,3611,80,1619,1259,273,2314,108,1837,2361,299,220,24,2007,2554,2252,1970,116,79,328,337,64,43,661,53,88,1184,385,162,151,1161,83,142,403,1218,1299,281,592,44,3598,170,929,870,244,61,420,2514,108,137,3,777,2117,2724,1996,2028,65,1940,980,193,224,1304,37,2360,32,182,1988,2466,1492,811,1066,465,1468,327,1608,245,48,139,193,963,441,221,1680,690,133,128,2159,81,2089,2487,356,630,3633,4185,124,594,153,139,786,113,3,1715,81,2322,900,1048,20,45,1888,73,220,36,1532,289,359,65,2259,1100,2172,200,198,2016,509,517,871,25,2223,68,2521,1711,295,517,1930,1849,1104,382,1358,2218,398,1060,232,92,21,38,861,57,405,2386,49,260,213,1687,2394,189,1698,1241,474,507,1024,738,242,243,269,324,1467,2407,1732,1378,2013,143,580,2238,23,1127,822,511,40,31,246,141,51,166,468,78,67,547,2344,617,932,2064,86,2713,75,2269,125,2536,65,16,1223,1599,65,1583,440,1781,1958,18,1373,64,194,254,2518,88,136,1423,238,220,1327,2263,433,1017,226,2340,1837,2361,907,3609,387,54,35,2339,677,1751,36,2635,41,2018,2152,393,2400,63,380,253,129,2399,2599,58,348,2472,1639,193,97,925,327,401,1208,40,480,689,715,63,1315,2178,79,55,86,51,382,509,24,42,395,52,11,7,62,2484,2298,1362,156,1883,96,131,9,2346,373,46,278,2507,15,884,1953,2093,91,95,427,45,1711,2100,1716,590,2321,2333,739,74,80,16,1188,85,149,508,2427,501,274,443,761,2369,294,399,257,421,17,26,67,213,992,344,1926,1448,116,1835,283,2064,1354,178,277,612,245,143,211,191]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>region<\/th>\n      <th>avg_price<\/th>\n      <th>count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 
 There are 404 unique regions in our data set. The regions are not
@@ -705,49 +734,51 @@ decide not to use it as a grouping variable for mixed effect model,
 because the results may be less informative due to the poor quality of
 the data.
 
-# Research Question and Hypotheses
+Research Question and Hypotheses
+================================
 
 Our major question of this data is: *What are the major factors that
 drive up or down the monthly housing rent prices?*
 
-  - Hypothesis1: Square feet has a positive influence on monthly rent
+-   Hypothesis1: Square feet has a positive influence on monthly rent
     prices.
 
-  - Hypothesis2: Beds and baths have positive influence on monthly rent
+-   Hypothesis2: Beds and baths have positive influence on monthly rent
     prices.
 
-  - Hypothesis3: Cats allowed and dogs allowed have negative influence
+-   Hypothesis3: Cats allowed and dogs allowed have negative influence
     on monthly rent prices, when controlling for square feet.
 
-  - Hypothesis4: Smoking allowed has a negative influence on monthly
+-   Hypothesis4: Smoking allowed has a negative influence on monthly
     rent prices, when controlling for square feet.
 
-  - Hypothesis5: Houses with Wheelchair access, electric vehicle charge,
+-   Hypothesis5: Houses with Wheelchair access, electric vehicle charge,
     and furnished will have a higher monthly rent price, when
     controlling for square feet.
 
-  - Hypothesis6: square feet’s influence on monthly rent prices varies
+-   Hypothesis6: square feet’s influence on monthly rent prices varies
     by type.
 
-  - Hypothesis7: square feet’s influence on monthly rent prices varies
+-   Hypothesis7: square feet’s influence on monthly rent prices varies
     by state.
 
-  - Hypothesis8: square feet’s influence on monthly rent prices varies
+-   Hypothesis8: square feet’s influence on monthly rent prices varies
     by laundry options.
 
-  - Hypothesis9: square feet’s influence on monthly rent prices varies
+-   Hypothesis9: square feet’s influence on monthly rent prices varies
     by parking options.
 
-  - Hypothesis10: square feet’s influence on monthly rent prices varies
+-   Hypothesis10: square feet’s influence on monthly rent prices varies
     by laundry options nested in types of housing.
 
-  - Hypothesis11: square feet’s influence on monthly rent prices varies
+-   Hypothesis11: square feet’s influence on monthly rent prices varies
     by parking options nested in types of housing.
 
-  - Hypothesis12: square feet’s influence on monthly rent prices varies
+-   Hypothesis12: square feet’s influence on monthly rent prices varies
     by types of housing nested in state.
 
-# A priori power analysis
+A priori power analysis
+=======================
 
 ``` r
 library(pwr)
@@ -778,9 +809,11 @@ largest model have 20 terms, we will need 2051 observations to detect a
 1% effect from the model. We have 371082 observations, so we have more
 than enough cases for our study.
 
-# Model construction
+Model construction
+==================
 
-## Smiple linear regressions
+Smiple linear regressions
+-------------------------
 
 ``` r
 lm1 <- lm(price ~ sqfeet, data = mydata)
@@ -811,7 +844,7 @@ par(mfrow=c(2,2))
 plot(lm1)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-23-1.png)
 
 The simple linear regression of square feet and monthly rent price shows
 a significant relationship between the two. The model’s adjusted
@@ -904,13 +937,13 @@ library(interactions)
 interact_plot(lm2_int, pred = beds, modx = baths)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-25-1.png)
 
 ``` r
 interact_plot(lm2_int, pred = baths, modx = beds)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-25-2.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-25-2.png)
 
 The interaction term is statistically significant, and the adjusted
 R-squared slightly increased to 0.06. The effect of beds on price is
@@ -998,25 +1031,25 @@ variables explain 12.85% of variance in price.
 interact_plot(lm2a_int, pred = sqfeet, modx = baths)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-28-1.png)
 
 ``` r
 interact_plot(lm2a_int, pred = sqfeet, modx = beds)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-28-2.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-28-2.png)
 
 ``` r
 interact_plot(lm2a_int, pred = beds, modx = baths)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-28-3.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-28-3.png)
 
 ``` r
 interact_plot(lm2a_int, pred = baths, modx = beds)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-28-4.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-28-4.png)
 
 The interaction effects of square feet and baths, square feet and beds
 are not very strong. Beds effect on price is negative when controlling
@@ -1102,13 +1135,13 @@ slighly increased from 0.1013 to 0.1016.
 interact_plot(lm3_int, pred = sqfeet, modx = dogs_allowed)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-31-1.png)
 
 ``` r
 interact_plot(lm3_int, pred = sqfeet, modx = cats_allowed)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-31-2.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-31-2.png)
 
 ``` r
 library(effects)
@@ -1131,7 +1164,7 @@ modelEffects <- effect("dogs_allowed * cats_allowed", lm3_int)
 plot(modelEffects)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-31-3.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-31-3.png)
 
 It is interesting to see that the dogs allowed and cats allowed have
 different interaction effect with square feet on price. Dogs not allowed
@@ -1244,25 +1277,25 @@ plotted as follows:
 interact_plot(lm4_int, pred = sqfeet, modx = smoking_allowed)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-34-1.png)
 
 ``` r
 interact_plot(lm4_int, pred = sqfeet, modx = wheelchair_access)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-34-2.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-34-2.png)
 
 ``` r
 interact_plot(lm4_int, pred = sqfeet, modx = electric_vehicle_charge)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-34-3.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-34-3.png)
 
 ``` r
 interact_plot(lm4_int, pred = sqfeet, modx = comes_furnished)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-34-4.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-34-4.png)
 
 Based on the plots, we can see that houses not allowing smoking the
 slope of square feet on price is steeper than houses allowing smoking.
@@ -1320,7 +1353,7 @@ par(mfrow=c(2,2))
 plot(lmAll_int)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-35-1.png)
 
 When we add all variables and interaction terms in the final linear
 model, the coefficients are all significant. The model is statistically
@@ -1328,29 +1361,17 @@ significant. The adjusted R-squared is 0.1647, so 16.47% of variance in
 price are explained by the independent variables.
 
 <!-- ### Plot the interaction terms in the final model -->
-
 <!-- ```{r} -->
-
 <!-- interact_plot(lmAll_int, pred = sqfeet, modx = dogs_allowed) -->
-
 <!-- interact_plot(lmAll_int, pred = sqfeet, modx = cats_allowed) -->
-
 <!-- interact_plot(lmAll_int, pred = sqfeet, modx = smoking_allowed) -->
-
 <!-- interact_plot(lmAll_int, pred = sqfeet, modx = wheelchair_access) -->
-
 <!-- interact_plot(lmAll_int, pred = sqfeet, modx = electric_vehicle_charge) -->
-
 <!-- interact_plot(lmAll_int, pred = sqfeet, modx = comes_furnished) -->
-
 <!-- interact_plot(lmAll_int, pred = beds, modx = baths) -->
-
 <!-- interact_plot(lmAll_int, pred = baths, modx = beds) -->
-
 <!-- modelEffects <- effect("dogs_allowed * cats_allowed", lmAll_int) -->
-
 <!-- plot(modelEffects) -->
-
 <!-- ``` -->
 
 ### List all models
@@ -1360,3104 +1381,1557 @@ stargazer::stargazer(lm1, lm2, lm2_int, lm2a, lm2a_int, lm3_int, lm4_int, lmAll_
 ```
 
 <table style="text-align:center">
-
 <tr>
-
 <td colspan="9" style="border-bottom: 1px solid black">
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td colspan="8">
-
 <em>Dependent variable:</em>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td>
-
 </td>
-
 <td colspan="8" style="border-bottom: 1px solid black">
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td colspan="8">
-
 price
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 (1)
-
 </td>
-
 <td>
-
 (2)
-
 </td>
-
 <td>
-
 (3)
-
 </td>
-
 <td>
-
 (4)
-
 </td>
-
 <td>
-
 (5)
-
 </td>
-
 <td>
-
 (6)
-
 </td>
-
 <td>
-
 (7)
-
 </td>
-
 <td>
-
 (8)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td colspan="9" style="border-bottom: 1px solid black">
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet
-
 </td>
-
 <td>
-
 0.484<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 0.651<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 0.502<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 0.480<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 0.582<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 0.697<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 (0.002)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.004)
-
 </td>
-
 <td>
-
 (0.011)
-
 </td>
-
 <td>
-
 (0.004)
-
 </td>
-
 <td>
-
 (0.004)
-
 </td>
-
 <td>
-
 (0.006)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 beds
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 11.022<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 87.658<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
-\-135.744<sup>\*\*\*</sup>
-
+-135.744<sup>\*\*\*</sup>
 </td>
-
 <td>
-
-\-21.516<sup>\*\*\*</sup>
-
+-21.516<sup>\*\*\*</sup>
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-48.491<sup>\*\*\*</sup>
-
+-48.491<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (1.173)
-
 </td>
-
 <td>
-
 (2.392)
-
 </td>
-
 <td>
-
 (1.428)
-
 </td>
-
 <td>
-
 (3.977)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (2.436)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 baths
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 193.730<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 323.624<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 94.256<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 201.254<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 228.841<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (1.735)
-
 </td>
-
 <td>
-
 (3.938)
-
 </td>
-
 <td>
-
 (1.774)
-
 </td>
-
 <td>
-
 (6.228)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (3.800)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:beds
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 0.006<sup>\*\*</sup>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.003)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:baths
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 0.079<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.006)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 beds:baths
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-55.344<sup>\*\*\*</sup>
-
+-55.344<sup>\*\*\*</sup>
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-83.035<sup>\*\*\*</sup>
-
+-83.035<sup>\*\*\*</sup>
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-57.287<sup>\*\*\*</sup>
-
+-57.287<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (1.507)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (2.284)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (1.438)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 dogs\_allowed1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 85.154<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 58.156<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (14.374)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (13.895)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 cats\_allowed1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 8.297
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-28.874<sup>\*\*\*</sup>
-
+-28.874<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (10.500)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (10.194)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:dogs\_allowed1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-0.061<sup>\*\*\*</sup>
-
+-0.061<sup>\*\*\*</sup>
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-0.051<sup>\*\*\*</sup>
-
+-0.051<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.010)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.010)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:cats\_allowed1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 0.069<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 0.100<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.010)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.010)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 dogs\_allowed1:cats\_allowed1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-101.821<sup>\*\*\*</sup>
-
+-101.821<sup>\*\*\*</sup>
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-94.999<sup>\*\*\*</sup>
-
+-94.999<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (8.773)
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (8.484)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 smoking\_allowed1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-36.309<sup>\*\*\*</sup>
-
+-36.309<sup>\*\*\*</sup>
 </td>
-
 <td>
-
-\-37.800<sup>\*\*\*</sup>
-
+-37.800<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (5.382)
-
 </td>
-
 <td>
-
 (5.327)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 wheelchair\_access1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 126.470<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 130.824<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (9.174)
-
 </td>
-
 <td>
-
 (9.181)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 electric\_vehicle\_charge1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 765.051<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 771.639<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (21.077)
-
 </td>
-
 <td>
-
 (20.772)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 comes\_furnished1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 191.103<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 180.375<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (10.162)
-
 </td>
-
 <td>
-
 (10.064)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:smoking\_allowed1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-0.113<sup>\*\*\*</sup>
-
+-0.113<sup>\*\*\*</sup>
 </td>
-
 <td>
-
-\-0.108<sup>\*\*\*</sup>
-
+-0.108<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.005)
-
 </td>
-
 <td>
-
 (0.005)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:wheelchair\_access1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-0.061<sup>\*\*\*</sup>
-
+-0.061<sup>\*\*\*</sup>
 </td>
-
 <td>
-
-\-0.075<sup>\*\*\*</sup>
-
+-0.075<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.009)
-
 </td>
-
 <td>
-
 (0.009)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:electric\_vehicle\_charge1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-0.327<sup>\*\*\*</sup>
-
+-0.327<sup>\*\*\*</sup>
 </td>
-
 <td>
-
-\-0.348<sup>\*\*\*</sup>
-
+-0.348<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.020)
-
 </td>
-
 <td>
-
 (0.020)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 sqfeet:comes\_furnished1
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
-\-0.232<sup>\*\*\*</sup>
-
+-0.232<sup>\*\*\*</sup>
 </td>
-
 <td>
-
-\-0.208<sup>\*\*\*</sup>
-
+-0.208<sup>\*\*\*</sup>
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 (0.009)
-
 </td>
-
 <td>
-
 (0.009)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 Constant
-
 </td>
-
 <td>
-
 683.814<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 852.369<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 686.849<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 637.317<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 529.135<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 685.944<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 686.381<sup>\*\*\*</sup>
-
 </td>
-
 <td>
-
 513.209<sup>\*\*\*</sup>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 (2.440)
-
 </td>
-
 <td>
-
 (2.223)
-
 </td>
-
 <td>
-
 (5.023)
-
 </td>
-
 <td>
-
 (2.496)
-
 </td>
-
 <td>
-
 (6.606)
-
 </td>
-
 <td>
-
 (4.492)
-
 </td>
-
 <td>
-
 (4.724)
-
 </td>
-
 <td>
-
 (7.318)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 <td>
-
 </td>
-
 </tr>
-
 <tr>
-
 <td colspan="9" style="border-bottom: 1px solid black">
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 Observations
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 <td>
-
 371,082
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 R<sup>2</sup>
-
 </td>
-
 <td>
-
 0.101
-
 </td>
-
 <td>
-
 0.058
-
 </td>
-
 <td>
-
 0.061
-
 </td>
-
 <td>
-
 0.124
-
 </td>
-
 <td>
-
 0.129
-
 </td>
-
 <td>
-
 0.102
-
 </td>
-
 <td>
-
 0.139
-
 </td>
-
 <td>
-
 0.165
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 Adjusted R<sup>2</sup>
-
 </td>
-
 <td>
-
 0.101
-
 </td>
-
 <td>
-
 0.058
-
 </td>
-
 <td>
-
 0.061
-
 </td>
-
 <td>
-
 0.124
-
 </td>
-
 <td>
-
 0.128
-
 </td>
-
 <td>
-
 0.102
-
 </td>
-
 <td>
-
 0.139
-
 </td>
-
 <td>
-
 0.165
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 Residual Std. Error
-
 </td>
-
 <td>
-
 459.041 (df = 371080)
-
 </td>
-
 <td>
-
 469.969 (df = 371079)
-
 </td>
-
 <td>
-
 469.118 (df = 371078)
-
 </td>
-
 <td>
-
 453.042 (df = 371078)
-
 </td>
-
 <td>
-
 451.932 (df = 371075)
-
 </td>
-
 <td>
-
 458.843 (df = 371075)
-
 </td>
-
 <td>
-
 449.121 (df = 371072)
-
 </td>
-
 <td>
-
 442.440 (df = 371064)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 F Statistic
-
 </td>
-
 <td>
-
 41,623.710<sup>\*\*\*</sup> (df = 1; 371080)
-
 </td>
-
 <td>
-
 11,327.780<sup>\*\*\*</sup> (df = 2; 371079)
-
 </td>
-
 <td>
-
 8,028.950<sup>\*\*\*</sup> (df = 3; 371078)
-
 </td>
-
 <td>
-
 17,542.970<sup>\*\*\*</sup> (df = 3; 371078)
-
 </td>
-
 <td>
-
 9,119.319<sup>\*\*\*</sup> (df = 6; 371075)
-
 </td>
-
 <td>
-
 6,997.631<sup>\*\*\*</sup> (df = 6; 371075)
-
 </td>
-
 <td>
-
 6,673.774<sup>\*\*\*</sup> (df = 9; 371072)
-
 </td>
-
 <td>
-
 4,305.444<sup>\*\*\*</sup> (df = 17; 371064)
-
 </td>
-
 </tr>
-
 <tr>
-
 <td colspan="9" style="border-bottom: 1px solid black">
-
 </td>
-
 </tr>
-
 <tr>
-
 <td style="text-align:left">
-
 <em>Note:</em>
-
 </td>
-
 <td colspan="8" style="text-align:right">
-
 <sup>*</sup>p\<0.1; <sup>**</sup>p\<0.05; <sup>***</sup>p\<0.01
-
 </td>
-
 </tr>
-
 </table>
 
-## Mixed effect models
+Mixed effect models
+-------------------
 
 There are 5 categorical variables in our dataset and we would like to
 explore whether the influence of square feet varies based on the
@@ -4477,7 +2951,7 @@ ggplot(mydata, aes(sqfeet, price, group = type)) +
 
     ## `geom_smooth()` using formula 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-37-1.png)
 
 The plot shows that different housing types have different intercepts
 and slops for square feet on price.
@@ -4494,7 +2968,7 @@ ggplot(mydata, aes(sqfeet, price, group = state)) +
 
     ## `geom_smooth()` using formula 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-38-1.png)
 
 The plot shows that different states have different intercepts and slops
 for square feet on price.
@@ -4511,7 +2985,7 @@ ggplot(mydata, aes(sqfeet, price, group = laundry_options)) +
 
     ## `geom_smooth()` using formula 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-39-1.png)
 
 The plot shows that different laundry options have different intercepts
 for square feet on price.
@@ -4528,7 +3002,7 @@ ggplot(mydata, aes(sqfeet, price, group = parking_options)) +
 
     ## `geom_smooth()` using formula 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-40-1.png)
 
 The plot shows that different parking options have different intercepts
 for square feet on price.
@@ -4670,7 +3144,7 @@ MuMIn::r.squaredGLMM(MixEffMod1a)
 
 When we add the random slope, the model failed to converge. When we
 changed optimizer to “bobyqa” and “Nelder\_Mead”, or using (0 +
-sqfeet|type) + (1|type), the model still failed to converge. We decide
+sqfeet\|type) + (1\|type), the model still failed to converge. We decide
 to drop the random slope and stick with the random intercept model.
 
 ``` r
@@ -5570,16 +4044,12 @@ still significantly better than the first model.
 
 ``` r
 library(sjPlot)
-```
 
-    ## Learn more about sjPlot with 'browseVignettes("sjPlot")'.
-
-``` r
 plot_model(MixEffMod1, type = "re") + 
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-55-1.png)
 
 ``` r
 library(merTools)
@@ -5607,7 +4077,7 @@ library(merTools)
     ## 
     ## arm (Version 1.11-1, built: 2020-4-27)
 
-    ## Working directory is C:/Users/hz2cp/OneDrive - nd.edu/Work in progress/Github Projects/us_housing
+    ## Working directory is C:/Users/hz2cp/OneDrive - nd.edu/Work in progress/Github Projects/us_housing2
 
     ## Registered S3 method overwritten by 'broom.mixed':
     ##   method      from 
@@ -5617,52 +4087,35 @@ library(merTools)
 plotREsim(REsim(MixEffMod1), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-55-2.png)<!-- --> When looking
-at the results of the mixed effects model for the random intercepts of
-square feet by housing types, we can see that there are clear
-differences in the intercepts of the various types. Townhouse, duplex,
-apartment, cottages/cabins/ and lofts have intercepts that are not
-significant. Manufactured (mobile homes) and houses have intercepts that
-are significantly below the average. Condos, in-law suites, and flats
-have intercepts that are significantly above the average intercept.
-Based on this model and the results, we can conclude that our hypothesis
-that square feet’s influence on the monthly rent differs by the type of
-home.
+![](README_files/figure-markdown_github/unnamed-chunk-55-2.png) When
+looking at the results of the mixed effects model for the random
+intercepts of square feet by housing types, we can see that there are
+clear differences in the intercepts of the various types. Townhouse,
+duplex, apartment, cottages/cabins/ and lofts have intercepts that are
+not significant. Manufactured (mobile homes) and houses have intercepts
+that are significantly below the average. Condos, in-law suites, and
+flats have intercepts that are significantly above the average
+intercept. Based on this model and the results, we can conclude that our
+hypothesis that square feet’s influence on the monthly rent differs by
+the type of home.
 
 <!-- We also plotted some other graphs as follows: -->
-
 <!-- ```{r} -->
-
 <!-- ggplot(mydata, aes(sqfeet, price,  -->
-
 <!--                               group = type, color = type)) + -->
-
 <!--   geom_smooth(method = "lm", se = FALSE) + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
-
 <!-- ```{r} -->
-
 <!-- plotdat <- mydata -->
-
 <!-- plotdat$Prediction  <-  predict(MixEffMod1) -->
-
 <!-- ggplot() +  -->
-
 <!--   geom_line(mapping = aes(sqfeet, Prediction, group = type),  -->
-
 <!--             data = plotdat, alpha = .25) +  -->
-
 <!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
-
 <!--               data = plotdat, method = "lm",  -->
-
 <!--               color = "red") + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
 
 #### State
@@ -5672,13 +4125,13 @@ plot_model(MixEffMod2, type = "re") +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-56-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-56-1.png)
 
 ``` r
 plotREsim(REsim(MixEffMod2), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-56-2.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-56-2.png)
 
 Our hypothesis that square feet’s influence on the monthly rent differs
 by state was supported by the results of our random intercept model for
@@ -5693,55 +4146,30 @@ well above the average intercept, and Washington DC which is also
 significantly above the average intercept.
 
 <!-- We plotted some other graphs as follows: -->
-
 <!-- ```{r, fig.width=10, fig.height=8} -->
-
 <!-- ggplot(mydata, aes(sqfeet, price,  -->
-
 <!--                               group = state, color = state)) + -->
-
 <!--   geom_smooth(method = "lm", se = FALSE) + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
-
 <!-- ```{r} -->
-
 <!-- plotdata <- as.data.frame(mydata)[which(mydata$state=='IN' | mydata$state == 'NY' | mydata$state == 'CA' ),] -->
-
 <!-- ggplot(plotdata, aes(sqfeet, price,  -->
-
 <!--                               group = state, color = state)) + -->
-
 <!--   geom_smooth(method = "lm", se = FALSE) + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
-
 <!-- This is a plot comparing slopes and intercepts of square feet on price at IN, CA, NY. IN is the lowest in housing price. -->
-
 <!-- ```{r} -->
-
 <!-- plotdat <- mydata -->
-
 <!-- plotdat$Prediction  <-  predict(MixEffMod2a) -->
-
 <!-- ggplot() +  -->
-
 <!--   geom_line(mapping = aes(sqfeet, Prediction, group = state),  -->
-
 <!--             data = plotdat, alpha = .25) +  -->
-
 <!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
-
 <!--               data = plotdat, method = "lm",  -->
-
 <!--               color = "red") + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
 
 #### Laundry options
@@ -5751,13 +4179,13 @@ plot_model(MixEffMod3, type = "re") +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-57-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-57-1.png)
 
 ``` r
 plotREsim(REsim(MixEffMod3), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-57-2.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-57-2.png)
 
 Our hypothesis that square feet’s influence on the monthly rent differs
 by the laundry options was supported by the results of our random
@@ -5770,39 +4198,22 @@ supply their own machines and if the machines are in unit, that is most
 convenient for the tenant.
 
 <!-- We plotted some other graphs as follows: -->
-
 <!-- ```{r} -->
-
 <!-- ggplot(mydata, aes(sqfeet, price,  -->
-
 <!--                               group = laundry_options, color = laundry_options)) + -->
-
 <!--   geom_smooth(method = "lm", se = FALSE) + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
-
 <!-- ```{r} -->
-
 <!-- plotdat <- mydata -->
-
 <!-- plotdat$Prediction  <-  predict(MixEffMod3a) -->
-
 <!-- ggplot() +  -->
-
 <!--   geom_line(mapping = aes(sqfeet, Prediction, group = laundry_options),  -->
-
 <!--             data = plotdat, alpha = .25) +  -->
-
 <!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
-
 <!--               data = plotdat, method = "lm",  -->
-
 <!--               color = "red") + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
 
 #### Parking options
@@ -5812,13 +4223,13 @@ plot_model(MixEffMod4, type = "re") +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-58-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-58-1.png)
 
 ``` r
 plotREsim(REsim(MixEffMod4), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-58-2.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-58-2.png)
 
 For the parking options, only 3 of the 8 options are significantly
 different from the average intercept. One of those that is significant
@@ -5829,39 +4240,22 @@ significantly above the average intercept for parking options. Again
 this satisfies our hypothesis and makes intuitive sense.
 
 <!-- We plotted some other graphs as follows: -->
-
 <!-- ```{r} -->
-
 <!-- ggplot(mydata, aes(sqfeet, price,  -->
-
 <!--                               group = parking_options, color = parking_options)) + -->
-
 <!--   geom_smooth(method = "lm", se = FALSE) + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
-
 <!-- ```{r} -->
-
 <!-- plotdat <- mydata -->
-
 <!-- plotdat$Prediction  <-  predict(MixEffMod4a) -->
-
 <!-- ggplot() +  -->
-
 <!--   geom_line(mapping = aes(sqfeet, Prediction, group = parking_options),  -->
-
 <!--             data = plotdat, alpha = .25) +  -->
-
 <!--   geom_smooth(mapping = aes(x = sqfeet, y = price),  -->
-
 <!--               data = plotdat, method = "lm",  -->
-
 <!--               color = "red") + -->
-
 <!--   theme_minimal() -->
-
 <!-- ``` -->
 
 #### Clusters
@@ -5870,7 +4264,7 @@ this satisfies our hypothesis and makes intuitive sense.
 plotREsim(REsim(clustermix1), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-59-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-59-1.png)
 
 We plot the effect ranges of the clustered mixed model. The results are
 slightly different from the previous random intercept models. The lowest
@@ -5881,7 +4275,8 @@ house instead of manufactured. It’s interesting to see that when we
 added them in one model, the intercept variances for each grouping
 variable also changed.
 
-## Hierarchical Model
+Hierarchical Model
+------------------
 
 ### Laundry options nested in type
 
@@ -5945,7 +4340,7 @@ follows:
 plotREsim(REsim(HierarchyMod1), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-61-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-61-1.png)
 
 For the hierarchy model exploring how the different types relate to the
 laundry options, many more of the options are insignificant than are
@@ -6018,7 +4413,7 @@ follows:
 plotREsim(REsim(HierarchyMod2), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-63-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-63-1.png)
 
 Very similarly to the laundry hierarchy model, there are many more
 intercepts that are not different from the average. Again, the specifics
@@ -6089,7 +4484,7 @@ It is a big improvement. We plot the effects as follows:
 plotREsim(REsim(HierarchyMod3), labs = TRUE)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-65-1.png)<!-- -->
+![](README_files/figure-markdown_github/unnamed-chunk-65-1.png)
 
 The second plot is hard to see because of the large numbers of
 categories of state by type. There is not much information that we are
@@ -6098,10 +4493,11 @@ hierarchies of types within states are significantly different than the
 average intercept but there is too much overlap of the axis labels so we
 cannot determine which intercept is which.
 
-# Conclusion
+Conclusion
+==========
 
-  - Main predictors are Geography (state), Housing Type & Square feet
-  - Homes only allowing a cat are the most expensive option compared to
+-   Main predictors are Geography (state), Housing Type & Square feet
+-   Homes only allowing a cat are the most expensive option compared to
     houses only allow dogs, houses allow both cats and dogs and houses
     do not allow cats and dogs.
-  - Rent prices vary by parking options and laundry options
+-   Rent prices vary by parking options and laundry options

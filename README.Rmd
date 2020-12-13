@@ -1,7 +1,9 @@
 ---
 title: "US Housing Rental Market Prediction"
 always_allow_html: true
-output: github_document
+output:
+  md_document:
+    variant: markdown_github
 ---
 
 ![US Housing Market (sourse: https://www.loveproperty.com/gallerylist/96138/expert-predictions-for-the-us-housing-market-through-the-rest-of-2020)](image/Housing.jpg){width=100%}
