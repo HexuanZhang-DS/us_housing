@@ -14,12 +14,13 @@ US Housing Market (sourse: https://www.loveproperty.com/gallerylist/96138/expert
 
 The dataset is from Kaggle (https://www.kaggle.com/austinreese/usa-housing-listings) which was compiled Craigslist housing information for the United States. The dataset contains 384,977 rows which represent each housing listing on the craigslist page. It also has 22 columns which are descriptors of the house listed. The dependent variable for the data is the monthly housing rent prices. There is also geographic information which is interesting because we were able to look at different areas of the country and what impact the geography had on the housing rent price and other factors. In the data there are 4 numeric variables: price, size of the property (sq feet), number of bedrooms, and number of bathrooms. There are 6 binary variables in the dataset such as: whether cats are allowed, whether dogs are allowed, whether smoking is allowed, wheelchair access, electric vehicle charge, and whether it comes furnished. There are 5 categorical variables including: type, region, state, laundry_options, parking options.
 
-```{r setup, include=FALSE, warning=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, 
+                      comment = "")
 ```
 
 
-```{r, echo=FALSE, warning=FALSE}
+```{r}
 #load packages
 library(tidyverse)
 library(readr)
@@ -228,7 +229,7 @@ mydata%>%
 ```
 
 ##### Map by State
-```{r, echo = TRUE, warning = FALSE, message = FALSE, comment = ""}
+```{r}
 library(ggmap)
 library(maps)
 library(mapproj)

@@ -25,27 +25,12 @@ wheelchair access, electric vehicle charge, and whether it comes
 furnished. There are 5 categorical variables including: type, region,
 state, laundry\_options, parking options.
 
-    ## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-
-    ## v ggplot2 3.3.2     v purrr   0.3.4
-    ## v tibble  3.0.3     v dplyr   1.0.0
-    ## v tidyr   1.1.0     v stringr 1.4.0
-    ## v readr   1.3.1     v forcats 0.5.0
-
-    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-    ## x dplyr::filter() masks stats::filter()
-    ## x dplyr::lag()    masks stats::lag()
-
-    ## 
-    ## Attaching package: 'data.table'
-
-    ## The following objects are masked from 'package:dplyr':
-    ## 
-    ##     between, first, last
-
-    ## The following object is masked from 'package:purrr':
-    ## 
-    ##     transpose
+``` r
+#load packages
+library(tidyverse)
+library(readr)
+library(data.table)
+```
 
 Load the data
 =============
@@ -66,27 +51,27 @@ housing <- housing %>%
 glimpse(housing)
 ```
 
-    ## Rows: 384,977
-    ## Columns: 19
-    ## $ id                      <dbl> 7049044568, 7049047186, 7043634882, 7049045...
-    ## $ region                  <chr> "reno / tahoe", "reno / tahoe", "reno / tah...
-    ## $ price                   <dbl> 1148, 1200, 1813, 1095, 289, 1093, 935, 109...
-    ## $ type                    <chr> "apartment", "condo", "apartment", "apartme...
-    ## $ sqfeet                  <int> 1078, 1001, 1683, 708, 250, 720, 661, 708, ...
-    ## $ beds                    <int> 3, 2, 2, 1, 0, 1, 1, 1, 2, 2, 1, 4, 3, 1, 1...
-    ## $ baths                   <dbl> 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 1, 3, 2, 1, 1...
-    ## $ cats_allowed            <int> 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1...
-    ## $ dogs_allowed            <int> 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1...
-    ## $ smoking_allowed         <int> 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1...
-    ## $ wheelchair_access       <int> 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-    ## $ electric_vehicle_charge <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-    ## $ comes_furnished         <int> 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-    ## $ laundry_options         <chr> "w/d in unit", "w/d hookups", "w/d in unit"...
-    ## $ parking_options         <chr> "carport", "carport", "attached garage", "c...
-    ## $ description             <chr> "Ridgeview by Vintage is where you will fin...
-    ## $ lat                     <dbl> 39.5483, 39.5026, 39.6269, 39.4477, 39.5357...
-    ## $ long                    <dbl> -119.796, -119.789, -119.708, -119.771, -11...
-    ## $ state                   <chr> "ca", "ca", "ca", "ca", "ca", "ca", "ca", "...
+    Rows: 384,977
+    Columns: 19
+    $ id                      <dbl> 7049044568, 7049047186, 7043634882, 7049045...
+    $ region                  <chr> "reno / tahoe", "reno / tahoe", "reno / tah...
+    $ price                   <dbl> 1148, 1200, 1813, 1095, 289, 1093, 935, 109...
+    $ type                    <chr> "apartment", "condo", "apartment", "apartme...
+    $ sqfeet                  <int> 1078, 1001, 1683, 708, 250, 720, 661, 708, ...
+    $ beds                    <int> 3, 2, 2, 1, 0, 1, 1, 1, 2, 2, 1, 4, 3, 1, 1...
+    $ baths                   <dbl> 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 1, 3, 2, 1, 1...
+    $ cats_allowed            <int> 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1...
+    $ dogs_allowed            <int> 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1...
+    $ smoking_allowed         <int> 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1...
+    $ wheelchair_access       <int> 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+    $ electric_vehicle_charge <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+    $ comes_furnished         <int> 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+    $ laundry_options         <chr> "w/d in unit", "w/d hookups", "w/d in unit"...
+    $ parking_options         <chr> "carport", "carport", "attached garage", "c...
+    $ description             <chr> "Ridgeview by Vintage is where you will fin...
+    $ lat                     <dbl> 39.5483, 39.5026, 39.6269, 39.4477, 39.5357...
+    $ long                    <dbl> -119.796, -119.789, -119.708, -119.771, -11...
+    $ state                   <chr> "ca", "ca", "ca", "ca", "ca", "ca", "ca", "...
 
 Change data type
 ----------------
@@ -101,54 +86,54 @@ housing[, (factorvars):= lapply(.SD, function(x) as.factor(x)),
 summary(housing)
 ```
 
-    ##           id                    region           price          
-    ##  7003808130:     1   jacksonville  :  4246   Min.   :0.000e+00  
-    ##  7004010416:     1   columbus      :  3738   1st Qu.:8.050e+02  
-    ##  7004032234:     1   rochester     :  3677   Median :1.036e+03  
-    ##  7004041631:     1   jackson       :  3667   Mean   :8.826e+03  
-    ##  7004048100:     1   fayetteville  :  3652   3rd Qu.:1.395e+03  
-    ##  7004059925:     1   fredericksburg:  2747   Max.   :2.768e+09  
-    ##  (Other)   :384971   (Other)       :363250                      
-    ##            type            sqfeet             beds              baths       
-    ##  apartment   :318032   Min.   :      0   Min.   :   0.000   Min.   : 0.000  
-    ##  house       : 33266   1st Qu.:    750   1st Qu.:   1.000   1st Qu.: 1.000  
-    ##  townhouse   : 15885   Median :    949   Median :   2.000   Median : 1.000  
-    ##  condo       :  6238   Mean   :   1060   Mean   :   1.905   Mean   : 1.481  
-    ##  duplex      :  5047   3rd Qu.:   1150   3rd Qu.:   2.000   3rd Qu.: 2.000  
-    ##  manufactured:  4242   Max.   :8388607   Max.   :1100.000   Max.   :75.000  
-    ##  (Other)     :  2267                                                        
-    ##  cats_allowed dogs_allowed smoking_allowed wheelchair_access
-    ##  0:105141     0:112445     0:103262        0:353366         
-    ##  1:279836     1:272532     1:281715        1: 31611         
-    ##                                                             
-    ##                                                             
-    ##                                                             
-    ##                                                             
-    ##                                                             
-    ##  electric_vehicle_charge comes_furnished           laundry_options  
-    ##  0:380022                0:366449                          : 79026  
-    ##  1:  4955                1: 18528        laundry in bldg   : 36103  
-    ##                                          laundry on site   : 58873  
-    ##                                          no laundry on site:  3624  
-    ##                                          w/d hookups       : 75568  
-    ##                                          w/d in unit       :131783  
-    ##                                                                     
-    ##            parking_options   description             lat        
-    ##                    :140687   Length:384977      Min.   :-43.53  
-    ##  off-street parking:128502   Class :character   1st Qu.: 33.45  
-    ##  attached garage   : 40591   Mode  :character   Median : 37.65  
-    ##  carport           : 38955                      Mean   : 37.23  
-    ##  detached garage   : 16940                      3rd Qu.: 41.14  
-    ##  street parking    : 15951                      Max.   :102.04  
-    ##  (Other)           :  3351                      NA's   :1918    
-    ##       long             state       
-    ##  Min.   :-163.89   ca     : 33085  
-    ##  1st Qu.:-100.78   fl     : 31929  
-    ##  Median : -87.75   tx     : 31137  
-    ##  Mean   : -92.70   nc     : 18628  
-    ##  3rd Qu.: -81.18   mi     : 14529  
-    ##  Max.   : 172.63   ga     : 13841  
-    ##  NA's   :1918      (Other):241828
+              id                    region           price          
+     7003808130:     1   jacksonville  :  4246   Min.   :0.000e+00  
+     7004010416:     1   columbus      :  3738   1st Qu.:8.050e+02  
+     7004032234:     1   rochester     :  3677   Median :1.036e+03  
+     7004041631:     1   jackson       :  3667   Mean   :8.826e+03  
+     7004048100:     1   fayetteville  :  3652   3rd Qu.:1.395e+03  
+     7004059925:     1   fredericksburg:  2747   Max.   :2.768e+09  
+     (Other)   :384971   (Other)       :363250                      
+               type            sqfeet             beds              baths       
+     apartment   :318032   Min.   :      0   Min.   :   0.000   Min.   : 0.000  
+     house       : 33266   1st Qu.:    750   1st Qu.:   1.000   1st Qu.: 1.000  
+     townhouse   : 15885   Median :    949   Median :   2.000   Median : 1.000  
+     condo       :  6238   Mean   :   1060   Mean   :   1.905   Mean   : 1.481  
+     duplex      :  5047   3rd Qu.:   1150   3rd Qu.:   2.000   3rd Qu.: 2.000  
+     manufactured:  4242   Max.   :8388607   Max.   :1100.000   Max.   :75.000  
+     (Other)     :  2267                                                        
+     cats_allowed dogs_allowed smoking_allowed wheelchair_access
+     0:105141     0:112445     0:103262        0:353366         
+     1:279836     1:272532     1:281715        1: 31611         
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+     electric_vehicle_charge comes_furnished           laundry_options  
+     0:380022                0:366449                          : 79026  
+     1:  4955                1: 18528        laundry in bldg   : 36103  
+                                             laundry on site   : 58873  
+                                             no laundry on site:  3624  
+                                             w/d hookups       : 75568  
+                                             w/d in unit       :131783  
+                                                                        
+               parking_options   description             lat        
+                       :140687   Length:384977      Min.   :-43.53  
+     off-street parking:128502   Class :character   1st Qu.: 33.45  
+     attached garage   : 40591   Mode  :character   Median : 37.65  
+     carport           : 38955                      Mean   : 37.23  
+     detached garage   : 16940                      3rd Qu.: 41.14  
+     street parking    : 15951                      Max.   :102.04  
+     (Other)           :  3351                      NA's   :1918    
+          long             state       
+     Min.   :-163.89   ca     : 33085  
+     1st Qu.:-100.78   fl     : 31929  
+     Median : -87.75   tx     : 31137  
+     Mean   : -92.70   nc     : 18628  
+     3rd Qu.: -81.18   mi     : 14529  
+     Max.   : 172.63   ga     : 13841  
+     NA's   :1918      (Other):241828  
 
 Trim abnormal records
 ---------------------
@@ -158,29 +143,29 @@ Trim abnormal records
 summary(housing$price)
 ```
 
-    ##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-    ## 0.000e+00 8.050e+02 1.036e+03 8.826e+03 1.395e+03 2.768e+09
+         Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+    0.000e+00 8.050e+02 1.036e+03 8.826e+03 1.395e+03 2.768e+09 
 
 ``` r
 summary(housing$sqfeet)
 ```
 
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##       0     750     949    1060    1150 8388607
+       Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+          0     750     949    1060    1150 8388607 
 
 ``` r
 summary(housing$beds)
 ```
 
-    ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-    ##    0.000    1.000    2.000    1.905    2.000 1100.000
+        Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+       0.000    1.000    2.000    1.905    2.000 1100.000 
 
 ``` r
 summary(housing$baths)
 ```
 
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##   0.000   1.000   1.000   1.481   2.000  75.000
+       Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0.000   1.000   1.000   1.481   2.000  75.000 
 
 ``` r
 price99 <- quantile(housing$price, .99)
@@ -195,21 +180,21 @@ housing%>%
   count()
 ```
 
-    ## # A tibble: 11 x 2
-    ## # Groups:   beds [11]
-    ##     beds      n
-    ##    <int>  <int>
-    ##  1     0  10978
-    ##  2     1 117226
-    ##  3     2 175513
-    ##  4     3  67037
-    ##  5     4  11575
-    ##  6     5   2324
-    ##  7     6    240
-    ##  8     7     49
-    ##  9     8     31
-    ## 10  1000      2
-    ## 11  1100      2
+    # A tibble: 11 x 2
+    # Groups:   beds [11]
+        beds      n
+       <int>  <int>
+     1     0  10978
+     2     1 117226
+     3     2 175513
+     4     3  67037
+     5     4  11575
+     6     5   2324
+     7     6    240
+     8     7     49
+     9     8     31
+    10  1000      2
+    11  1100      2
 
 ``` r
 housing%>% 
@@ -217,30 +202,30 @@ housing%>%
   count()
 ```
 
-    ## # A tibble: 20 x 2
-    ## # Groups:   baths [20]
-    ##    baths      n
-    ##    <dbl>  <int>
-    ##  1   0     3107
-    ##  2   1   198184
-    ##  3   1.5  27363
-    ##  4   2   134649
-    ##  5   2.5  13162
-    ##  6   3     5549
-    ##  7   3.5   1007
-    ##  8   4     1495
-    ##  9   4.5    231
-    ## 10   5      131
-    ## 11   5.5     57
-    ## 12   6       26
-    ## 13   6.5      4
-    ## 14   7        4
-    ## 15   7.5      2
-    ## 16   8        1
-    ## 17   8.5      1
-    ## 18  25        1
-    ## 19  35        1
-    ## 20  75        2
+    # A tibble: 20 x 2
+    # Groups:   baths [20]
+       baths      n
+       <dbl>  <int>
+     1   0     3107
+     2   1   198184
+     3   1.5  27363
+     4   2   134649
+     5   2.5  13162
+     6   3     5549
+     7   3.5   1007
+     8   4     1495
+     9   4.5    231
+    10   5      131
+    11   5.5     57
+    12   6       26
+    13   6.5      4
+    14   7        4
+    15   7.5      2
+    16   8        1
+    17   8.5      1
+    18  25        1
+    19  35        1
+    20  75        2
 
 Price range, square feet range, beds and baths ranges are all abnormal.
 It may be due to mistakes during the web scraping or when people put the
@@ -261,54 +246,54 @@ mydata <- housing %>%
 summary(mydata)
 ```
 
-    ##           id                    region           price     
-    ##  7003808130:     1   jacksonville  :  4185   Min.   : 344  
-    ##  7004010416:     1   jackson       :  3633   1st Qu.: 815  
-    ##  7004032234:     1   columbus      :  3611   Median :1035  
-    ##  7004041631:     1   rochester     :  3609   Mean   :1157  
-    ##  7004048100:     1   fayetteville  :  3598   3rd Qu.:1385  
-    ##  7004059925:     1   fredericksburg:  2724   Max.   :3395  
-    ##  (Other)   :371079   (Other)       :349725                 
-    ##            type            sqfeet          beds           baths      
-    ##  apartment   :310039   Min.   : 340   Min.   :0.000   Min.   :0.000  
-    ##  house       : 29063   1st Qu.: 750   1st Qu.:1.000   1st Qu.:1.000  
-    ##  townhouse   : 15416   Median : 946   Median :2.000   Median :1.000  
-    ##  condo       :  5763   Mean   : 978   Mean   :1.879   Mean   :1.467  
-    ##  duplex      :  4857   3rd Qu.:1136   3rd Qu.:2.000   3rd Qu.:2.000  
-    ##  manufactured:  3991   Max.   :2405   Max.   :8.000   Max.   :7.500  
-    ##  (Other)     :  1956                                                 
-    ##  cats_allowed dogs_allowed smoking_allowed wheelchair_access
-    ##  0: 98422     0:106000     0: 97909        0:341232         
-    ##  1:272663     1:265085     1:273176        1: 29853         
-    ##                                                             
-    ##                                                             
-    ##                                                             
-    ##                                                             
-    ##                                                             
-    ##  electric_vehicle_charge comes_furnished           laundry_options  
-    ##  0:366590                0:355833                          : 76741  
-    ##  1:  4495                1: 15252        laundry in bldg   : 34178  
-    ##                                          laundry on site   : 56362  
-    ##                                          no laundry on site:  3235  
-    ##                                          w/d hookups       : 73645  
-    ##                                          w/d in unit       :126924  
-    ##                                                                     
-    ##            parking_options   description             lat        
-    ##                    :137014   Length:371085      Min.   :-40.27  
-    ##  off-street parking:124174   Class :character   1st Qu.: 33.44  
-    ##  carport           : 38004   Mode  :character   Median : 37.66  
-    ##  attached garage   : 37006                      Mean   : 37.23  
-    ##  detached garage   : 16263                      3rd Qu.: 41.15  
-    ##  street parking    : 15393                      Max.   :102.04  
-    ##  (Other)           :  3231                      NA's   :1835    
-    ##       long             state       
-    ##  Min.   :-163.89   fl     : 31161  
-    ##  1st Qu.: -98.55   ca     : 30251  
-    ##  Median : -87.63   tx     : 30062  
-    ##  Mean   : -92.50   nc     : 18105  
-    ##  3rd Qu.: -81.17   mi     : 14213  
-    ##  Max.   :  94.16   ga     : 13437  
-    ##  NA's   :1835      (Other):233856
+              id                    region           price     
+     7003808130:     1   jacksonville  :  4185   Min.   : 344  
+     7004010416:     1   jackson       :  3633   1st Qu.: 815  
+     7004032234:     1   columbus      :  3611   Median :1035  
+     7004041631:     1   rochester     :  3609   Mean   :1157  
+     7004048100:     1   fayetteville  :  3598   3rd Qu.:1385  
+     7004059925:     1   fredericksburg:  2724   Max.   :3395  
+     (Other)   :371079   (Other)       :349725                 
+               type            sqfeet          beds           baths      
+     apartment   :310039   Min.   : 340   Min.   :0.000   Min.   :0.000  
+     house       : 29063   1st Qu.: 750   1st Qu.:1.000   1st Qu.:1.000  
+     townhouse   : 15416   Median : 946   Median :2.000   Median :1.000  
+     condo       :  5763   Mean   : 978   Mean   :1.879   Mean   :1.467  
+     duplex      :  4857   3rd Qu.:1136   3rd Qu.:2.000   3rd Qu.:2.000  
+     manufactured:  3991   Max.   :2405   Max.   :8.000   Max.   :7.500  
+     (Other)     :  1956                                                 
+     cats_allowed dogs_allowed smoking_allowed wheelchair_access
+     0: 98422     0:106000     0: 97909        0:341232         
+     1:272663     1:265085     1:273176        1: 29853         
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+     electric_vehicle_charge comes_furnished           laundry_options  
+     0:366590                0:355833                          : 76741  
+     1:  4495                1: 15252        laundry in bldg   : 34178  
+                                             laundry on site   : 56362  
+                                             no laundry on site:  3235  
+                                             w/d hookups       : 73645  
+                                             w/d in unit       :126924  
+                                                                        
+               parking_options   description             lat        
+                       :137014   Length:371085      Min.   :-40.27  
+     off-street parking:124174   Class :character   1st Qu.: 33.44  
+     carport           : 38004   Mode  :character   Median : 37.66  
+     attached garage   : 37006                      Mean   : 37.23  
+     detached garage   : 16263                      3rd Qu.: 41.15  
+     street parking    : 15393                      Max.   :102.04  
+     (Other)           :  3231                      NA's   :1835    
+          long             state       
+     Min.   :-163.89   fl     : 31161  
+     1st Qu.: -98.55   ca     : 30251  
+     Median : -87.63   tx     : 30062  
+     Mean   : -92.50   nc     : 18105  
+     3rd Qu.: -81.17   mi     : 14213  
+     Max.   :  94.16   ga     : 13437  
+     NA's   :1835      (Other):233856  
 
 Exploratory Analysis
 ====================
@@ -322,8 +307,8 @@ library(ggplot2)
 summary(mydata$price)
 ```
 
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##     344     815    1035    1157    1385    3395
+       Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+        344     815    1035    1157    1385    3395 
 
 ``` r
 ggplot(mydata) + 
@@ -335,8 +320,6 @@ ggplot(mydata) +
         panel.border = element_blank(), 
         panel.background = element_blank()) 
 ```
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
 ![](README_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
@@ -353,8 +336,8 @@ Independent Variables
 summary(mydata$sqfeet)
 ```
 
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##     340     750     946     978    1136    2405
+       Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+        340     750     946     978    1136    2405 
 
 ``` r
 ggplot(mydata) +
@@ -366,8 +349,6 @@ ggplot(mydata) +
         panel.border = element_blank(), 
         panel.background = element_blank()) 
 ```
-
-    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
 ![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
@@ -392,10 +373,6 @@ ggplot(mydata, aes(x=sqfeet,
         panel.border = element_blank(), 
         panel.background = element_blank()) 
 ```
-
-    ## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
-
-    ## `geom_smooth()` using formula 'y ~ x'
 
 ![](README_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
@@ -440,54 +417,20 @@ slightly higher than others.
 names(mydata)
 ```
 
-    ##  [1] "id"                      "region"                 
-    ##  [3] "price"                   "type"                   
-    ##  [5] "sqfeet"                  "beds"                   
-    ##  [7] "baths"                   "cats_allowed"           
-    ##  [9] "dogs_allowed"            "smoking_allowed"        
-    ## [11] "wheelchair_access"       "electric_vehicle_charge"
-    ## [13] "comes_furnished"         "laundry_options"        
-    ## [15] "parking_options"         "description"            
-    ## [17] "lat"                     "long"                   
-    ## [19] "state"
+     [1] "id"                      "region"                 
+     [3] "price"                   "type"                   
+     [5] "sqfeet"                  "beds"                   
+     [7] "baths"                   "cats_allowed"           
+     [9] "dogs_allowed"            "smoking_allowed"        
+    [11] "wheelchair_access"       "electric_vehicle_charge"
+    [13] "comes_furnished"         "laundry_options"        
+    [15] "parking_options"         "description"            
+    [17] "lat"                     "long"                   
+    [19] "state"                  
 
 ``` r
 mydata<- as.data.frame(mydata)
 library(PerformanceAnalytics)
-```
-
-    ## Warning: package 'PerformanceAnalytics' was built under R version 4.0.3
-
-    ## Loading required package: xts
-
-    ## Loading required package: zoo
-
-    ## 
-    ## Attaching package: 'zoo'
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     as.Date, as.Date.numeric
-
-    ## 
-    ## Attaching package: 'xts'
-
-    ## The following objects are masked from 'package:data.table':
-    ## 
-    ##     first, last
-
-    ## The following objects are masked from 'package:dplyr':
-    ## 
-    ##     first, last
-
-    ## 
-    ## Attaching package: 'PerformanceAnalytics'
-
-    ## The following object is masked from 'package:graphics':
-    ## 
-    ##     legend
-
-``` r
 cor_vars <- c( "price", "sqfeet", "beds" ,"baths" ,"cats_allowed" ,"dogs_allowed"  , "smoking_allowed" , "wheelchair_access" , "electric_vehicle_charge" , "comes_furnished" )
 cor_df <- as.data.frame(mydata)[cor_vars]
 cor_df <- cor_df %>%
@@ -515,22 +458,20 @@ mydata %>%
   arrange(desc(count))
 ```
 
-    ## `summarise()` ungrouping output (override with `.groups` argument)
-
-    ## # A tibble: 11 x 3
-    ##    type          avg_price  count
-    ##    <fct>             <dbl>  <int>
-    ##  1 apartment          1141 310039
-    ##  2 house              1223  29063
-    ##  3 townhouse          1255  15416
-    ##  4 condo              1481   5763
-    ##  5 duplex             1199   4857
-    ##  6 manufactured        924   3991
-    ##  7 loft               1344    667
-    ##  8 cottage/cabin      1227    640
-    ##  9 flat               1491    494
-    ## 10 in-law             1324    152
-    ## 11 land                550      3
+    # A tibble: 11 x 3
+       type          avg_price  count
+       <fct>             <dbl>  <int>
+     1 apartment          1141 310039
+     2 house              1223  29063
+     3 townhouse          1255  15416
+     4 condo              1481   5763
+     5 duplex             1199   4857
+     6 manufactured        924   3991
+     7 loft               1344    667
+     8 cottage/cabin      1227    640
+     9 flat               1491    494
+    10 in-law             1324    152
+    11 land                550      3
 
 The majority of our cases are apartment, house and townhouse. Their mean
 prices are different. We may use this variable as a grouping variable
@@ -541,26 +482,26 @@ mydata %>%
   filter(type=="land")
 ```
 
-    ##           id          region price type sqfeet beds baths cats_allowed
-    ## 1 7030040917        lakeland   350 land    400    1     1            1
-    ## 2 7047503378 santa fe / taos   550 land   2000    0     1            1
-    ## 3 7029082924       jonesboro   750 land    900    2     1            0
-    ##   dogs_allowed smoking_allowed wheelchair_access electric_vehicle_charge
-    ## 1            1               1                 0                       0
-    ## 2            1               1                 0                       1
-    ## 3            0               1                 0                       0
-    ##   comes_furnished laundry_options    parking_options
-    ## 1               0 laundry on site off-street parking
-    ## 2               0     w/d hookups off-street parking
-    ## 3               0     w/d in unit off-street parking
-    ##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             description
-    ## 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Lake Juliana Boating and Lodging, a 100 year old central Florida fishcamp known to locals as Lundyville is offering  Recreational Vehicle spaces for yearly lease opportunities. This park is located on Lake Juliana near the convenience of the  I4  corridor to access Lakeland, Orlando areas. The park is secluded on a dead end road with quiet being the mainstay. 126 foot fishing dock, pool, dedicated parking.  The property is also home of the small and intimate Lundyville Music Hall event venue featuring live bands, open mics, karaoke and special musical entertainment events.  RV's  should be no older than 2000.   Water is provided and lawn care is available. Electricity has been updated to 50 amp services with billing through TECO power. Covered boat slips with electric power is available for tenants.  Please contact John at  show contact info  for more information.   Please note: Units including washers will pay additional $15 monthly rental fee.
-    ## 2 Now Available: Parking Space for tiny house or RV on land out SF Trail, Below Camp Stoney. Adjoins Wilderness and great trails. It is beautiful out here, and only 20 minutes to town, 12 minutes to Harry's Road House Restaurant or El Gancho Club. Fully paved road to front gate. Walled One Acre already has one one 20 foot RV. Also 2 currently rented Cabin Studio Houses. Has recently refurbished, retiled Bathhouse, with toilet and hot water shower, shared with the Single Person in other Travel Trailer. Delicious Water from well. Electricity via 50 amp RV metered plugin.  High Speed internet included.  Heating not included.  I am providing heat and electricity for the bath house, and propane for the hot water.  Renter pays for usage of electricity for their living unit and provides their propane or wood for cooking and heating.     My daughter and I have several cats,  love animals, and want easy to live with, neighbors and other animals. We live in a valley of pondarosa pines, canyons with access to beautiful long walks as we border on the several thousand acres of the little utilized Camp Stoney Summer Camp. We live on a one-acre walled compound so there is a feeling of enclosure and safety, as well as access to living in the outdoors. Space is available for gardening and composting.  This is an amazing area, close to Santa Fe, yet has a feeling of being far out in the country.  Good for those who enjoy being on the edge, yet surrounded by more nature than city.  This space co-exists with two other fully self contained houses nearby within this compound. We are mostly artists, musicians and those in the healing service professions. There is a great creative energy here, and if the 20 minute drive from Santa Fe is not too far for you, [closer than Eldorado by a few miles] you will love the walks and quiet that exist here.  Amazing dark starry sky.  This is an old, mixed settlement of various cultures here, and my 40 year experience living here, is positive with my neighbors, who are there if you need help or are broken down on the side of the road. It is a country feeling here, and if you can appreciate the old funky ways of New Mexico you will enjoy it here. It is not a covenanted area like El Dorado, in that we have distant neighbors with horses, rabbits, chickens, goats, and the occasional non-running vintage pickup on blocks. It is very quiet and pleasant out here. Most neighboring houses are on several acres. Many comment how amazed they are, that we are so close to Santa Fe, yet have such nature and privacy. The stars are incredible out here.   There is a feeling here, of being on the edge, with access to nature, yet to the plaza is only 20 minutes away, straight down the Old Santa Fe Trail, with only 3 stop signs the entire way to town.   Living on the edge of the Camp Stoney Summer camp with all the land they have is like a sanctuary we adjoin. This is a great place for those who like that closeness and connection to nature. Has wireless internet, with recent high speed upgrade.     Water could be supplied to your unit, by hose, from the well house/bathhouse about 30 feet away.  During freeze months, you would need a tank in your unit that can be filled.   I provide water, and propane for the bathhouse, included in rent.  Grey water could be alright, and but no septic entrances for dark water disposal.  That is where the nearby bathhouse provides toilet access and running, hot/cold water, on a year round basis.  Animals are possible if owner is responsible, and they are no problem to the others here on the property, and my nearby neighbors.   Price of rent determined by size, duration, and how many are using the facilities [The water primarily and electric] and what you need. Basic utililies and Trash removal also included. Around $500-600 per month for one month or more. Talk to me on what you need. 2 week minimum stay with a 2 week agreement.   Space has gardening possibilities, and contains about 2000 square feet of total land or about 50 ft by 40ft. I have had in the past, a tiny home built on this location, as well as mid sized Trailers, RVs and fifth wheels.  In past years, many have stayed through the Winter, using the Bathhouse for water.
-    ## 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Hwy 141 @ Craighead/Greene County line.  2 bedroom 1 bath mobile home - partially furnished, or not. Washer/Dryer Refrigerator  Access to Private Fishing Lake  $175 per week or $750/month Utilities are tenant's responsibility  For viewing appointment           Call  show contact info  - Between 7am - 7pm only please.      Or TEXT ONLY  @ (870) 2750-1328 *** calls will not be answered on this number.
-    ##       lat      long state
-    ## 1 28.1428  -81.8024    fl
-    ## 2 35.5690 -105.8550    nm
-    ## 3 35.8330  -90.6965    ar
+              id          region price type sqfeet beds baths cats_allowed
+    1 7030040917        lakeland   350 land    400    1     1            1
+    2 7047503378 santa fe / taos   550 land   2000    0     1            1
+    3 7029082924       jonesboro   750 land    900    2     1            0
+      dogs_allowed smoking_allowed wheelchair_access electric_vehicle_charge
+    1            1               1                 0                       0
+    2            1               1                 0                       1
+    3            0               1                 0                       0
+      comes_furnished laundry_options    parking_options
+    1               0 laundry on site off-street parking
+    2               0     w/d hookups off-street parking
+    3               0     w/d in unit off-street parking
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                description
+    1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Lake Juliana Boating and Lodging, a 100 year old central Florida fishcamp known to locals as Lundyville is offering  Recreational Vehicle spaces for yearly lease opportunities. This park is located on Lake Juliana near the convenience of the  I4  corridor to access Lakeland, Orlando areas. The park is secluded on a dead end road with quiet being the mainstay. 126 foot fishing dock, pool, dedicated parking.  The property is also home of the small and intimate Lundyville Music Hall event venue featuring live bands, open mics, karaoke and special musical entertainment events.  RV's  should be no older than 2000.   Water is provided and lawn care is available. Electricity has been updated to 50 amp services with billing through TECO power. Covered boat slips with electric power is available for tenants.  Please contact John at  show contact info  for more information.   Please note: Units including washers will pay additional $15 monthly rental fee.
+    2 Now Available: Parking Space for tiny house or RV on land out SF Trail, Below Camp Stoney. Adjoins Wilderness and great trails. It is beautiful out here, and only 20 minutes to town, 12 minutes to Harry's Road House Restaurant or El Gancho Club. Fully paved road to front gate. Walled One Acre already has one one 20 foot RV. Also 2 currently rented Cabin Studio Houses. Has recently refurbished, retiled Bathhouse, with toilet and hot water shower, shared with the Single Person in other Travel Trailer. Delicious Water from well. Electricity via 50 amp RV metered plugin.  High Speed internet included.  Heating not included.  I am providing heat and electricity for the bath house, and propane for the hot water.  Renter pays for usage of electricity for their living unit and provides their propane or wood for cooking and heating.     My daughter and I have several cats,  love animals, and want easy to live with, neighbors and other animals. We live in a valley of pondarosa pines, canyons with access to beautiful long walks as we border on the several thousand acres of the little utilized Camp Stoney Summer Camp. We live on a one-acre walled compound so there is a feeling of enclosure and safety, as well as access to living in the outdoors. Space is available for gardening and composting.  This is an amazing area, close to Santa Fe, yet has a feeling of being far out in the country.  Good for those who enjoy being on the edge, yet surrounded by more nature than city.  This space co-exists with two other fully self contained houses nearby within this compound. We are mostly artists, musicians and those in the healing service professions. There is a great creative energy here, and if the 20 minute drive from Santa Fe is not too far for you, [closer than Eldorado by a few miles] you will love the walks and quiet that exist here.  Amazing dark starry sky.  This is an old, mixed settlement of various cultures here, and my 40 year experience living here, is positive with my neighbors, who are there if you need help or are broken down on the side of the road. It is a country feeling here, and if you can appreciate the old funky ways of New Mexico you will enjoy it here. It is not a covenanted area like El Dorado, in that we have distant neighbors with horses, rabbits, chickens, goats, and the occasional non-running vintage pickup on blocks. It is very quiet and pleasant out here. Most neighboring houses are on several acres. Many comment how amazed they are, that we are so close to Santa Fe, yet have such nature and privacy. The stars are incredible out here.   There is a feeling here, of being on the edge, with access to nature, yet to the plaza is only 20 minutes away, straight down the Old Santa Fe Trail, with only 3 stop signs the entire way to town.   Living on the edge of the Camp Stoney Summer camp with all the land they have is like a sanctuary we adjoin. This is a great place for those who like that closeness and connection to nature. Has wireless internet, with recent high speed upgrade.     Water could be supplied to your unit, by hose, from the well house/bathhouse about 30 feet away.  During freeze months, you would need a tank in your unit that can be filled.   I provide water, and propane for the bathhouse, included in rent.  Grey water could be alright, and but no septic entrances for dark water disposal.  That is where the nearby bathhouse provides toilet access and running, hot/cold water, on a year round basis.  Animals are possible if owner is responsible, and they are no problem to the others here on the property, and my nearby neighbors.   Price of rent determined by size, duration, and how many are using the facilities [The water primarily and electric] and what you need. Basic utililies and Trash removal also included. Around $500-600 per month for one month or more. Talk to me on what you need. 2 week minimum stay with a 2 week agreement.   Space has gardening possibilities, and contains about 2000 square feet of total land or about 50 ft by 40ft. I have had in the past, a tiny home built on this location, as well as mid sized Trailers, RVs and fifth wheels.  In past years, many have stayed through the Winter, using the Bathhouse for water.
+    3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    Hwy 141 @ Craighead/Greene County line.  2 bedroom 1 bath mobile home - partially furnished, or not. Washer/Dryer Refrigerator  Access to Private Fishing Lake  $175 per week or $750/month Utilities are tenant's responsibility  For viewing appointment           Call  show contact info  - Between 7am - 7pm only please.      Or TEXT ONLY  @ (870) 2750-1328 *** calls will not be answered on this number.
+          lat      long state
+    1 28.1428  -81.8024    fl
+    2 35.5690 -105.8550    nm
+    3 35.8330  -90.6965    ar
 
 These three cases seem like monthly fees for mobile homes. Since there
 are only three cases in this type, and this type is very different from
@@ -581,22 +522,20 @@ mydata%>%
   summarize(avg_price=round(mean(price)), count=n())
 ```
 
-    ## `summarise()` ungrouping output (override with `.groups` argument)
-
-    ## # A tibble: 51 x 3
-    ##    state avg_price count
-    ##    <chr>     <dbl> <int>
-    ##  1 AK         1169  2095
-    ##  2 AL          881  8093
-    ##  3 AR          859  3087
-    ##  4 AZ         1051  6453
-    ##  5 CA         1744 30251
-    ##  6 CO         1471 10824
-    ##  7 CT         1338  3673
-    ##  8 DC         1810  2369
-    ##  9 DE         1275  2007
-    ## 10 FL         1219 31160
-    ## # ... with 41 more rows
+    # A tibble: 51 x 3
+       state avg_price count
+       <chr>     <dbl> <int>
+     1 AK         1169  2095
+     2 AL          881  8093
+     3 AR          859  3087
+     4 AZ         1051  6453
+     5 CA         1744 30251
+     6 CO         1471 10824
+     7 CT         1338  3673
+     8 DC         1810  2369
+     9 DE         1275  2007
+    10 FL         1219 31160
+    # ... with 41 more rows
 
 ##### Map by State
 
@@ -667,10 +606,10 @@ mydata$laundry_options <- as.factor(mydata$laundry_options)
 summary(mydata$laundry_options)
 ```
 
-    ## Information not available           laundry in bldg           laundry on site 
-    ##                     76741                     34178                     56361 
-    ##        no laundry on site               w/d hookups               w/d in unit 
-    ##                      3235                     73644                    126923
+    Information not available           laundry in bldg           laundry on site 
+                        76741                     34178                     56361 
+           no laundry on site               w/d hookups               w/d in unit 
+                         3235                     73644                    126923 
 
 ``` r
 mydata%>% 
@@ -678,17 +617,15 @@ mydata%>%
   summarize(avg_price=round(mean(price)), count=n())
 ```
 
-    ## `summarise()` ungrouping output (override with `.groups` argument)
-
-    ## # A tibble: 6 x 3
-    ##   laundry_options           avg_price  count
-    ##   <fct>                         <dbl>  <int>
-    ## 1 Information not available      1101  76741
-    ## 2 laundry in bldg                1031  34178
-    ## 3 laundry on site                 979  56361
-    ## 4 no laundry on site              957   3235
-    ## 5 w/d hookups                    1045  73644
-    ## 6 w/d in unit                    1375 126923
+    # A tibble: 6 x 3
+      laundry_options           avg_price  count
+      <fct>                         <dbl>  <int>
+    1 Information not available      1101  76741
+    2 laundry in bldg                1031  34178
+    3 laundry on site                 979  56361
+    4 no laundry on site              957   3235
+    5 w/d hookups                    1045  73644
+    6 w/d in unit                    1375 126923
 
 There are 6 categories in laundry options. We can see that washer/dryer
 in unit has the highest mean prices compared to others, which makes
@@ -709,12 +646,12 @@ mydata$parking_options <- as.factor(mydata$parking_options)
 summary(mydata$parking_options)
 ```
 
-    ##           attached garage                   carport           detached garage 
-    ##                     37006                     38004                     16263 
-    ## Information not available                no parking        off-street parking 
-    ##                    137014                      3087                    124171 
-    ##            street parking             valet parking 
-    ##                     15393                       144
+              attached garage                   carport           detached garage 
+                        37006                     38004                     16263 
+    Information not available                no parking        off-street parking 
+                       137014                      3087                    124171 
+               street parking             valet parking 
+                        15393                       144 
 
 ``` r
 mydata%>% 
@@ -722,19 +659,17 @@ mydata%>%
   summarize(avg_price=round(mean(price)), count=n())
 ```
 
-    ## `summarise()` ungrouping output (override with `.groups` argument)
-
-    ## # A tibble: 8 x 3
-    ##   parking_options           avg_price  count
-    ##   <fct>                         <dbl>  <int>
-    ## 1 attached garage                1529  37006
-    ## 2 carport                        1261  38004
-    ## 3 detached garage                1323  16263
-    ## 4 Information not available      1108 137014
-    ## 5 no parking                     1238   3087
-    ## 6 off-street parking             1045 124171
-    ## 7 street parking                 1154  15393
-    ## 8 valet parking                  1787    144
+    # A tibble: 8 x 3
+      parking_options           avg_price  count
+      <fct>                         <dbl>  <int>
+    1 attached garage                1529  37006
+    2 carport                        1261  38004
+    3 detached garage                1323  16263
+    4 Information not available      1108 137014
+    5 no parking                     1238   3087
+    6 off-street parking             1045 124171
+    7 street parking                 1154  15393
+    8 valet parking                  1787    144
 
 There are 8 categories in parking options. WE can see that valet parking
 has the highest mean prices compared to others. Same as laundry options,
@@ -749,22 +684,20 @@ mydata%>%
   summarize(avg_price=round(mean(price)), count=n())
 ```
 
-    ## `summarise()` ungrouping output (override with `.groups` argument)
-
-    ## # A tibble: 404 x 3
-    ##    region             avg_price count
-    ##    <fct>                  <dbl> <int>
-    ##  1 abilene                  792   891
-    ##  2 akron / canton           850  1508
-    ##  3 albany                  1025  2046
-    ##  4 albuquerque              900  2053
-    ##  5 altoona-johnstown        815   245
-    ##  6 amarillo                 657  1341
-    ##  7 ames                     825   354
-    ##  8 anchorage / mat-su      1150  1654
-    ##  9 ann arbor               1249  2215
-    ## 10 annapolis               1588  2041
-    ## # ... with 394 more rows
+    # A tibble: 404 x 3
+       region             avg_price count
+       <fct>                  <dbl> <int>
+     1 abilene                  792   891
+     2 akron / canton           850  1508
+     3 albany                  1025  2046
+     4 albuquerque              900  2053
+     5 altoona-johnstown        815   245
+     6 amarillo                 657  1341
+     7 ames                     825   354
+     8 anchorage / mat-su      1150  1654
+     9 ann arbor               1249  2215
+    10 annapolis               1588  2041
+    # ... with 394 more rows
 
 There are 404 unique regions in our data set. The regions are not
 cleaned. Some indicate a city, a town, or an area, and some just
@@ -827,21 +760,21 @@ pwrAnalysis <- pwr.f2.test(u = k-1, f2 = (adjR2 / (1-adjR2)), sig.level = 0.05, 
 pwrAnalysis
 ```
 
-    ## 
-    ##      Multiple regression power calculation 
-    ## 
-    ##               u = 19
-    ##               v = 2030.096
-    ##              f2 = 0.01010101
-    ##       sig.level = 0.05
-    ##           power = 0.8
+
+         Multiple regression power calculation 
+
+                  u = 19
+                  v = 2030.096
+                 f2 = 0.01010101
+          sig.level = 0.05
+              power = 0.8
 
 ``` r
 sampSize = floor(pwrAnalysis$u + pwrAnalysis$v + 1)+1
 sampSize
 ```
 
-    ## [1] 2051
+    [1] 2051
 
 We will have multivariate linear models and mixed effect models. If our
 largest model have 20 terms, we will need 2051 observations to detect a
@@ -859,24 +792,24 @@ lm1 <- lm(price ~ sqfeet, data = mydata)
 summary(lm1)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet, data = mydata)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -1446.5  -303.9  -102.5   204.7  2439.9 
-    ## 
-    ## Coefficients:
-    ##              Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) 6.838e+02  2.440e+00   280.2   <2e-16 ***
-    ## sqfeet      4.841e-01  2.373e-03   204.0   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 459 on 371080 degrees of freedom
-    ## Multiple R-squared:  0.1009, Adjusted R-squared:  0.1009 
-    ## F-statistic: 4.162e+04 on 1 and 371080 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet, data = mydata)
+
+    Residuals:
+        Min      1Q  Median      3Q     Max 
+    -1446.5  -303.9  -102.5   204.7  2439.9 
+
+    Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+    (Intercept) 6.838e+02  2.440e+00   280.2   <2e-16 ***
+    sqfeet      4.841e-01  2.373e-03   204.0   <2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 459 on 371080 degrees of freedom
+    Multiple R-squared:  0.1009,    Adjusted R-squared:  0.1009 
+    F-statistic: 4.162e+04 on 1 and 371080 DF,  p-value: < 2.2e-16
 
 ``` r
 par(mfrow=c(2,2))
@@ -903,32 +836,32 @@ lm2 <- lm(price ~ beds + baths, data = mydata)
 summary(lm2)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ beds + baths, data = mydata)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -1575.9  -318.1  -106.9   215.1  2375.6 
-    ## 
-    ## Coefficients:
-    ##             Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)  852.369      2.223   383.4   <2e-16 ***
-    ## beds          11.022      1.173     9.4   <2e-16 ***
-    ## baths        193.730      1.735   111.7   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 470 on 371079 degrees of freedom
-    ## Multiple R-squared:  0.05754,    Adjusted R-squared:  0.05754 
-    ## F-statistic: 1.133e+04 on 2 and 371079 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ beds + baths, data = mydata)
+
+    Residuals:
+        Min      1Q  Median      3Q     Max 
+    -1575.9  -318.1  -106.9   215.1  2375.6 
+
+    Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)  852.369      2.223   383.4   <2e-16 ***
+    beds          11.022      1.173     9.4   <2e-16 ***
+    baths        193.730      1.735   111.7   <2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 470 on 371079 degrees of freedom
+    Multiple R-squared:  0.05754,   Adjusted R-squared:  0.05754 
+    F-statistic: 1.133e+04 on 2 and 371079 DF,  p-value: < 2.2e-16
 
 ``` r
 car::vif(lm2)
 ```
 
-    ##     beds    baths 
-    ## 1.633673 1.633673
+        beds    baths 
+    1.633673 1.633673 
 
 When we just include beds and baths in the linear model, both of them
 are positively related to price. The model is statistically significant,
@@ -945,34 +878,30 @@ lm2_int <- lm(price ~  beds * baths, data = mydata)
 summary(lm2_int)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ beds * baths, data = mydata)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -1242.7  -320.5  -104.8   212.0  2439.5 
-    ## 
-    ## Coefficients:
-    ##             Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)  686.849      5.023  136.73   <2e-16 ***
-    ## beds          87.658      2.392   36.64   <2e-16 ***
-    ## baths        323.624      3.938   82.19   <2e-16 ***
-    ## beds:baths   -55.344      1.507  -36.73   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 469.1 on 371078 degrees of freedom
-    ## Multiple R-squared:  0.06095,    Adjusted R-squared:  0.06095 
-    ## F-statistic:  8029 on 3 and 371078 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ beds * baths, data = mydata)
+
+    Residuals:
+        Min      1Q  Median      3Q     Max 
+    -1242.7  -320.5  -104.8   212.0  2439.5 
+
+    Coefficients:
+                Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)  686.849      5.023  136.73   <2e-16 ***
+    beds          87.658      2.392   36.64   <2e-16 ***
+    baths        323.624      3.938   82.19   <2e-16 ***
+    beds:baths   -55.344      1.507  -36.73   <2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 469.1 on 371078 degrees of freedom
+    Multiple R-squared:  0.06095,   Adjusted R-squared:  0.06095 
+    F-statistic:  8029 on 3 and 371078 DF,  p-value: < 2.2e-16
 
 ``` r
 library(interactions)
-```
 
-    ## Warning: package 'interactions' was built under R version 4.0.3
-
-``` r
 interact_plot(lm2_int, pred = beds, modx = baths)
 ```
 
@@ -994,33 +923,33 @@ lm2a <- lm(price ~ sqfeet + beds + baths , data = mydata)
 summary(lm2a)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet + beds + baths, data = mydata)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -1794.8  -297.7  -100.6   199.3  2589.8 
-    ## 
-    ## Coefficients:
-    ##               Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)  6.373e+02  2.496e+00  255.35   <2e-16 ***
-    ## sqfeet       6.511e-01  3.874e-03  168.07   <2e-16 ***
-    ## beds        -1.357e+02  1.428e+00  -95.04   <2e-16 ***
-    ## baths        9.426e+01  1.774e+00   53.13   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 453 on 371078 degrees of freedom
-    ## Multiple R-squared:  0.1242, Adjusted R-squared:  0.1242 
-    ## F-statistic: 1.754e+04 on 3 and 371078 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet + beds + baths, data = mydata)
+
+    Residuals:
+        Min      1Q  Median      3Q     Max 
+    -1794.8  -297.7  -100.6   199.3  2589.8 
+
+    Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)  6.373e+02  2.496e+00  255.35   <2e-16 ***
+    sqfeet       6.511e-01  3.874e-03  168.07   <2e-16 ***
+    beds        -1.357e+02  1.428e+00  -95.04   <2e-16 ***
+    baths        9.426e+01  1.774e+00   53.13   <2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 453 on 371078 degrees of freedom
+    Multiple R-squared:  0.1242,    Adjusted R-squared:  0.1242 
+    F-statistic: 1.754e+04 on 3 and 371078 DF,  p-value: < 2.2e-16
 
 ``` r
 car::vif(lm2a)
 ```
 
-    ##   sqfeet     beds    baths 
-    ## 2.736125 2.608752 1.838312
+      sqfeet     beds    baths 
+    2.736125 2.608752 1.838312 
 
 When we add square feet in the model, beds’ coefficient becomes
 negative. We thought that there may be a multicollinearity issue with
@@ -1035,30 +964,30 @@ lm2a_int <- lm(price ~ sqfeet * (beds + baths) + beds * baths, data = mydata)
 summary(lm2a_int)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet * (beds + baths) + beds * baths, 
-    ##     data = mydata)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -2349.7  -299.3  -101.4   199.6  2631.7 
-    ## 
-    ## Coefficients:
-    ##                Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)  529.134830   6.605775  80.102  < 2e-16 ***
-    ## sqfeet         0.502164   0.010990  45.694  < 2e-16 ***
-    ## beds         -21.515957   3.977423  -5.410 6.32e-08 ***
-    ## baths        201.254277   6.227670  32.316  < 2e-16 ***
-    ## sqfeet:beds    0.006158   0.003065   2.009   0.0445 *  
-    ## sqfeet:baths   0.079462   0.005793  13.717  < 2e-16 ***
-    ## beds:baths   -83.035177   2.283798 -36.358  < 2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 451.9 on 371075 degrees of freedom
-    ## Multiple R-squared:  0.1285, Adjusted R-squared:  0.1285 
-    ## F-statistic:  9119 on 6 and 371075 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet * (beds + baths) + beds * baths, 
+        data = mydata)
+
+    Residuals:
+        Min      1Q  Median      3Q     Max 
+    -2349.7  -299.3  -101.4   199.6  2631.7 
+
+    Coefficients:
+                   Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)  529.134830   6.605775  80.102  < 2e-16 ***
+    sqfeet         0.502164   0.010990  45.694  < 2e-16 ***
+    beds         -21.515957   3.977423  -5.410 6.32e-08 ***
+    baths        201.254277   6.227670  32.316  < 2e-16 ***
+    sqfeet:beds    0.006158   0.003065   2.009   0.0445 *  
+    sqfeet:baths   0.079462   0.005793  13.717  < 2e-16 ***
+    beds:baths   -83.035177   2.283798 -36.358  < 2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 451.9 on 371075 degrees of freedom
+    Multiple R-squared:  0.1285,    Adjusted R-squared:  0.1285 
+    F-statistic:  9119 on 6 and 371075 DF,  p-value: < 2.2e-16
 
 The interaction term of beds and baths is significant in this model. The
 interaction term of square feet and beds is just above the significant
@@ -1100,33 +1029,33 @@ lm3 <- lm(price ~ sqfeet + dogs_allowed + cats_allowed, data=mydata)
 summary(lm3)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet + dogs_allowed + cats_allowed, data = mydata)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -1450.0  -303.9  -102.9   204.8  2442.4 
-    ## 
-    ## Coefficients:
-    ##                 Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)   681.473445   2.835814  240.31   <2e-16 ***
-    ## sqfeet          0.486696   0.002386  203.97   <2e-16 ***
-    ## dogs_allowed1 -48.932913   3.633756  -13.47   <2e-16 ***
-    ## cats_allowed1  47.338939   3.727564   12.70   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 458.9 on 371078 degrees of freedom
-    ## Multiple R-squared:  0.1013, Adjusted R-squared:  0.1013 
-    ## F-statistic: 1.394e+04 on 3 and 371078 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet + dogs_allowed + cats_allowed, data = mydata)
+
+    Residuals:
+        Min      1Q  Median      3Q     Max 
+    -1450.0  -303.9  -102.9   204.8  2442.4 
+
+    Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)   681.473445   2.835814  240.31   <2e-16 ***
+    sqfeet          0.486696   0.002386  203.97   <2e-16 ***
+    dogs_allowed1 -48.932913   3.633756  -13.47   <2e-16 ***
+    cats_allowed1  47.338939   3.727564   12.70   <2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 458.9 on 371078 degrees of freedom
+    Multiple R-squared:  0.1013,    Adjusted R-squared:  0.1013 
+    F-statistic: 1.394e+04 on 3 and 371078 DF,  p-value: < 2.2e-16
 
 ``` r
 car::vif(lm3)
 ```
 
-    ##       sqfeet dogs_allowed cats_allowed 
-    ##     1.011571     4.747170     4.770903
+          sqfeet dogs_allowed cats_allowed 
+        1.011571     4.747170     4.770903 
 
 The model is significant with ajusted R-squared of 0.1013. 10.13% of
 variance in price are explained by independent variables. All variables
@@ -1141,30 +1070,30 @@ lm3_int <- lm(price ~ sqfeet * (dogs_allowed + cats_allowed ) + dogs_allowed * c
 summary(lm3_int)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet * (dogs_allowed + cats_allowed) + 
-    ##     dogs_allowed * cats_allowed, data = mydata)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -1448.6  -303.3  -102.5   204.6  2444.0 
-    ## 
-    ## Coefficients:
-    ##                               Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)                  6.859e+02  4.492e+00 152.703  < 2e-16 ***
-    ## sqfeet                       4.796e-01  4.189e-03 114.469  < 2e-16 ***
-    ## dogs_allowed1                8.515e+01  1.437e+01   5.924 3.14e-09 ***
-    ## cats_allowed1                8.297e+00  1.050e+01   0.790    0.429    
-    ## sqfeet:dogs_allowed1        -6.065e-02  1.042e-02  -5.822 5.80e-09 ***
-    ## sqfeet:cats_allowed1         6.915e-02  1.048e-02   6.600 4.12e-11 ***
-    ## dogs_allowed1:cats_allowed1 -1.018e+02  8.773e+00 -11.606  < 2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 458.8 on 371075 degrees of freedom
-    ## Multiple R-squared:  0.1016, Adjusted R-squared:  0.1016 
-    ## F-statistic:  6998 on 6 and 371075 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet * (dogs_allowed + cats_allowed) + 
+        dogs_allowed * cats_allowed, data = mydata)
+
+    Residuals:
+        Min      1Q  Median      3Q     Max 
+    -1448.6  -303.3  -102.5   204.6  2444.0 
+
+    Coefficients:
+                                  Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)                  6.859e+02  4.492e+00 152.703  < 2e-16 ***
+    sqfeet                       4.796e-01  4.189e-03 114.469  < 2e-16 ***
+    dogs_allowed1                8.515e+01  1.437e+01   5.924 3.14e-09 ***
+    cats_allowed1                8.297e+00  1.050e+01   0.790    0.429    
+    sqfeet:dogs_allowed1        -6.065e-02  1.042e-02  -5.822 5.80e-09 ***
+    sqfeet:cats_allowed1         6.915e-02  1.048e-02   6.600 4.12e-11 ***
+    dogs_allowed1:cats_allowed1 -1.018e+02  8.773e+00 -11.606  < 2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 458.8 on 371075 degrees of freedom
+    Multiple R-squared:  0.1016,    Adjusted R-squared:  0.1016 
+    F-statistic:  6998 on 6 and 371075 DF,  p-value: < 2.2e-16
 
 The interaction terms are all highly statistically significant, but
 cats\_allowed is no longer significant here. The adjusted R-squared only
@@ -1184,21 +1113,7 @@ interact_plot(lm3_int, pred = sqfeet, modx = cats_allowed)
 
 ``` r
 library(effects)
-```
 
-    ## Loading required package: carData
-
-    ## Registered S3 methods overwritten by 'lme4':
-    ##   method                          from
-    ##   cooks.distance.influence.merMod car 
-    ##   influence.merMod                car 
-    ##   dfbeta.influence.merMod         car 
-    ##   dfbetas.influence.merMod        car
-
-    ## lattice theme set by effectsTheme()
-    ## See ?effectsTheme for details.
-
-``` r
 modelEffects <- effect("dogs_allowed * cats_allowed", lm3_int)
 plot(modelEffects)
 ```
@@ -1227,38 +1142,38 @@ lm4 <- lm(price ~ sqfeet + smoking_allowed + wheelchair_access + electric_vehicl
 summary(lm4)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet + smoking_allowed + wheelchair_access + 
-    ##     electric_vehicle_charge + comes_furnished, data = mydata)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -1572.62  -293.99   -94.46   202.19  2511.79 
-    ## 
-    ## Coefficients:
-    ##                            Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)               7.917e+02  2.797e+00  283.00   <2e-16 ***
-    ## sqfeet                    4.787e-01  2.329e-03  205.53   <2e-16 ***
-    ## smoking_allowed1         -1.511e+02  1.735e+00  -87.08   <2e-16 ***
-    ## wheelchair_access1        6.657e+01  2.865e+00   23.24   <2e-16 ***
-    ## electric_vehicle_charge1  4.385e+02  6.885e+00   63.69   <2e-16 ***
-    ## comes_furnished1         -4.892e+01  3.829e+00  -12.78   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 450 on 371076 degrees of freedom
-    ## Multiple R-squared:  0.136,  Adjusted R-squared:  0.136 
-    ## F-statistic: 1.168e+04 on 5 and 371076 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet + smoking_allowed + wheelchair_access + 
+        electric_vehicle_charge + comes_furnished, data = mydata)
+
+    Residuals:
+         Min       1Q   Median       3Q      Max 
+    -1572.62  -293.99   -94.46   202.19  2511.79 
+
+    Coefficients:
+                               Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)               7.917e+02  2.797e+00  283.00   <2e-16 ***
+    sqfeet                    4.787e-01  2.329e-03  205.53   <2e-16 ***
+    smoking_allowed1         -1.511e+02  1.735e+00  -87.08   <2e-16 ***
+    wheelchair_access1        6.657e+01  2.865e+00   23.24   <2e-16 ***
+    electric_vehicle_charge1  4.385e+02  6.885e+00   63.69   <2e-16 ***
+    comes_furnished1         -4.892e+01  3.829e+00  -12.78   <2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 450 on 371076 degrees of freedom
+    Multiple R-squared:  0.136, Adjusted R-squared:  0.136 
+    F-statistic: 1.168e+04 on 5 and 371076 DF,  p-value: < 2.2e-16
 
 ``` r
 car::vif(lm4)
 ```
 
-    ##                  sqfeet         smoking_allowed       wheelchair_access 
-    ##                1.002559                1.071361                1.112745 
-    ## electric_vehicle_charge         comes_furnished 
-    ##                1.039193                1.058738
+                     sqfeet         smoking_allowed       wheelchair_access 
+                   1.002559                1.071361                1.112745 
+    electric_vehicle_charge         comes_furnished 
+                   1.039193                1.058738 
 
 This model includes all of the other binary variables. The model is
 significant. Adjusted R-squared is 0.136, so the independent variables
@@ -1280,33 +1195,33 @@ lm4_int <- lm(price ~ sqfeet * (smoking_allowed + wheelchair_access + electric_v
 summary(lm4_int)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet * (smoking_allowed + wheelchair_access + 
-    ##     electric_vehicle_charge + comes_furnished), data = mydata)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -1673.70  -292.75   -95.97   201.91  2470.13 
-    ## 
-    ## Coefficients:
-    ##                                   Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)                     686.381394   4.723853 145.301  < 2e-16 ***
-    ## sqfeet                            0.582306   0.004433 131.362  < 2e-16 ***
-    ## smoking_allowed1                -36.308657   5.382297  -6.746 1.52e-11 ***
-    ## wheelchair_access1              126.470173   9.174267  13.785  < 2e-16 ***
-    ## electric_vehicle_charge1        765.051353  21.076530  36.299  < 2e-16 ***
-    ## comes_furnished1                191.103490  10.162034  18.806  < 2e-16 ***
-    ## sqfeet:smoking_allowed1          -0.113089   0.005113 -22.117  < 2e-16 ***
-    ## sqfeet:wheelchair_access1        -0.061074   0.009031  -6.762 1.36e-11 ***
-    ## sqfeet:electric_vehicle_charge1  -0.326663   0.020489 -15.943  < 2e-16 ***
-    ## sqfeet:comes_furnished1          -0.232376   0.009239 -25.152  < 2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 449.1 on 371072 degrees of freedom
-    ## Multiple R-squared:  0.1393, Adjusted R-squared:  0.1393 
-    ## F-statistic:  6674 on 9 and 371072 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet * (smoking_allowed + wheelchair_access + 
+        electric_vehicle_charge + comes_furnished), data = mydata)
+
+    Residuals:
+         Min       1Q   Median       3Q      Max 
+    -1673.70  -292.75   -95.97   201.91  2470.13 
+
+    Coefficients:
+                                      Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)                     686.381394   4.723853 145.301  < 2e-16 ***
+    sqfeet                            0.582306   0.004433 131.362  < 2e-16 ***
+    smoking_allowed1                -36.308657   5.382297  -6.746 1.52e-11 ***
+    wheelchair_access1              126.470173   9.174267  13.785  < 2e-16 ***
+    electric_vehicle_charge1        765.051353  21.076530  36.299  < 2e-16 ***
+    comes_furnished1                191.103490  10.162034  18.806  < 2e-16 ***
+    sqfeet:smoking_allowed1          -0.113089   0.005113 -22.117  < 2e-16 ***
+    sqfeet:wheelchair_access1        -0.061074   0.009031  -6.762 1.36e-11 ***
+    sqfeet:electric_vehicle_charge1  -0.326663   0.020489 -15.943  < 2e-16 ***
+    sqfeet:comes_furnished1          -0.232376   0.009239 -25.152  < 2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 449.1 on 371072 degrees of freedom
+    Multiple R-squared:  0.1393,    Adjusted R-squared:  0.1393 
+    F-statistic:  6674 on 9 and 371072 DF,  p-value: < 2.2e-16
 
 The interaction terms are all significant. The adjusted R-squared
 slightly increased from 0.136 to 0.1393. The interaction effects are
@@ -1349,43 +1264,43 @@ lmAll_int <- lm(price ~ sqfeet*(dogs_allowed + cats_allowed + smoking_allowed + 
 summary(lmAll_int)
 ```
 
-    ## 
-    ## Call:
-    ## lm(formula = price ~ sqfeet * (dogs_allowed + cats_allowed + 
-    ##     smoking_allowed + wheelchair_access + electric_vehicle_charge + 
-    ##     comes_furnished) + dogs_allowed * cats_allowed + beds * baths, 
-    ##     data = mydata)
-    ## 
-    ## Residuals:
-    ##      Min       1Q   Median       3Q      Max 
-    ## -1936.33  -287.99   -92.31   193.97  2553.49 
-    ## 
-    ## Coefficients:
-    ##                                   Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)                     513.208639   7.317846  70.131  < 2e-16 ***
-    ## sqfeet                            0.697245   0.005906 118.067  < 2e-16 ***
-    ## dogs_allowed1                    58.156261  13.894665   4.186 2.85e-05 ***
-    ## cats_allowed1                   -28.873711  10.193663  -2.833  0.00462 ** 
-    ## smoking_allowed1                -37.800103   5.327410  -7.095 1.29e-12 ***
-    ## wheelchair_access1              130.823955   9.180501  14.250  < 2e-16 ***
-    ## electric_vehicle_charge1        771.639326  20.772472  37.147  < 2e-16 ***
-    ## comes_furnished1                180.375101  10.064415  17.922  < 2e-16 ***
-    ## beds                            -48.491093   2.435988 -19.906  < 2e-16 ***
-    ## baths                           228.841329   3.799617  60.227  < 2e-16 ***
-    ## sqfeet:dogs_allowed1             -0.051187   0.010072  -5.082 3.74e-07 ***
-    ## sqfeet:cats_allowed1              0.099775   0.010174   9.807  < 2e-16 ***
-    ## sqfeet:smoking_allowed1          -0.107726   0.005073 -21.234  < 2e-16 ***
-    ## sqfeet:wheelchair_access1        -0.075308   0.009038  -8.332  < 2e-16 ***
-    ## sqfeet:electric_vehicle_charge1  -0.347810   0.020195 -17.222  < 2e-16 ***
-    ## sqfeet:comes_furnished1          -0.207965   0.009161 -22.701  < 2e-16 ***
-    ## dogs_allowed1:cats_allowed1     -94.999280   8.483684 -11.198  < 2e-16 ***
-    ## beds:baths                      -57.287445   1.438263 -39.831  < 2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 442.4 on 371064 degrees of freedom
-    ## Multiple R-squared:  0.1648, Adjusted R-squared:  0.1647 
-    ## F-statistic:  4305 on 17 and 371064 DF,  p-value: < 2.2e-16
+
+    Call:
+    lm(formula = price ~ sqfeet * (dogs_allowed + cats_allowed + 
+        smoking_allowed + wheelchair_access + electric_vehicle_charge + 
+        comes_furnished) + dogs_allowed * cats_allowed + beds * baths, 
+        data = mydata)
+
+    Residuals:
+         Min       1Q   Median       3Q      Max 
+    -1936.33  -287.99   -92.31   193.97  2553.49 
+
+    Coefficients:
+                                      Estimate Std. Error t value Pr(>|t|)    
+    (Intercept)                     513.208639   7.317846  70.131  < 2e-16 ***
+    sqfeet                            0.697245   0.005906 118.067  < 2e-16 ***
+    dogs_allowed1                    58.156261  13.894665   4.186 2.85e-05 ***
+    cats_allowed1                   -28.873711  10.193663  -2.833  0.00462 ** 
+    smoking_allowed1                -37.800103   5.327410  -7.095 1.29e-12 ***
+    wheelchair_access1              130.823955   9.180501  14.250  < 2e-16 ***
+    electric_vehicle_charge1        771.639326  20.772472  37.147  < 2e-16 ***
+    comes_furnished1                180.375101  10.064415  17.922  < 2e-16 ***
+    beds                            -48.491093   2.435988 -19.906  < 2e-16 ***
+    baths                           228.841329   3.799617  60.227  < 2e-16 ***
+    sqfeet:dogs_allowed1             -0.051187   0.010072  -5.082 3.74e-07 ***
+    sqfeet:cats_allowed1              0.099775   0.010174   9.807  < 2e-16 ***
+    sqfeet:smoking_allowed1          -0.107726   0.005073 -21.234  < 2e-16 ***
+    sqfeet:wheelchair_access1        -0.075308   0.009038  -8.332  < 2e-16 ***
+    sqfeet:electric_vehicle_charge1  -0.347810   0.020195 -17.222  < 2e-16 ***
+    sqfeet:comes_furnished1          -0.207965   0.009161 -22.701  < 2e-16 ***
+    dogs_allowed1:cats_allowed1     -94.999280   8.483684 -11.198  < 2e-16 ***
+    beds:baths                      -57.287445   1.438263 -39.831  < 2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+    Residual standard error: 442.4 on 371064 degrees of freedom
+    Multiple R-squared:  0.1648,    Adjusted R-squared:  0.1647 
+    F-statistic:  4305 on 17 and 371064 DF,  p-value: < 2.2e-16
 
 ``` r
 par(mfrow=c(2,2))
@@ -2974,8 +2889,6 @@ ggplot(mydata, aes(sqfeet, price, group = type)) +
   theme_bw()
 ```
 
-    ## `geom_smooth()` using formula 'y ~ x'
-
 ![](README_files/figure-markdown_github/unnamed-chunk-37-1.png)
 
 The plot shows that different housing types have different intercepts
@@ -2990,8 +2903,6 @@ ggplot(mydata, aes(sqfeet, price, group = state)) +
   facet_wrap( ~ state) +
   theme_bw()
 ```
-
-    ## `geom_smooth()` using formula 'y ~ x'
 
 ![](README_files/figure-markdown_github/unnamed-chunk-38-1.png)
 
@@ -3008,8 +2919,6 @@ ggplot(mydata, aes(sqfeet, price, group = laundry_options)) +
   theme_bw()
 ```
 
-    ## `geom_smooth()` using formula 'y ~ x'
-
 ![](README_files/figure-markdown_github/unnamed-chunk-39-1.png)
 
 The plot shows that different laundry options have different intercepts
@@ -3025,8 +2934,6 @@ ggplot(mydata, aes(sqfeet, price, group = parking_options)) +
   theme_bw()
 ```
 
-    ## `geom_smooth()` using formula 'y ~ x'
-
 ![](README_files/figure-markdown_github/unnamed-chunk-40-1.png)
 
 The plot shows that different parking options have different intercepts
@@ -3038,18 +2945,7 @@ for square feet on price.
 
 ``` r
 library(lme4)
-```
 
-    ## Loading required package: Matrix
-
-    ## 
-    ## Attaching package: 'Matrix'
-
-    ## The following objects are masked from 'package:tidyr':
-    ## 
-    ##     expand, pack, unpack
-
-``` r
 #Random intercept
 
 MixEffMod1 <- lmer(price ~  sqfeet + (1|type), 
@@ -3058,48 +2954,46 @@ MixEffMod1 <- lmer(price ~  sqfeet + (1|type),
 summary(MixEffMod1)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (1 | type)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5593928
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.3192 -0.6596 -0.2220  0.4361  5.4030 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance Std.Dev.
-    ##  type     (Intercept)  45391   213.1   
-    ##  Residual             206198   454.1   
-    ## Number of obs: 371082, groups:  type, 10
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 6.780e+02  6.762e+01   10.03
-    ## sqfeet      5.547e-01  2.628e-03  211.05
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.041
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (1 | type)
+       Data: mydata
+
+    REML criterion at convergence: 5593928
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -3.3192 -0.6596 -0.2220  0.4361  5.4030 
+
+    Random effects:
+     Groups   Name        Variance Std.Dev.
+     type     (Intercept)  45391   213.1   
+     Residual             206198   454.1   
+    Number of obs: 371082, groups:  type, 10
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 6.780e+02  6.762e+01   10.03
+    sqfeet      5.547e-01  2.628e-03  211.05
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.041
 
 ``` r
 performance::icc(MixEffMod1)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.180
-    ##   Conditional ICC: 0.161
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.180
+      Conditional ICC: 0.161
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod1)
 ```
 
-    ## Warning: 'r.squaredGLMM' now calculates a revised statistic. See the help page.
-
-    ##            R2m       R2c
-    ## [1,] 0.1097778 0.2703895
+               R2m       R2c
+    [1,] 0.1097778 0.2703895
 
 The random intercept model shows that the intercept variance is pretty
 large. the square feet’s fix effect is still significant, with a t value
@@ -3113,59 +3007,50 @@ difference is 0.16.
 MixEffMod1a <- lmer(price ~  1 +  (sqfeet|type), 
                data = mydata,
                 control = lmerControl(optimizer="Nelder_Mead"))
-```
 
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## Model failed to converge with max|grad| = 2.5388 (tol = 0.002, component 1)
-
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
-    ##  - Rescale variables?;Model is nearly unidentifiable: large eigenvalue ratio
-    ##  - Rescale variables?
-
-``` r
 summary(MixEffMod1a)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ 1 + (sqfeet | type)
-    ##    Data: mydata
-    ## Control: lmerControl(optimizer = "Nelder_Mead")
-    ## 
-    ## REML criterion at convergence: 5593249
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.3630 -0.6607 -0.2215  0.4352  5.4160 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance  Std.Dev. Corr 
-    ##  type     (Intercept) 6.219e+05 788.5779      
-    ##           sqfeet      3.411e-01   0.5841 -0.97
-    ##  Residual             2.058e+05 453.6405      
-    ## Number of obs: 371082, groups:  type, 10
-    ## 
-    ## Fixed effects:
-    ##             Estimate Std. Error t value
-    ## (Intercept)  1358.75      63.45   21.41
-    ## convergence code: 0
-    ## Model failed to converge with max|grad| = 2.5388 (tol = 0.002, component 1)
-    ## Model is nearly unidentifiable: very large eigenvalue
-    ##  - Rescale variables?
-    ## Model is nearly unidentifiable: large eigenvalue ratio
-    ##  - Rescale variables?
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ 1 + (sqfeet | type)
+       Data: mydata
+    Control: lmerControl(optimizer = "Nelder_Mead")
+
+    REML criterion at convergence: 5593249
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -3.3630 -0.6607 -0.2215  0.4352  5.4160 
+
+    Random effects:
+     Groups   Name        Variance  Std.Dev. Corr 
+     type     (Intercept) 6.219e+05 788.5779      
+              sqfeet      3.411e-01   0.5841 -0.97
+     Residual             2.058e+05 453.6405      
+    Number of obs: 371082, groups:  type, 10
+
+    Fixed effects:
+                Estimate Std. Error t value
+    (Intercept)  1358.75      63.45   21.41
+    convergence code: 0
+    Model failed to converge with max|grad| = 2.5388 (tol = 0.002, component 1)
+    Model is nearly unidentifiable: very large eigenvalue
+     - Rescale variables?
+    Model is nearly unidentifiable: large eigenvalue ratio
+     - Rescale variables?
 
 ``` r
 performance::icc(MixEffMod1a)
 ```
 
-    ## [1] NA
+    [1] NA
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod1a)
 ```
 
-    ##      R2m       R2c
-    ## [1,]   0 0.3497538
+         R2m       R2c
+    [1,]   0 0.3497538
 
 When we add the random slope, the model failed to converge. When we
 changed optimizer to “bobyqa” and “Nelder\_Mead”, or using (0 +
@@ -3180,83 +3065,76 @@ MixEffMod1b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allow
 summary(MixEffMod1b)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
-    ##     wheelchair_access + electric_vehicle_charge + comes_furnished) +  
-    ##     dogs_allowed * cats_allowed + beds * baths + (1 | type)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5569704
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -4.3907 -0.6484 -0.2079  0.4323  5.7891 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance Std.Dev.
-    ##  type     (Intercept)  24515   156.6   
-    ##  Residual             193173   439.5   
-    ## Number of obs: 371082, groups:  type, 10
-    ## 
-    ## Fixed effects:
-    ##                                   Estimate Std. Error t value
-    ## (Intercept)                      5.009e+02  5.026e+01   9.965
-    ## sqfeet                           7.474e-01  6.001e-03 124.529
-    ## dogs_allowed1                    7.107e+01  1.382e+01   5.144
-    ## cats_allowed1                   -5.833e+00  1.014e+01  -0.575
-    ## smoking_allowed1                -3.111e+01  5.301e+00  -5.869
-    ## wheelchair_access1               1.387e+02  9.125e+00  15.202
-    ## electric_vehicle_charge1         7.487e+02  2.065e+01  36.258
-    ## comes_furnished1                 1.669e+02  1.004e+01  16.632
-    ## beds                            -4.043e+01  2.426e+00 -16.664
-    ## baths                            1.989e+02  3.829e+00  51.935
-    ## sqfeet:dogs_allowed1            -3.892e-02  1.001e-02  -3.888
-    ## sqfeet:cats_allowed1             7.010e-02  1.013e-02   6.919
-    ## sqfeet:smoking_allowed1         -1.143e-01  5.048e-03 -22.635
-    ## sqfeet:wheelchair_access1       -8.690e-02  8.985e-03  -9.672
-    ## sqfeet:electric_vehicle_charge1 -3.213e-01  2.007e-02 -16.011
-    ## sqfeet:comes_furnished1         -2.024e-01  9.114e-03 -22.213
-    ## dogs_allowed1:cats_allowed1     -1.161e+02  8.457e+00 -13.726
-    ## beds:baths                      -5.013e+01  1.436e+00 -34.913
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
+        wheelchair_access + electric_vehicle_charge + comes_furnished) +  
+        dogs_allowed * cats_allowed + beds * baths + (1 | type)
+       Data: mydata
 
-    ## 
-    ## Correlation matrix not shown by default, as p = 18 > 12.
-    ## Use print(x, correlation=TRUE)  or
-    ##     vcov(x)        if you need it
+    REML criterion at convergence: 5569704
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -4.3907 -0.6484 -0.2079  0.4323  5.7891 
+
+    Random effects:
+     Groups   Name        Variance Std.Dev.
+     type     (Intercept)  24515   156.6   
+     Residual             193173   439.5   
+    Number of obs: 371082, groups:  type, 10
+
+    Fixed effects:
+                                      Estimate Std. Error t value
+    (Intercept)                      5.009e+02  5.026e+01   9.965
+    sqfeet                           7.474e-01  6.001e-03 124.529
+    dogs_allowed1                    7.107e+01  1.382e+01   5.144
+    cats_allowed1                   -5.833e+00  1.014e+01  -0.575
+    smoking_allowed1                -3.111e+01  5.301e+00  -5.869
+    wheelchair_access1               1.387e+02  9.125e+00  15.202
+    electric_vehicle_charge1         7.487e+02  2.065e+01  36.258
+    comes_furnished1                 1.669e+02  1.004e+01  16.632
+    beds                            -4.043e+01  2.426e+00 -16.664
+    baths                            1.989e+02  3.829e+00  51.935
+    sqfeet:dogs_allowed1            -3.892e-02  1.001e-02  -3.888
+    sqfeet:cats_allowed1             7.010e-02  1.013e-02   6.919
+    sqfeet:smoking_allowed1         -1.143e-01  5.048e-03 -22.635
+    sqfeet:wheelchair_access1       -8.690e-02  8.985e-03  -9.672
+    sqfeet:electric_vehicle_charge1 -3.213e-01  2.007e-02 -16.011
+    sqfeet:comes_furnished1         -2.024e-01  9.114e-03 -22.213
+    dogs_allowed1:cats_allowed1     -1.161e+02  8.457e+00 -13.726
+    beds:baths                      -5.013e+01  1.436e+00 -34.913
 
 ``` r
 performance::icc(MixEffMod1b)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.113
-    ##   Conditional ICC: 0.094
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.113
+      Conditional ICC: 0.094
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod1b)
 ```
 
-    ##            R2m       R2c
-    ## [1,] 0.1642542 0.2583722
+               R2m       R2c
+    [1,] 0.1642542 0.2583722
 
 ``` r
 anova(MixEffMod1, MixEffMod1b)
 ```
 
-    ## refitting model(s) with ML (instead of REML)
-
-    ## Data: mydata
-    ## Models:
-    ## MixEffMod1: price ~ sqfeet + (1 | type)
-    ## MixEffMod1b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
-    ## MixEffMod1b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
-    ## MixEffMod1b:     dogs_allowed * cats_allowed + beds * baths + (1 | type)
-    ##             npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
-    ## MixEffMod1     4 5593937 5593980 -2796964  5593929                        
-    ## MixEffMod1b   20 5569735 5569951 -2784847  5569695 24234 16  < 2.2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    Data: mydata
+    Models:
+    MixEffMod1: price ~ sqfeet + (1 | type)
+    MixEffMod1b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
+    MixEffMod1b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
+    MixEffMod1b:     dogs_allowed * cats_allowed + beds * baths + (1 | type)
+                npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
+    MixEffMod1     4 5593937 5593980 -2796964  5593929                        
+    MixEffMod1b   20 5569735 5569951 -2784847  5569695 24234 16  < 2.2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 We add our linear predictors to this full random intercept model, the
 icc is 0,094, so 9.4% of variance in price is accounted for by type. The
@@ -3275,46 +3153,46 @@ MixEffMod2 <- lmer(price ~  sqfeet + (1|state),
 summary(MixEffMod2)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (1 | state)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5422628
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.3217 -0.5408 -0.1071  0.4075  6.6918 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance Std.Dev.
-    ##  state    (Intercept)  94100   306.8   
-    ##  Residual             129836   360.3   
-    ## Number of obs: 371082, groups:  state, 51
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 6.558e+02  4.301e+01   15.25
-    ## sqfeet      5.143e-01  1.886e-03  272.70
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.043
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (1 | state)
+       Data: mydata
+
+    REML criterion at convergence: 5422628
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -5.3217 -0.5408 -0.1071  0.4075  6.6918 
+
+    Random effects:
+     Groups   Name        Variance Std.Dev.
+     state    (Intercept)  94100   306.8   
+     Residual             129836   360.3   
+    Number of obs: 371082, groups:  state, 51
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 6.558e+02  4.301e+01   15.25
+    sqfeet      5.143e-01  1.886e-03  272.70
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.043
 
 ``` r
 performance::icc(MixEffMod2)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.420
-    ##   Conditional ICC: 0.375
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.420
+      Conditional ICC: 0.375
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod2)
 ```
 
-    ##            R2m       R2c
-    ## [1,] 0.1064233 0.4819132
+               R2m       R2c
+    [1,] 0.1064233 0.4819132
 
 The random intercept model shows that the intercept variance is pretty
 large. the square feet’s fix effect is still significant, with a t value
@@ -3328,67 +3206,58 @@ is 0.1064, and the total model r-squared is 0.4819. The difference is
 MixEffMod2a <- lmer(price ~  sqfeet + (sqfeet|state), 
                data = mydata, 
                 control = lmerControl(optimizer="Nelder_Mead"))
-```
 
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## Model failed to converge with max|grad| = 0.843305 (tol = 0.002, component 1)
-
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
-    ##  - Rescale variables?;Model is nearly unidentifiable: large eigenvalue ratio
-    ##  - Rescale variables?
-
-``` r
 summary(MixEffMod2a)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (sqfeet | state)
-    ##    Data: mydata
-    ## Control: lmerControl(optimizer = "Nelder_Mead")
-    ## 
-    ## REML criterion at convergence: 5419154
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.5647 -0.5361 -0.1068  0.4095  6.6782 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance  Std.Dev. Corr 
-    ##  state    (Intercept) 8.200e+04 286.3531      
-    ##           sqfeet      1.752e-02   0.1324 -0.04
-    ##  Residual             1.286e+05 358.5464      
-    ## Number of obs: 371082, groups:  state, 51
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 650.09989   40.22027   16.16
-    ## sqfeet        0.52268    0.01876   27.86
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.050
-    ## convergence code: 0
-    ## Model failed to converge with max|grad| = 0.843305 (tol = 0.002, component 1)
-    ## Model is nearly unidentifiable: very large eigenvalue
-    ##  - Rescale variables?
-    ## Model is nearly unidentifiable: large eigenvalue ratio
-    ##  - Rescale variables?
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (sqfeet | state)
+       Data: mydata
+    Control: lmerControl(optimizer = "Nelder_Mead")
+
+    REML criterion at convergence: 5419154
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -5.5647 -0.5361 -0.1068  0.4095  6.6782 
+
+    Random effects:
+     Groups   Name        Variance  Std.Dev. Corr 
+     state    (Intercept) 8.200e+04 286.3531      
+              sqfeet      1.752e-02   0.1324 -0.04
+     Residual             1.286e+05 358.5464      
+    Number of obs: 371082, groups:  state, 51
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 650.09989   40.22027   16.16
+    sqfeet        0.52268    0.01876   27.86
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.050
+    convergence code: 0
+    Model failed to converge with max|grad| = 0.843305 (tol = 0.002, component 1)
+    Model is nearly unidentifiable: very large eigenvalue
+     - Rescale variables?
+    Model is nearly unidentifiable: large eigenvalue ratio
+     - Rescale variables?
 
 ``` r
 performance::icc(MixEffMod2a)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.432
-    ##   Conditional ICC: 0.385
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.432
+      Conditional ICC: 0.385
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod2a)
 ```
 
-    ##            R2m       R2c
-    ## [1,] 0.1085765 0.4933536
+               R2m       R2c
+    [1,] 0.1085765 0.4933536
 
 We tried different optimizers, but the model failed to converge. we
 decide to drop the random slope.
@@ -3401,83 +3270,76 @@ MixEffMod2b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allow
 summary(MixEffMod2b)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
-    ##     wheelchair_access + electric_vehicle_charge + comes_furnished) +  
-    ##     dogs_allowed * cats_allowed + beds * baths + (1 | state)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5396128
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -6.2146 -0.5422 -0.1054  0.4061  7.5241 
-    ## 
-    ## Random effects:
-    ##  Groups   Name        Variance Std.Dev.
-    ##  state    (Intercept)  92071   303.4   
-    ##  Residual             120886   347.7   
-    ## Number of obs: 371082, groups:  state, 51
-    ## 
-    ## Fixed effects:
-    ##                                   Estimate Std. Error t value
-    ## (Intercept)                     365.635673  42.887457   8.525
-    ## sqfeet                            0.732540   0.004665 157.025
-    ## dogs_allowed1                    50.566822  10.928913   4.627
-    ## cats_allowed1                   -83.050562   8.045985 -10.322
-    ## smoking_allowed1                 65.229367   4.230892  15.417
-    ## wheelchair_access1              122.094999   7.230866  16.885
-    ## electric_vehicle_charge1        484.556449  16.357040  29.624
-    ## comes_furnished1                238.060366   7.927991  30.028
-    ## beds                            -25.793821   1.924964 -13.400
-    ## baths                           230.088811   3.001613  76.655
-    ## sqfeet:dogs_allowed1             -0.048805   0.007922  -6.161
-    ## sqfeet:cats_allowed1              0.085475   0.008000  10.684
-    ## sqfeet:smoking_allowed1          -0.152075   0.004000 -38.023
-    ## sqfeet:wheelchair_access1        -0.083769   0.007111 -11.780
-    ## sqfeet:electric_vehicle_charge1  -0.230911   0.015883 -14.538
-    ## sqfeet:comes_furnished1          -0.241770   0.007209 -33.539
-    ## dogs_allowed1:cats_allowed1      29.024547   6.720244   4.319
-    ## beds:baths                      -58.804880   1.132446 -51.927
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
+        wheelchair_access + electric_vehicle_charge + comes_furnished) +  
+        dogs_allowed * cats_allowed + beds * baths + (1 | state)
+       Data: mydata
 
-    ## 
-    ## Correlation matrix not shown by default, as p = 18 > 12.
-    ## Use print(x, correlation=TRUE)  or
-    ##     vcov(x)        if you need it
+    REML criterion at convergence: 5396128
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -6.2146 -0.5422 -0.1054  0.4061  7.5241 
+
+    Random effects:
+     Groups   Name        Variance Std.Dev.
+     state    (Intercept)  92071   303.4   
+     Residual             120886   347.7   
+    Number of obs: 371082, groups:  state, 51
+
+    Fixed effects:
+                                      Estimate Std. Error t value
+    (Intercept)                     365.635673  42.887457   8.525
+    sqfeet                            0.732540   0.004665 157.025
+    dogs_allowed1                    50.566822  10.928913   4.627
+    cats_allowed1                   -83.050562   8.045985 -10.322
+    smoking_allowed1                 65.229367   4.230892  15.417
+    wheelchair_access1              122.094999   7.230866  16.885
+    electric_vehicle_charge1        484.556449  16.357040  29.624
+    comes_furnished1                238.060366   7.927991  30.028
+    beds                            -25.793821   1.924964 -13.400
+    baths                           230.088811   3.001613  76.655
+    sqfeet:dogs_allowed1             -0.048805   0.007922  -6.161
+    sqfeet:cats_allowed1              0.085475   0.008000  10.684
+    sqfeet:smoking_allowed1          -0.152075   0.004000 -38.023
+    sqfeet:wheelchair_access1        -0.083769   0.007111 -11.780
+    sqfeet:electric_vehicle_charge1  -0.230911   0.015883 -14.538
+    sqfeet:comes_furnished1          -0.241770   0.007209 -33.539
+    dogs_allowed1:cats_allowed1      29.024547   6.720244   4.319
+    beds:baths                      -58.804880   1.132446 -51.927
 
 ``` r
 performance::icc(MixEffMod2b)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.432
-    ##   Conditional ICC: 0.370
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.432
+      Conditional ICC: 0.370
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod2b)
 ```
 
-    ##            R2m      R2c
-    ## [1,] 0.1440311 0.514105
+               R2m      R2c
+    [1,] 0.1440311 0.514105
 
 ``` r
 anova(MixEffMod2, MixEffMod2b)
 ```
 
-    ## refitting model(s) with ML (instead of REML)
-
-    ## Data: mydata
-    ## Models:
-    ## MixEffMod2: price ~ sqfeet + (1 | state)
-    ## MixEffMod2b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
-    ## MixEffMod2b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
-    ## MixEffMod2b:     dogs_allowed * cats_allowed + beds * baths + (1 | state)
-    ##             npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
-    ## MixEffMod2     4 5422634 5422678 -2711313  5422626                        
-    ## MixEffMod2b   20 5396151 5396367 -2698055  5396111 26516 16  < 2.2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    Data: mydata
+    Models:
+    MixEffMod2: price ~ sqfeet + (1 | state)
+    MixEffMod2b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
+    MixEffMod2b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
+    MixEffMod2b:     dogs_allowed * cats_allowed + beds * baths + (1 | state)
+                npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
+    MixEffMod2     4 5422634 5422678 -2711313  5422626                        
+    MixEffMod2b   20 5396151 5396367 -2698055  5396111 26516 16  < 2.2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 We add our linear predictors to this full random intercept model, the
 icc is 0,370, so 37% of variance in price is accounted for by type. The
@@ -3496,46 +3358,46 @@ MixEffMod3 <- lmer(price ~  sqfeet + (1|laundry_options),
 summary(MixEffMod3)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (1 | laundry_options)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5562903
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6711 -0.6277 -0.1957  0.4158  5.5717 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance Std.Dev.
-    ##  laundry_options (Intercept)  15968   126.4   
-    ##  Residual                    189668   435.5   
-    ## Number of obs: 371082, groups:  laundry_options, 6
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 6.627e+02  5.165e+01   12.83
-    ## sqfeet      4.539e-01  2.373e-03  191.31
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.042
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (1 | laundry_options)
+       Data: mydata
+
+    REML criterion at convergence: 5562903
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -3.6711 -0.6277 -0.1957  0.4158  5.5717 
+
+    Random effects:
+     Groups          Name        Variance Std.Dev.
+     laundry_options (Intercept)  15968   126.4   
+     Residual                    189668   435.5   
+    Number of obs: 371082, groups:  laundry_options, 6
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 6.627e+02  5.165e+01   12.83
+    sqfeet      4.539e-01  2.373e-03  191.31
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.042
 
 ``` r
 performance::icc(MixEffMod3)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.078
-    ##   Conditional ICC: 0.071
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.078
+      Conditional ICC: 0.071
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod3)
 ```
 
-    ##             R2m       R2c
-    ## [1,] 0.09176817 0.1622939
+                R2m       R2c
+    [1,] 0.09176817 0.1622939
 
 The random intercept model shows that the intercept variance is pretty
 large. the square feet’s fix effect is still significant, with a t value
@@ -3549,54 +3411,46 @@ difference is 0.07.
 MixEffMod3a <- lmer(price ~  sqfeet +  (sqfeet|laundry_options), 
                data = mydata,
                control = lmerControl(optimizer="Nelder_Mead"))
-```
 
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## unable to evaluate scaled gradient
-
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## Model failed to converge: degenerate Hessian with 1 negative eigenvalues
-
-``` r
 summary(MixEffMod3a)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (sqfeet | laundry_options)
-    ##    Data: mydata
-    ## Control: lmerControl(optimizer = "Nelder_Mead")
-    ## 
-    ## REML criterion at convergence: 5561817
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6277 -0.6327 -0.1928  0.4169  5.6072 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance  Std.Dev. Corr 
-    ##  laundry_options (Intercept) 1.646e+05 405.7164      
-    ##                  sqfeet      2.449e-02   0.1565 -0.93
-    ##  Residual                    1.891e+05 434.8535      
-    ## Number of obs: 371082, groups:  laundry_options, 6
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 635.31612  165.68590   3.834
-    ## sqfeet        0.48810    0.06407   7.619
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.931
-    ## convergence code: 0
-    ## unable to evaluate scaled gradient
-    ## Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (sqfeet | laundry_options)
+       Data: mydata
+    Control: lmerControl(optimizer = "Nelder_Mead")
+
+    REML criterion at convergence: 5561817
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -3.6277 -0.6327 -0.1928  0.4169  5.6072 
+
+    Random effects:
+     Groups          Name        Variance  Std.Dev. Corr 
+     laundry_options (Intercept) 1.646e+05 405.7164      
+                     sqfeet      2.449e-02   0.1565 -0.93
+     Residual                    1.891e+05 434.8535      
+    Number of obs: 371082, groups:  laundry_options, 6
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 635.31612  165.68590   3.834
+    sqfeet        0.48810    0.06407   7.619
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.931
+    convergence code: 0
+    unable to evaluate scaled gradient
+    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod3a)
 ```
 
-    ##             R2m     R2c
-    ## [1,] 0.08345626 0.34315
+                R2m     R2c
+    [1,] 0.08345626 0.34315
 
 This model failed to converge. We dropped the random slope.
 
@@ -3608,83 +3462,76 @@ MixEffMod3b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allow
 summary(MixEffMod3b)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
-    ##     wheelchair_access + electric_vehicle_charge + comes_furnished) +  
-    ##     dogs_allowed * cats_allowed + beds * baths + (1 | laundry_options)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5545130
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -4.5490 -0.6280 -0.1881  0.4119  5.9440 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance Std.Dev.
-    ##  laundry_options (Intercept)  13574   116.5   
-    ##  Residual                    180801   425.2   
-    ## Number of obs: 371082, groups:  laundry_options, 6
-    ## 
-    ## Fixed effects:
-    ##                                   Estimate Std. Error t value
-    ## (Intercept)                     516.443968  48.095207  10.738
-    ## sqfeet                            0.650005   0.005725 113.544
-    ## dogs_allowed1                    -7.516235  13.375903  -0.562
-    ## cats_allowed1                    -8.916897   9.891591  -0.901
-    ## smoking_allowed1                 -3.308870   5.139100  -0.644
-    ## wheelchair_access1              111.243429   8.832462  12.595
-    ## electric_vehicle_charge1        664.272955  19.978830  33.249
-    ## comes_furnished1                183.904492   9.677544  19.003
-    ## beds                            -25.199952   2.348372 -10.731
-    ## baths                           181.063701   3.678565  49.221
-    ## sqfeet:dogs_allowed1             -0.013080   0.009690  -1.350
-    ## sqfeet:cats_allowed1              0.066244   0.009794   6.764
-    ## sqfeet:smoking_allowed1          -0.095688   0.004885 -19.589
-    ## sqfeet:wheelchair_access1        -0.097645   0.008693 -11.233
-    ## sqfeet:electric_vehicle_charge1  -0.295813   0.019415 -15.236
-    ## sqfeet:comes_furnished1          -0.252865   0.008810 -28.701
-    ## dogs_allowed1:cats_allowed1     -85.703953   8.177242 -10.481
-    ## beds:baths                      -52.886608   1.385072 -38.183
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
+        wheelchair_access + electric_vehicle_charge + comes_furnished) +  
+        dogs_allowed * cats_allowed + beds * baths + (1 | laundry_options)
+       Data: mydata
 
-    ## 
-    ## Correlation matrix not shown by default, as p = 18 > 12.
-    ## Use print(x, correlation=TRUE)  or
-    ##     vcov(x)        if you need it
+    REML criterion at convergence: 5545130
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -4.5490 -0.6280 -0.1881  0.4119  5.9440 
+
+    Random effects:
+     Groups          Name        Variance Std.Dev.
+     laundry_options (Intercept)  13574   116.5   
+     Residual                    180801   425.2   
+    Number of obs: 371082, groups:  laundry_options, 6
+
+    Fixed effects:
+                                      Estimate Std. Error t value
+    (Intercept)                     516.443968  48.095207  10.738
+    sqfeet                            0.650005   0.005725 113.544
+    dogs_allowed1                    -7.516235  13.375903  -0.562
+    cats_allowed1                    -8.916897   9.891591  -0.901
+    smoking_allowed1                 -3.308870   5.139100  -0.644
+    wheelchair_access1              111.243429   8.832462  12.595
+    electric_vehicle_charge1        664.272955  19.978830  33.249
+    comes_furnished1                183.904492   9.677544  19.003
+    beds                            -25.199952   2.348372 -10.731
+    baths                           181.063701   3.678565  49.221
+    sqfeet:dogs_allowed1             -0.013080   0.009690  -1.350
+    sqfeet:cats_allowed1              0.066244   0.009794   6.764
+    sqfeet:smoking_allowed1          -0.095688   0.004885 -19.589
+    sqfeet:wheelchair_access1        -0.097645   0.008693 -11.233
+    sqfeet:electric_vehicle_charge1  -0.295813   0.019415 -15.236
+    sqfeet:comes_furnished1          -0.252865   0.008810 -28.701
+    dogs_allowed1:cats_allowed1     -85.703953   8.177242 -10.481
+    beds:baths                      -52.886608   1.385072 -38.183
 
 ``` r
 performance::icc(MixEffMod3b)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.070
-    ##   Conditional ICC: 0.060
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.070
+      Conditional ICC: 0.060
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod3b)
 ```
 
-    ##            R2m       R2c
-    ## [1,] 0.1357403 0.1960954
+               R2m       R2c
+    [1,] 0.1357403 0.1960954
 
 ``` r
 anova(MixEffMod3,  MixEffMod3b)
 ```
 
-    ## refitting model(s) with ML (instead of REML)
-
-    ## Data: mydata
-    ## Models:
-    ## MixEffMod3: price ~ sqfeet + (1 | laundry_options)
-    ## MixEffMod3b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
-    ## MixEffMod3b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
-    ## MixEffMod3b:     dogs_allowed * cats_allowed + beds * baths + (1 | laundry_options)
-    ##             npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
-    ## MixEffMod3     4 5562910 5562954 -2781451  5562902                        
-    ## MixEffMod3b   20 5545160 5545376 -2772560  5545120 17783 16  < 2.2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    Data: mydata
+    Models:
+    MixEffMod3: price ~ sqfeet + (1 | laundry_options)
+    MixEffMod3b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
+    MixEffMod3b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
+    MixEffMod3b:     dogs_allowed * cats_allowed + beds * baths + (1 | laundry_options)
+                npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
+    MixEffMod3     4 5562910 5562954 -2781451  5562902                        
+    MixEffMod3b   20 5545160 5545376 -2772560  5545120 17783 16  < 2.2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 We add our linear predictors to this full random intercept model, the
 icc is 0,06, so 6% of variance in price is accounted for by laundry
@@ -3703,46 +3550,46 @@ MixEffMod4 <- lmer(price ~  sqfeet + (1|parking_options),
 summary(MixEffMod4)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (1 | parking_options)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5578673
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.6048 -0.6503 -0.2087  0.4341  5.5743 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance Std.Dev.
-    ##  parking_options (Intercept)  54437   233.3   
-    ##  Residual                    197893   444.9   
-    ## Number of obs: 371082, groups:  parking_options, 8
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 9.086e+02  8.266e+01   10.99
-    ## sqfeet      4.036e-01  2.398e-03  168.29
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.028
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (1 | parking_options)
+       Data: mydata
+
+    REML criterion at convergence: 5578673
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -3.6048 -0.6503 -0.2087  0.4341  5.5743 
+
+    Random effects:
+     Groups          Name        Variance Std.Dev.
+     parking_options (Intercept)  54437   233.3   
+     Residual                    197893   444.9   
+    Number of obs: 371082, groups:  parking_options, 8
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 9.086e+02  8.266e+01   10.99
+    sqfeet      4.036e-01  2.398e-03  168.29
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.028
 
 ``` r
 performance::icc(MixEffMod4)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.216
-    ##   Conditional ICC: 0.203
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.216
+      Conditional ICC: 0.203
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod4)
 ```
 
-    ##             R2m       R2c
-    ## [1,] 0.06111679 0.2636694
+                R2m       R2c
+    [1,] 0.06111679 0.2636694
 
 The random intercept model shows that the intercept variance is pretty
 large. the square feet’s fix effect is still significant, with a t value
@@ -3756,54 +3603,46 @@ difference is 0.2036.
 MixEffMod4a <- lmer(price ~  sqfeet + (sqfeet|parking_options), 
                data = mydata,
                control = lmerControl(optimizer="Nelder_Mead"))
-```
 
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## unable to evaluate scaled gradient
-
-    ## Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-    ## Model failed to converge: degenerate Hessian with 1 negative eigenvalues
-
-``` r
 summary(MixEffMod4a)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (sqfeet | parking_options)
-    ##    Data: mydata
-    ## Control: lmerControl(optimizer = "Nelder_Mead")
-    ## 
-    ## REML criterion at convergence: 5575854
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.3173 -0.6480 -0.2034  0.4352  5.7104 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance  Std.Dev. Corr 
-    ##  parking_options (Intercept) 2.568e+05 506.7289      
-    ##                  sqfeet      2.417e-02   0.1555 -0.89
-    ##  Residual                    1.964e+05 443.1437      
-    ## Number of obs: 371082, groups:  parking_options, 8
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 925.88837  179.48781   5.159
-    ## sqfeet        0.39463    0.05595   7.054
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.886
-    ## convergence code: 0
-    ## unable to evaluate scaled gradient
-    ## Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (sqfeet | parking_options)
+       Data: mydata
+    Control: lmerControl(optimizer = "Nelder_Mead")
+
+    REML criterion at convergence: 5575854
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -3.3173 -0.6480 -0.2034  0.4352  5.7104 
+
+    Random effects:
+     Groups          Name        Variance  Std.Dev. Corr 
+     parking_options (Intercept) 2.568e+05 506.7289      
+                     sqfeet      2.417e-02   0.1555 -0.89
+     Residual                    1.964e+05 443.1437      
+    Number of obs: 371082, groups:  parking_options, 8
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 925.88837  179.48781   5.159
+    sqfeet        0.39463    0.05595   7.054
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.886
+    convergence code: 0
+    unable to evaluate scaled gradient
+    Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod4a)
 ```
 
-    ##             R2m       R2c
-    ## [1,] 0.04401189 0.4496659
+                R2m       R2c
+    [1,] 0.04401189 0.4496659
 
 This model failed to converge, so we dropped the random slope.
 
@@ -3814,83 +3653,76 @@ MixEffMod4b <- lmer(price ~  sqfeet*(dogs_allowed + cats_allowed + smoking_allow
 summary(MixEffMod4b)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
-    ##     wheelchair_access + electric_vehicle_charge + comes_furnished) +  
-    ##     dogs_allowed * cats_allowed + beds * baths + (1 | parking_options)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5558053
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -4.3231 -0.6425 -0.2022  0.4336  5.7841 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance Std.Dev.
-    ##  parking_options (Intercept)  44979   212.1   
-    ##  Residual                    187201   432.7   
-    ## Number of obs: 371082, groups:  parking_options, 8
-    ## 
-    ## Fixed effects:
-    ##                                   Estimate Std. Error t value
-    ## (Intercept)                     710.702242  75.463959   9.418
-    ## sqfeet                            0.585431   0.005888  99.436
-    ## dogs_allowed1                    24.077360  13.593211   1.771
-    ## cats_allowed1                   -47.440211   9.997974  -4.745
-    ## smoking_allowed1                -37.991061   5.222530  -7.274
-    ## wheelchair_access1              110.282784   8.984281  12.275
-    ## electric_vehicle_charge1        681.837429  20.328815  33.540
-    ## comes_furnished1                148.312537   9.852388  15.053
-    ## beds                            -24.173826   2.401505 -10.066
-    ## baths                           229.821056   3.724833  61.700
-    ## sqfeet:dogs_allowed1             -0.057202   0.009853  -5.805
-    ## sqfeet:cats_allowed1              0.119799   0.009956  12.033
-    ## sqfeet:smoking_allowed1          -0.082937   0.004969 -16.691
-    ## sqfeet:wheelchair_access1        -0.079542   0.008841  -8.997
-    ## sqfeet:electric_vehicle_charge1  -0.319731   0.019751 -16.188
-    ## sqfeet:comes_furnished1          -0.174523   0.008968 -19.460
-    ## dogs_allowed1:cats_allowed1     -60.996893   8.318359  -7.333
-    ## beds:baths                      -62.725412   1.410806 -44.461
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
+        wheelchair_access + electric_vehicle_charge + comes_furnished) +  
+        dogs_allowed * cats_allowed + beds * baths + (1 | parking_options)
+       Data: mydata
 
-    ## 
-    ## Correlation matrix not shown by default, as p = 18 > 12.
-    ## Use print(x, correlation=TRUE)  or
-    ##     vcov(x)        if you need it
+    REML criterion at convergence: 5558053
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -4.3231 -0.6425 -0.2022  0.4336  5.7841 
+
+    Random effects:
+     Groups          Name        Variance Std.Dev.
+     parking_options (Intercept)  44979   212.1   
+     Residual                    187201   432.7   
+    Number of obs: 371082, groups:  parking_options, 8
+
+    Fixed effects:
+                                      Estimate Std. Error t value
+    (Intercept)                     710.702242  75.463959   9.418
+    sqfeet                            0.585431   0.005888  99.436
+    dogs_allowed1                    24.077360  13.593211   1.771
+    cats_allowed1                   -47.440211   9.997974  -4.745
+    smoking_allowed1                -37.991061   5.222530  -7.274
+    wheelchair_access1              110.282784   8.984281  12.275
+    electric_vehicle_charge1        681.837429  20.328815  33.540
+    comes_furnished1                148.312537   9.852388  15.053
+    beds                            -24.173826   2.401505 -10.066
+    baths                           229.821056   3.724833  61.700
+    sqfeet:dogs_allowed1             -0.057202   0.009853  -5.805
+    sqfeet:cats_allowed1              0.119799   0.009956  12.033
+    sqfeet:smoking_allowed1          -0.082937   0.004969 -16.691
+    sqfeet:wheelchair_access1        -0.079542   0.008841  -8.997
+    sqfeet:electric_vehicle_charge1  -0.319731   0.019751 -16.188
+    sqfeet:comes_furnished1          -0.174523   0.008968 -19.460
+    dogs_allowed1:cats_allowed1     -60.996893   8.318359  -7.333
+    beds:baths                      -62.725412   1.410806 -44.461
 
 ``` r
 performance::icc(MixEffMod4b)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.194
-    ##   Conditional ICC: 0.172
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.194
+      Conditional ICC: 0.172
 
 ``` r
 MuMIn::r.squaredGLMM(MixEffMod4b)
 ```
 
-    ##            R2m       R2c
-    ## [1,] 0.1108241 0.2830786
+               R2m       R2c
+    [1,] 0.1108241 0.2830786
 
 ``` r
 anova(MixEffMod4, MixEffMod4b)
 ```
 
-    ## refitting model(s) with ML (instead of REML)
-
-    ## Data: mydata
-    ## Models:
-    ## MixEffMod4: price ~ sqfeet + (1 | parking_options)
-    ## MixEffMod4b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
-    ## MixEffMod4b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
-    ## MixEffMod4b:     dogs_allowed * cats_allowed + beds * baths + (1 | parking_options)
-    ##             npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
-    ## MixEffMod4     4 5578682 5578725 -2789337  5578674                        
-    ## MixEffMod4b   20 5558085 5558301 -2779022  5558045 20629 16  < 2.2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    Data: mydata
+    Models:
+    MixEffMod4: price ~ sqfeet + (1 | parking_options)
+    MixEffMod4b: price ~ sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
+    MixEffMod4b:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
+    MixEffMod4b:     dogs_allowed * cats_allowed + beds * baths + (1 | parking_options)
+                npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
+    MixEffMod4     4 5578682 5578725 -2789337  5578674                        
+    MixEffMod4b   20 5558085 5558301 -2779022  5558045 20629 16  < 2.2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 We add our linear predictors to this full random intercept model, the
 icc is 0,172, so 17.2% of variance in price is accounted for by parking
@@ -3908,52 +3740,52 @@ clustermix1 <- lmer(price ~  sqfeet + (1|type) + (1|laundry_options) + (1|parkin
 summary(clustermix1)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: 
-    ## price ~ sqfeet + (1 | type) + (1 | laundry_options) + (1 | parking_options) +  
-    ##     (1 | state)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5371483
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.7606 -0.5311 -0.0801  0.4036  7.2237 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance Std.Dev.
-    ##  state           (Intercept)  84986   291.52  
-    ##  type            (Intercept)  18997   137.83  
-    ##  parking_options (Intercept)  33424   182.82  
-    ##  laundry_options (Intercept)   7948    89.15  
-    ##  Residual                    113073   336.26  
-    ## Number of obs: 371082, groups:  
-    ## state, 51; type, 10; parking_options, 8; laundry_options, 6
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 7.201e+02  9.540e+01   7.548
-    ## sqfeet      5.016e-01  2.067e-03 242.728
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.022
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: 
+    price ~ sqfeet + (1 | type) + (1 | laundry_options) + (1 | parking_options) +  
+        (1 | state)
+       Data: mydata
+
+    REML criterion at convergence: 5371483
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -5.7606 -0.5311 -0.0801  0.4036  7.2237 
+
+    Random effects:
+     Groups          Name        Variance Std.Dev.
+     state           (Intercept)  84986   291.52  
+     type            (Intercept)  18997   137.83  
+     parking_options (Intercept)  33424   182.82  
+     laundry_options (Intercept)   7948    89.15  
+     Residual                    113073   336.26  
+    Number of obs: 371082, groups:  
+    state, 51; type, 10; parking_options, 8; laundry_options, 6
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 7.201e+02  9.540e+01   7.548
+    sqfeet      5.016e-01  2.067e-03 242.728
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.022
 
 ``` r
 performance::icc(clustermix1)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.562
-    ##   Conditional ICC: 0.512
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.562
+      Conditional ICC: 0.512
 
 ``` r
 MuMIn::r.squaredGLMM(clustermix1)
 ```
 
-    ##             R2m       R2c
-    ## [1,] 0.08940907 0.6015777
+                R2m       R2c
+    [1,] 0.08940907 0.6015777
 
 In this clustered mixed effect model, we added all the grouping
 variables as random intercepts. We can see that the square feet’s
@@ -3970,91 +3802,84 @@ clustermix2 <- lmer(price ~  sqfeet + sqfeet*(dogs_allowed + cats_allowed + smok
 summary(clustermix2)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: 
-    ## price ~ sqfeet + sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
-    ##     wheelchair_access + electric_vehicle_charge + comes_furnished) +  
-    ##     dogs_allowed * cats_allowed + beds * baths + (1 | type) +  
-    ##     (1 | laundry_options) + (1 | parking_options) + (1 | state)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5359321
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.6039 -0.5422 -0.0856  0.4035  8.3060 
-    ## 
-    ## Random effects:
-    ##  Groups          Name        Variance Std.Dev.
-    ##  state           (Intercept)  84361   290.45  
-    ##  type            (Intercept)  13370   115.63  
-    ##  parking_options (Intercept)  31458   177.36  
-    ##  laundry_options (Intercept)   6830    82.64  
-    ##  Residual                    109428   330.80  
-    ## Number of obs: 371082, groups:  
-    ## state, 51; type, 10; parking_options, 8; laundry_options, 6
-    ## 
-    ## Fixed effects:
-    ##                                   Estimate Std. Error t value
-    ## (Intercept)                     464.490384  90.099001   5.155
-    ## sqfeet                            0.672750   0.004624 145.482
-    ## dogs_allowed1                    23.976247  10.427254   2.299
-    ## cats_allowed1                   -38.313139   7.737406  -4.952
-    ## smoking_allowed1                 67.092904   4.047010  16.578
-    ## wheelchair_access1               79.476496   6.894332  11.528
-    ## electric_vehicle_charge1        353.281572  15.590384  22.660
-    ## comes_furnished1                206.745093   7.582808  27.265
-    ## beds                             16.985620   1.856601   9.149
-    ## baths                           173.137702   2.918350  59.327
-    ## sqfeet:dogs_allowed1             -0.024422   0.007550  -3.235
-    ## sqfeet:cats_allowed1              0.038160   0.007646   4.991
-    ## sqfeet:smoking_allowed1          -0.131201   0.003822 -34.327
-    ## sqfeet:wheelchair_access1        -0.092465   0.006777 -13.643
-    ## sqfeet:electric_vehicle_charge1  -0.162328   0.015123 -10.734
-    ## sqfeet:comes_furnished1          -0.235948   0.006881 -34.292
-    ## dogs_allowed1:cats_allowed1       7.666888   6.431713   1.192
-    ## beds:baths                      -54.453939   1.087835 -50.057
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: 
+    price ~ sqfeet + sqfeet * (dogs_allowed + cats_allowed + smoking_allowed +  
+        wheelchair_access + electric_vehicle_charge + comes_furnished) +  
+        dogs_allowed * cats_allowed + beds * baths + (1 | type) +  
+        (1 | laundry_options) + (1 | parking_options) + (1 | state)
+       Data: mydata
 
-    ## 
-    ## Correlation matrix not shown by default, as p = 18 > 12.
-    ## Use print(x, correlation=TRUE)  or
-    ##     vcov(x)        if you need it
+    REML criterion at convergence: 5359321
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -5.6039 -0.5422 -0.0856  0.4035  8.3060 
+
+    Random effects:
+     Groups          Name        Variance Std.Dev.
+     state           (Intercept)  84361   290.45  
+     type            (Intercept)  13370   115.63  
+     parking_options (Intercept)  31458   177.36  
+     laundry_options (Intercept)   6830    82.64  
+     Residual                    109428   330.80  
+    Number of obs: 371082, groups:  
+    state, 51; type, 10; parking_options, 8; laundry_options, 6
+
+    Fixed effects:
+                                      Estimate Std. Error t value
+    (Intercept)                     464.490384  90.099001   5.155
+    sqfeet                            0.672750   0.004624 145.482
+    dogs_allowed1                    23.976247  10.427254   2.299
+    cats_allowed1                   -38.313139   7.737406  -4.952
+    smoking_allowed1                 67.092904   4.047010  16.578
+    wheelchair_access1               79.476496   6.894332  11.528
+    electric_vehicle_charge1        353.281572  15.590384  22.660
+    comes_furnished1                206.745093   7.582808  27.265
+    beds                             16.985620   1.856601   9.149
+    baths                           173.137702   2.918350  59.327
+    sqfeet:dogs_allowed1             -0.024422   0.007550  -3.235
+    sqfeet:cats_allowed1              0.038160   0.007646   4.991
+    sqfeet:smoking_allowed1          -0.131201   0.003822 -34.327
+    sqfeet:wheelchair_access1        -0.092465   0.006777 -13.643
+    sqfeet:electric_vehicle_charge1  -0.162328   0.015123 -10.734
+    sqfeet:comes_furnished1          -0.235948   0.006881 -34.292
+    dogs_allowed1:cats_allowed1       7.666888   6.431713   1.192
+    beds:baths                      -54.453939   1.087835 -50.057
 
 ``` r
 performance::icc(clustermix2)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.554
-    ##   Conditional ICC: 0.495
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.554
+      Conditional ICC: 0.495
 
 ``` r
 MuMIn::r.squaredGLMM(clustermix2)
 ```
 
-    ##           R2m       R2c
-    ## [1,] 0.106799 0.6017831
+              R2m       R2c
+    [1,] 0.106799 0.6017831
 
 ``` r
 anova(clustermix1,  clustermix2)
 ```
 
-    ## refitting model(s) with ML (instead of REML)
-
-    ## Data: mydata
-    ## Models:
-    ## clustermix1: price ~ sqfeet + (1 | type) + (1 | laundry_options) + (1 | parking_options) + 
-    ## clustermix1:     (1 | state)
-    ## clustermix2: price ~ sqfeet + sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
-    ## clustermix2:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
-    ## clustermix2:     dogs_allowed * cats_allowed + beds * baths + (1 | type) + 
-    ## clustermix2:     (1 | laundry_options) + (1 | parking_options) + (1 | state)
-    ##             npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
-    ## clustermix1    7 5371497 5371573 -2685742  5371483                        
-    ## clustermix2   23 5359351 5359600 -2679652  5359305 12179 16  < 2.2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    Data: mydata
+    Models:
+    clustermix1: price ~ sqfeet + (1 | type) + (1 | laundry_options) + (1 | parking_options) + 
+    clustermix1:     (1 | state)
+    clustermix2: price ~ sqfeet + sqfeet * (dogs_allowed + cats_allowed + smoking_allowed + 
+    clustermix2:     wheelchair_access + electric_vehicle_charge + comes_furnished) + 
+    clustermix2:     dogs_allowed * cats_allowed + beds * baths + (1 | type) + 
+    clustermix2:     (1 | laundry_options) + (1 | parking_options) + (1 | state)
+                npar     AIC     BIC   logLik deviance Chisq Df Pr(>Chisq)    
+    clustermix1    7 5371497 5371573 -2685742  5371483                        
+    clustermix2   23 5359351 5359600 -2679652  5359305 12179 16  < 2.2e-16 ***
+    ---
+    Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 We added the linear predictors to the clustered mixed effect model. The
 icc is 0.495, so state, type, parking and laundry options still account
@@ -4069,11 +3894,7 @@ still significantly better than the first model.
 
 ``` r
 library(sjPlot)
-```
 
-    ## Learn more about sjPlot with 'browseVignettes("sjPlot")'.
-
-``` r
 plot_model(MixEffMod1, type = "re") + 
   theme_minimal()
 ```
@@ -4082,37 +3903,7 @@ plot_model(MixEffMod1, type = "re") +
 
 ``` r
 library(merTools)
-```
 
-    ## Warning: package 'merTools' was built under R version 4.0.3
-
-    ## Loading required package: arm
-
-    ## Loading required package: MASS
-
-    ## Warning: package 'MASS' was built under R version 4.0.3
-
-    ## 
-    ## Attaching package: 'MASS'
-
-    ## The following object is masked _by_ '.GlobalEnv':
-    ## 
-    ##     housing
-
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     select
-
-    ## 
-    ## arm (Version 1.11-1, built: 2020-4-27)
-
-    ## Working directory is C:/Users/hz2cp/OneDrive - nd.edu/Work in progress/Github Projects/us_housing2
-
-    ## Registered S3 method overwritten by 'broom.mixed':
-    ##   method      from 
-    ##   tidy.gamlss broom
-
-``` r
 plotREsim(REsim(MixEffMod1), labs = TRUE)
 ```
 
@@ -4232,47 +4023,47 @@ HierarchyMod1 <- lmer(price ~  sqfeet + (1|type/laundry_options),
 summary(HierarchyMod1)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (1 | type/laundry_options)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5551108
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -4.0368 -0.6263 -0.1921  0.4104  5.9171 
-    ## 
-    ## Random effects:
-    ##  Groups               Name        Variance Std.Dev.
-    ##  laundry_options:type (Intercept)  29443   171.6   
-    ##  type                 (Intercept)  21773   147.6   
-    ##  Residual                         183629   428.5   
-    ## Number of obs: 371082, groups:  laundry_options:type, 60; type, 10
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 7.198e+02  5.212e+01   13.81
-    ## sqfeet      4.963e-01  2.592e-03  191.50
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.050
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (1 | type/laundry_options)
+       Data: mydata
+
+    REML criterion at convergence: 5551108
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -4.0368 -0.6263 -0.1921  0.4104  5.9171 
+
+    Random effects:
+     Groups               Name        Variance Std.Dev.
+     laundry_options:type (Intercept)  29443   171.6   
+     type                 (Intercept)  21773   147.6   
+     Residual                         183629   428.5   
+    Number of obs: 371082, groups:  laundry_options:type, 60; type, 10
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 7.198e+02  5.212e+01   13.81
+    sqfeet      4.963e-01  2.592e-03  191.50
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.050
 
 ``` r
 performance::icc(HierarchyMod1)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.218
-    ##   Conditional ICC: 0.197
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.218
+      Conditional ICC: 0.197
 
 ``` r
 MuMIn::r.squaredGLMM(HierarchyMod1)
 ```
 
-    ##             R2m       R2c
-    ## [1,] 0.09565805 0.2928794
+                R2m       R2c
+    [1,] 0.09565805 0.2928794
 
 The hierarchical model shows that the intercept of square feet varies a
 lot by type and by laundry options within the housing type. The icc is
@@ -4305,47 +4096,47 @@ HierarchyMod2 <- lmer(price ~  sqfeet + (1|type/parking_options),
 summary(HierarchyMod2)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (1 | type/parking_options)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5561575
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.4725 -0.6450 -0.1999  0.4316  5.7908 
-    ## 
-    ## Random effects:
-    ##  Groups               Name        Variance Std.Dev.
-    ##  parking_options:type (Intercept)  41675   204.1   
-    ##  type                 (Intercept)  35574   188.6   
-    ##  Residual                         188856   434.6   
-    ## Number of obs: 371082, groups:  parking_options:type, 76; type, 10
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 7.951e+02  6.494e+01   12.24
-    ## sqfeet      5.043e-01  2.575e-03  195.83
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.041
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (1 | type/parking_options)
+       Data: mydata
+
+    REML criterion at convergence: 5561575
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -3.4725 -0.6450 -0.1999  0.4316  5.7908 
+
+    Random effects:
+     Groups               Name        Variance Std.Dev.
+     parking_options:type (Intercept)  41675   204.1   
+     type                 (Intercept)  35574   188.6   
+     Residual                         188856   434.6   
+    Number of obs: 371082, groups:  parking_options:type, 76; type, 10
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 7.951e+02  6.494e+01   12.24
+    sqfeet      5.043e-01  2.575e-03  195.83
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.041
 
 ``` r
 performance::icc(HierarchyMod2)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.290
-    ##   Conditional ICC: 0.265
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.290
+      Conditional ICC: 0.265
 
 ``` r
 MuMIn::r.squaredGLMM(HierarchyMod2)
 ```
 
-    ##             R2m       R2c
-    ## [1,] 0.08789494 0.3526736
+                R2m       R2c
+    [1,] 0.08789494 0.3526736
 
 The hierarchical model shows that the intercept of square feet varies a
 lot by type and by parking options within the housing type. The icc is
@@ -4377,47 +4168,47 @@ HierarchyMod3 <- lmer(price ~  sqfeet + (1|state/type),
 summary(HierarchyMod3)
 ```
 
-    ## Linear mixed model fit by REML ['lmerMod']
-    ## Formula: price ~ sqfeet + (1 | state/type)
-    ##    Data: mydata
-    ## 
-    ## REML criterion at convergence: 5405504
-    ## 
-    ## Scaled residuals: 
-    ##     Min      1Q  Median      3Q     Max 
-    ## -5.1497 -0.5395 -0.1054  0.3987  6.8320 
-    ## 
-    ## Random effects:
-    ##  Groups     Name        Variance Std.Dev.
-    ##  type:state (Intercept)  33620   183.4   
-    ##  state      (Intercept)  77595   278.6   
-    ##  Residual               123616   351.6   
-    ## Number of obs: 371082, groups:  type:state, 455; state, 51
-    ## 
-    ## Fixed effects:
-    ##              Estimate Std. Error t value
-    ## (Intercept) 5.660e+02  4.026e+01   14.06
-    ## sqfeet      5.827e-01  2.088e-03  279.16
-    ## 
-    ## Correlation of Fixed Effects:
-    ##        (Intr)
-    ## sqfeet -0.058
+    Linear mixed model fit by REML ['lmerMod']
+    Formula: price ~ sqfeet + (1 | state/type)
+       Data: mydata
+
+    REML criterion at convergence: 5405504
+
+    Scaled residuals: 
+        Min      1Q  Median      3Q     Max 
+    -5.1497 -0.5395 -0.1054  0.3987  6.8320 
+
+    Random effects:
+     Groups     Name        Variance Std.Dev.
+     type:state (Intercept)  33620   183.4   
+     state      (Intercept)  77595   278.6   
+     Residual               123616   351.6   
+    Number of obs: 371082, groups:  type:state, 455; state, 51
+
+    Fixed effects:
+                 Estimate Std. Error t value
+    (Intercept) 5.660e+02  4.026e+01   14.06
+    sqfeet      5.827e-01  2.088e-03  279.16
+
+    Correlation of Fixed Effects:
+           (Intr)
+    sqfeet -0.058
 
 ``` r
 performance::icc(HierarchyMod3)
 ```
 
-    ## # Intraclass Correlation Coefficient
-    ## 
-    ##      Adjusted ICC: 0.474
-    ##   Conditional ICC: 0.413
+    # Intraclass Correlation Coefficient
+
+         Adjusted ICC: 0.474
+      Conditional ICC: 0.413
 
 ``` r
 MuMIn::r.squaredGLMM(HierarchyMod3)
 ```
 
-    ##            R2m       R2c
-    ## [1,] 0.1272737 0.5405919
+               R2m       R2c
+    [1,] 0.1272737 0.5405919
 
 The hierarchical model shows that the intercept of square feet varies a
 lot by state and by housing type within state. The icc is 0.413, so the
