@@ -2,8 +2,6 @@
 Housing Market (sourse:
 <a href="https://www.loveproperty.com/gallerylist/96138/expert-predictions-for-the-us-housing-market-through-the-rest-of-2020" class="uri">https://www.loveproperty.com/gallerylist/96138/expert-predictions-for-the-us-housing-market-through-the-rest-of-2020</a>)
 
-US Housing Rental Market Prediction
-===================================
 
 Introduction
 ============
